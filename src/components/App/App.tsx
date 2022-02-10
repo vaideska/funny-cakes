@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
-import {Route, Switch, Link} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Route, Switch, Link, useHistory} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
 import {FormRegister} from "../FormRegister/FormRegister";
 import {FormLogin} from "../FormLogin/FormLogin";
+import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
+import {child, get, getDatabase, ref} from "firebase/database";
+import {FullRecipe} from "../FullRecipe/FullRecipe";
 (function() {
   const firebaseConfig = {
     apiKey: "AIzaSyCCalDHvx-N-OD-UE4P7XQKdjj3bdCnDN0",
@@ -22,9 +25,60 @@ interface User {
   uid: string
 }
 
+interface RecipeDuration {
+  count: number,
+  unit: string
+}
+
+interface RecipeIngredient {
+  name: string,
+  unit: string
+}
+
+export interface Recipe {
+  id: string,
+  title: string,
+  description: string,
+  owner: string,
+  date: number,
+  duration: RecipeDuration,
+  diameter: number,
+  imgUrl: string,
+  tags: string[],
+  ingredients: RecipeIngredient[],
+  recipeText: string
+}
+
 
 function App() {
   const [user, setUser] = useState<User>({} as User);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const history = useHistory();
+  useEffect(() => {
+    getRecipes();
+  }, [])
+
+  const getRecipes = ():void => {
+    const dbRef = ref(getDatabase());
+    get(child(dbRef, `recipes/`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const resultArr: Array<Recipe> = [];
+        const result = snapshot.val(); // пришедший объект
+        const keysArr = Object.keys(result);
+        keysArr.forEach((el) => {
+          resultArr.push(result[el]); // из объекта с объектами делаем массив
+        })
+        console.log(resultArr);
+        setRecipes(resultArr);
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
+
   return (
     <div className="App">
       <p>{`user email: ${user.email}`}</p>
@@ -36,7 +90,17 @@ function App() {
       </div>
       <Switch>
         <Route path={routes.main} exact>
-          <h1>Main page</h1>
+          <div>
+            {recipes.length > 0 && recipes.map((recipe, index) => ( // пока решение в лоб
+              // потом задемпозируем
+              <div key={recipe.id} onClick={() => {history.push(`/recipes/${recipe.id}`)}}>
+                <p>{recipe.title}</p>
+                <p>{recipe.id}</p>
+                <p>{recipe.description}</p>
+                <p>{recipe.owner}</p>
+              </div>
+            ))}
+          </div>
         </Route>
         <Route path={routes.signUp} exact>
           <FormRegister/>
@@ -45,10 +109,10 @@ function App() {
           <FormLogin setUser={setUser}/>
         </Route>
         <Route path={routes.createRecipe} exact>
-          <h1>Create recipe</h1>
+          <CreateRecipe/>
         </Route>
         <Route path={routes.recipe}>
-          <h1>{`recipe id:`}</h1>
+          <FullRecipe/>
         </Route>
       </Switch>
     </div>
