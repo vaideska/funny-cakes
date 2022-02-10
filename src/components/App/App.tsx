@@ -9,6 +9,7 @@ import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
+import { Modal } from '../Modal';
 
 (function() {
   const firebaseConfig = {
@@ -78,6 +79,7 @@ function App() {
 
   return (
     <div className="App">
+      <Modal />
       <HeaderContainer isLoged={true}/>
       <Container> {/*Этот контейнер может быть удален в дальнейшем.
       Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
