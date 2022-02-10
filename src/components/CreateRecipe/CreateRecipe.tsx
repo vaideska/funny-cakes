@@ -13,11 +13,11 @@ export const CreateRecipe = () => {
       description: 'description',
       owner: 'owner',
       date: Date.now(),
-      duration: { count: 50, unit: 'unit'},
+      duration: 50,
       diameter: 20,
       imgUrl: '#',
       tags: ['tag1', 'tag2', 'tag3'],
-      ingredients: [{name: 'ingredients name1', unit: 'g'}, {name: 'ingredients name2', unit: 'g'}],
+      ingredients: [{name: 'ingredients name1', unit: 'g', count: 150}, {name: 'ingredients name2', unit: 'g', count: 30}],
       recipeText: `Recipe text`
     })
       .then((result) => {

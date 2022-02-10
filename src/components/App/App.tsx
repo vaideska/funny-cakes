@@ -25,14 +25,10 @@ interface User {
   uid: string
 }
 
-interface RecipeDuration {
-  count: number,
-  unit: string
-}
-
 interface RecipeIngredient {
   name: string,
-  unit: string
+  unit: string,
+  count: number
 }
 
 export interface Recipe {
@@ -41,7 +37,7 @@ export interface Recipe {
   description: string,
   owner: string,
   date: number,
-  duration: RecipeDuration,
+  duration: number,
   diameter: number,
   imgUrl: string,
   tags: string[],
@@ -68,7 +64,6 @@ function App() {
         keysArr.forEach((el) => {
           resultArr.push(result[el]); // из объекта с объектами делаем массив
         })
-        console.log(resultArr);
         setRecipes(resultArr);
       } else {
         console.log("No data available");
