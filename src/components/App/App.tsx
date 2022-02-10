@@ -7,6 +7,9 @@ import {FormLogin} from "../FormLogin/FormLogin";
 import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
+import { Container } from '@mui/material';
+import { HeaderContainer } from '../../containers/HeaderContainer';
+
 (function() {
   const firebaseConfig = {
     apiKey: "AIzaSyCCalDHvx-N-OD-UE4P7XQKdjj3bdCnDN0",
@@ -45,7 +48,6 @@ export interface Recipe {
   recipeText: string
 }
 
-
 function App() {
   const [user, setUser] = useState<User>({} as User);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -76,6 +78,9 @@ function App() {
 
   return (
     <div className="App">
+      <HeaderContainer isLoged={true}/>
+      <Container> {/*Этот контейнер может быть удален в дальнейшем.
+      Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
       <p>{`user email: ${user.email}`}</p>
       <div>
         <Link to={routes.main}>to main </Link>
@@ -83,33 +88,34 @@ function App() {
         <Link to={routes.signIn}>to login </Link>
         <Link to={routes.createRecipe}>to create recipe </Link>
       </div>
-      <Switch>
-        <Route path={routes.main} exact>
-          <div>
-            {recipes.length > 0 && recipes.map((recipe, index) => ( // пока решение в лоб
-              // потом задемпозируем
-              <div key={recipe.id} onClick={() => {history.push(`/recipes/${recipe.id}`)}}>
-                <p>{recipe.title}</p>
-                <p>{recipe.id}</p>
-                <p>{recipe.description}</p>
-                <p>{recipe.owner}</p>
-              </div>
-            ))}
-          </div>
-        </Route>
-        <Route path={routes.signUp} exact>
-          <FormRegister/>
-        </Route>
-        <Route path={routes.signIn} exact>
-          <FormLogin setUser={setUser}/>
-        </Route>
-        <Route path={routes.createRecipe} exact>
-          <CreateRecipe/>
-        </Route>
-        <Route path={routes.recipe}>
-          <FullRecipe/>
-        </Route>
-      </Switch>
+        <Switch>
+          <Route path={routes.main} exact>
+            <div>
+              {recipes.length > 0 && recipes.map((recipe, index) => ( // пока решение в лоб
+                // потом задемпозируем
+                <div key={recipe.id} onClick={() => {history.push(`/recipes/${recipe.id}`)}}>
+                  <p>{recipe.title}</p>
+                  <p>{recipe.id}</p>
+                  <p>{recipe.description}</p>
+                  <p>{recipe.owner}</p>
+                </div>
+              ))}
+            </div>
+          </Route>
+          <Route path={routes.signUp} exact>
+            <FormRegister/>
+          </Route>
+          <Route path={routes.signIn} exact>
+            <FormLogin setUser={setUser}/>
+          </Route>
+          <Route path={routes.createRecipe} exact>
+            <CreateRecipe/>
+          </Route>
+          <Route path={routes.recipe}>
+            <FullRecipe/>
+          </Route>
+        </Switch>
+      </Container>
     </div>
   );
 }
