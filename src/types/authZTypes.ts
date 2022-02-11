@@ -1,7 +1,18 @@
 export interface authZState {
+    status: authZStatus,
+    user: user,
+    modal: authZModal
+}
+
+export interface authZModal {
+    isOpen: boolean,
+    variant: 'login' | 'register'
+}
+
+export interface authZStatus {
     isLoged: boolean,
     loading: boolean,
-    user: user
+    error: string | null,
 }
 
 export interface user {

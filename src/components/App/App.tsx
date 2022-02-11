@@ -9,7 +9,7 @@ import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import { Modal } from '../Modal';
+import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 
 (function() {
   const firebaseConfig = {
@@ -23,11 +23,6 @@ import { Modal } from '../Modal';
   };
   const app = initializeApp(firebaseConfig)
 })();
-
-interface User {
-  email: string,
-  uid: string
-}
 
 interface RecipeIngredient {
   name: string,
@@ -50,7 +45,6 @@ export interface Recipe {
 }
 
 function App() {
-  const [user, setUser] = useState<User>({} as User);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const history = useHistory();
   useEffect(() => {
@@ -79,11 +73,10 @@ function App() {
 
   return (
     <div className="App">
-      <Modal />
-      <HeaderContainer isLoged={true}/>
+      <AuthZModalContainer />
+      <HeaderContainer />
       <Container> {/*Этот контейнер может быть удален в дальнейшем.
       Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
-      <p>{`user email: ${user.email}`}</p>
       <div>
         <Link to={routes.main}>to main </Link>
         <Link to={routes.signUp}>to register </Link>
@@ -108,7 +101,7 @@ function App() {
             <FormRegister/>
           </Route>
           <Route path={routes.signIn} exact>
-            <FormLogin setUser={setUser}/>
+            <FormLogin />
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipe/>

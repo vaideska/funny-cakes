@@ -13,6 +13,7 @@ import {
 interface NavBarAvatarProps {
     menuIsOpen: boolean,
     menuAnchorEl: any,
+    handleLogoutBtnClick: () => void,
     handleOpenMenu: (e: MouseEvent) => void,
     handleCloseMenu: () => void
 }
@@ -20,6 +21,7 @@ interface NavBarAvatarProps {
 export const NavBarAvatar = ({
     menuIsOpen,
     menuAnchorEl,
+    handleLogoutBtnClick,
     handleOpenMenu,
     handleCloseMenu,
 }: NavBarAvatarProps) => {
@@ -47,7 +49,7 @@ export const NavBarAvatar = ({
                 sx={{ mt: 1 }}
             >
                 <MenuItem onClick={handleCloseMenu}>
-                    <Typography variant='body1' textAlign="center">Выйти</Typography>
+                    <Typography variant='body1' textAlign="center" onClick={handleLogoutBtnClick}>Выйти</Typography>
                 </MenuItem>
             </Menu>
         </Box>
