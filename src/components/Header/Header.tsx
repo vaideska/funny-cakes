@@ -12,11 +12,12 @@ import {
 import { NavBarAvatarContainer } from '../../containers/NavBarAvatarContainer';
 
 interface HeaderProps {
-   isLoged: boolean;
+   isLoged: boolean,
+   handleLoginBtnClick: () => void,
    handleLogoClick: (e: MouseEvent) => void
 }
 
-export const Header = ({ isLoged, handleLogoClick }: HeaderProps) => {
+export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick }: HeaderProps) => {
    return (
       <AppBar position="static">
          <Container>
@@ -48,7 +49,8 @@ export const Header = ({ isLoged, handleLogoClick }: HeaderProps) => {
                         <AccountCircleRounded />
                      }
                      size='medium'
-                     sx={{ ml: 2 }}>
+                     sx={{ ml: 2 }}
+                     onClick={handleLoginBtnClick}>
                      Войти
                   </Button>
                )}
