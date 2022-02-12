@@ -2,8 +2,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Route, Switch, Link} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
-import { FormRegister } from "../FormRegister/FormRegister";
-import {FormLogin} from "../FormLogin/FormLogin";
 import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { HeaderContainer } from '../../containers/HeaderContainer';
