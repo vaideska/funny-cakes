@@ -15,7 +15,7 @@ export const CreateRecipe = () => {
       date: Date.now(),
       duration: 50,
       diameter: 20,
-      imgUrl: '#',
+      imgUrl: 'https://images.unsplash.com/photo-1614145121029-83a9f7b68bf4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGNha2V8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60',
       tags: ['tag1', 'tag2', 'tag3'],
       ingredients: [{name: 'ingredients name1', unit: 'g', count: 150}, {name: 'ingredients name2', unit: 'g', count: 30}],
       recipeText: `Recipe text`
