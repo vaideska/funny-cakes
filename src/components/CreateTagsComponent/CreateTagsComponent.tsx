@@ -59,7 +59,7 @@ export const CreateTagsComponent = (props: propsType) => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 500 }}>
+      <FormControl sx={{ m: 1, width: 450 }}>
         <InputLabel id="demo-multiple-chip-label">Теги</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"

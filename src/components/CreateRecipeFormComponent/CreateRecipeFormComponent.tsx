@@ -4,9 +4,12 @@ import {
   Typography, 
   Box, 
   TextField, 
-  InputAdornment 
+  InputAdornment,
+  IconButton
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
+import { PhotoCamera } from '@mui/icons-material';
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
 import { Recipe, RecipeIngredient } from '../../types/recipeType';
 import { CreateListIngredientsComponent } from '../CreateListIngredientsComponent';
@@ -37,6 +40,8 @@ export const CreateRecipeFormComponent = () => {
 
   const initStsteForm: PartitialTodo = {};
   const [form, setForm] = useState(initStsteForm);
+  const initFile: any = null;
+  const [selectedFile, setSelectedFile] = React.useState(initFile);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -59,6 +64,15 @@ const setTagList = (tagList: string[]) => {
   setForm({...form, 'tags': tagList});
 }
 
+const handleSelectFile = (e: any) => {      //TODO: не нашла какой тип события для загрузки
+  setSelectedFile(e.target.files[0]);
+  setForm({...form, 'imgUrl': e.target.files[0].name});   //TODO: что именно загружать в объек для сервера? Отдельный метод с firebase?
+}
+
+const InputStyle = styled('input')({
+  display: 'none',
+});
+
   return (
       <Box component="form"
       sx={{
@@ -75,6 +89,7 @@ const setTagList = (tagList: string[]) => {
             name="title"
             label="Название"
             onChange={handleChange}
+            sx={{width: 450}}
         /><br/>
         <TextField
             required
@@ -82,12 +97,14 @@ const setTagList = (tagList: string[]) => {
             label="Краткое описание"
             multiline
             onChange={handleChange}
+            sx={{width: 450}}
             rows={3}
         /><br/>
         <TextField
             name="diameter"
             type="number"
             label="Диаметр"
+            sx={{width: 200}}
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
@@ -102,6 +119,7 @@ const setTagList = (tagList: string[]) => {
             name="duration"
             type="number"
             label="Общее время"
+            sx={{width: 200}}
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">мин. <AccessTimeTwoToneIcon/></InputAdornment>,
@@ -116,12 +134,21 @@ const setTagList = (tagList: string[]) => {
           <br/>
           <CreateTagsComponent setTagList={setTagList} />
         <br/>
+        <label htmlFor="icon-button-file">
+          <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleSelectFile}/>
+          <IconButton color="primary" aria-label="upload picture" component="span">
+            <PhotoCamera />
+          </IconButton>
+          <label>{selectedFile ? selectedFile.name : "Загрузить фотографию"}</label>
+        </label>
+        <br/>
         <TextField
             required
             name="recipeText"
             label="Описание рецепта"
             multiline
             onChange={handleChange}
+            sx={{width: 450}}
             rows={7}
         /><br/>
         <Button variant="contained" type="submit">Опубликовать</Button>
@@ -136,7 +163,7 @@ const setTagList = (tagList: string[]) => {
 3. Компонент Теги +
 
 Осталось:
-1. Компонент Загрузка картинки
+1. Компонент Загрузка картинки +/-
 2. Обработка кнопки
 3. Отправить на сервер
 4. Декомпозировать на компоненты

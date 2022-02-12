@@ -12,7 +12,7 @@ export const CreateListIngredientsComponent = (props: propsType) => {
   const { setIngredientsList } = props;
   const [countIngredient, setCountIngrediend] = useState(1);
   const initialIngredients: RecipeIngredient[] = [];
-  const [ingredients, setIngredients] = useState(initialIngredients);
+  const [, setIngredients] = useState(initialIngredients);
 
   const handleClick = (e: React.SyntheticEvent) => {
     setCountIngrediend(countIngredient + 1);
@@ -32,19 +32,20 @@ export const CreateListIngredientsComponent = (props: propsType) => {
       setIngredientsList(newState);
       return newState;
     })
-    console.log('ingredients', ingredients);
   }
 
   return (
     <>
       <>
       {arr.map((elem, index) => {
-        return <Box component="div" key={index}><CreateIngredientComponent id={index} updateIngredients={updateIngredients}/></Box>;
-      })}
+        return (
+        <Box component="div" key={index}>
+          <CreateIngredientComponent id={index} updateIngredients={updateIngredients}/>
+          {index+1 === countIngredient ? <IconButton aria-label="addIngredient" onClick={handleClick}>< AddCircleOutlineTwoToneIcon/></IconButton> : null }
+        </Box>
+        );
+      })} 
       </>
-      <IconButton aria-label="addIngredient" onClick={handleClick}>
-          <AddCircleOutlineTwoToneIcon/>
-      </IconButton>
     </>
   )
 }
