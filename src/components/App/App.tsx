@@ -2,11 +2,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Route, Switch, Link} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
+import { FormRegister } from "../FormRegister/FormRegister";
+import {FormLogin} from "../FormLogin/FormLogin";
 import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
-import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import {RecipesContainer} from "../../containers/RecipesContainer";
+import {RecipesFeed} from "../RecipesFeed";
 import {getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 
@@ -72,15 +73,13 @@ function App() {
     <div className="App">
       <AuthZModalContainer />
       <HeaderContainer />
-      <Container> {/*Этот контейнер может быть удален в дальнейшем.
-      Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
       <div>
         <Link to={routes.main}>to main </Link>
         <Link to={routes.createRecipe}>to create recipe </Link>
       </div>
         <Switch>
           <Route path={routes.main} exact>
-            <RecipesContainer recipes={recipes}/>
+            <RecipesFeed recipes={recipes}/>
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipe/>
@@ -89,7 +88,6 @@ function App() {
             <FullRecipe/>
           </Route>
         </Switch>
-      </Container>
     </div>
   );
 }

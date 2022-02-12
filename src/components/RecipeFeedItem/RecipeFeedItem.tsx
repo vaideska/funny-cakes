@@ -1,5 +1,5 @@
 import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from "@mui/material";
-import React from "react";
+import React, {useCallback} from "react";
 import {useHistory} from "react-router-dom";
 import {Recipe} from "../App/App";
 
@@ -10,6 +10,13 @@ interface RecipeFeedItemProps {
 
 export const RecipeFeedItem = ({recipe}: RecipeFeedItemProps) => {
   const history = useHistory();
+
+  const showFullRecipe = useCallback(
+    () => {
+      history.push(`/recipes/${recipe.id}`)
+    }, []
+  )
+
   return (
     <Grid item key={recipe.id} xs={12} sm={6} md={4}>
       <Card raised={true}>
@@ -19,7 +26,7 @@ export const RecipeFeedItem = ({recipe}: RecipeFeedItemProps) => {
             height="220"
             image={recipe.imgUrl}
             title={recipe.title}
-            onClick={() => {history.push(`/recipes/${recipe.id}`)}}
+            onClick={showFullRecipe}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
