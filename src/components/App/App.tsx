@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Route, Switch, Link, useHistory} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
-import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import { CreateRecipeFormComponent } from '../CreateRecipeFormComponent';
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
+import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
+
 
 (function() {
   const firebaseConfig = {
@@ -95,10 +95,7 @@ function App() {
             </div>
           </Route>
           <Route path={routes.createRecipe} exact>
-            <br/>
-            <CreateRecipeFormComponent />
-
-            <CreateRecipe/>
+            <CreateRecipeFormContainer />
           </Route>
           <Route path={`${routes.recipe}/:id`}>
             <FullRecipe/>

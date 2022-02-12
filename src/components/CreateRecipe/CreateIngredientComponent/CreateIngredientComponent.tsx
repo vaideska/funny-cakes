@@ -1,45 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TextField,
   FormControl,
   InputLabel,
   Select,
-  SelectChangeEvent,
-  MenuItem
+  MenuItem,
+  SelectChangeEvent
 } from "@mui/material";
-import { RecipeIngredient } from '../../types/recipeType'
+import { RecipeIngredient } from '../../../types/recipeType'
 
 const Input = (props: {}) => {
   return <input type='number' {...props} />
 }
 
-type cbFunc = (id: number, ingridient: RecipeIngredient) => void;
-type propsType = {
-  updateIngredients: cbFunc,
-  id: number
+type propsCreteIngredient = {
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  ingredient: RecipeIngredient,
+  handleSelectChange: (e: SelectChangeEvent<string>) => void
 }
 
-export const CreateIngredientComponent = (props: propsType) => {
-  const {updateIngredients, id} = props;
-
-  const initIngredientState: RecipeIngredient = {unit: 'gr', count: 0, name: ''};
-  const [ingredient, setIngredient] = useState(initIngredientState);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setIngredient({...ingredient, [name]: value});
-    updateIngredients(id, ingredient);
-  };
-
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
-    const value = e.target.value;
-    const newIngredient = {...ingredient, 'unit': value};
-    setIngredient(newIngredient);
-    updateIngredients(id, newIngredient);
-  }
+export const CreateIngredientComponent = (props: propsCreteIngredient) => {
+  const {
+    handleChange,
+    ingredient,
+    handleSelectChange
+  } = props;
 
   return (
   <>
