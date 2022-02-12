@@ -8,6 +8,7 @@ import { HeaderContainer } from '../../containers/HeaderContainer';
 import {RecipesFeed} from "../RecipesFeed";
 import {getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
+import { Container } from '@mui/material';
 
 (function() {
   const firebaseConfig = {
@@ -71,10 +72,10 @@ function App() {
     <div className="App">
       <AuthZModalContainer />
       <HeaderContainer />
-      <div>
+      <Container>
         <Link to={routes.main}>to main </Link>
         <Link to={routes.createRecipe}>to create recipe </Link>
-      </div>
+      </Container>
         <Switch>
           <Route path={routes.main} exact>
             <RecipesFeed recipes={recipes}/>

@@ -1,4 +1,4 @@
-import { Box,  Grid } from "@mui/material";
+import { Box,  Container,  Grid } from "@mui/material";
 import {Recipe} from "../App/App";
 import {RecipeFeedItem} from "../RecipeFeedItem";
 
@@ -9,13 +9,15 @@ interface RecipesFeedProps {
 export const RecipesFeed = ({recipes}: RecipesFeedProps) => {
 
   return (
-    <Box sx={{py: 4}}>
-      <Grid container spacing={4} alignItems={"center"}>
-        {recipes.length > 0 && recipes.map((recipe) => (
-          <RecipeFeedItem key={recipe.id} recipe={recipe}/>
-        ))}
-      </Grid>
-    </Box>
+    <Container >
+      <Box sx={{py: 4}}>
+        <Grid container spacing={4} alignItems={"center"}>
+          {recipes.length > 0 && recipes.map((recipe) => (
+            <RecipeFeedItem key={recipe.id} recipe={recipe}/>
+          ))}
+        </Grid>
+      </Box>
+    </Container>
   )
 }
 
