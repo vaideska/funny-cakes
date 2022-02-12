@@ -115,7 +115,7 @@ function App() {
 
             <CreateRecipe/>
           </Route>
-          <Route path={routes.recipe}>
+          <Route path={`${routes.recipe}/:id`}>
             <FullRecipe/>
           </Route>
         </Switch>

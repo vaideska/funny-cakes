@@ -35,10 +35,10 @@ export const CreateIngredientComponent = (props: propsType) => {
   };
 
   const handleSelectChange = (e: SelectChangeEvent<string>) => {
-    const name = e.target.name;
     const value = e.target.value;
-    setIngredient({...ingredient, [name]: value});
-    updateIngredients(id, ingredient as RecipeIngredient);
+    const newIngredient = {...ingredient, 'unit': value};
+    setIngredient(newIngredient);
+    updateIngredients(id, newIngredient);
   }
 
   return (

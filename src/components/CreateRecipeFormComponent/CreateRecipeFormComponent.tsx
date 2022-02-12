@@ -14,38 +14,45 @@ import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutl
 import { Recipe, RecipeIngredient } from '../../types/recipeType';
 import { CreateListIngredientsComponent } from '../CreateListIngredientsComponent';
 import { CreateTagsComponent } from '../CreateTagsComponent';
-/* 
-
-interface Recipe {
-  id: string,
-  title: string,
-  description: string,
-  owner: string,
-  date: number,
-  duration: number,
-  diameter: number,
-  imgUrl: string,
-  tags: string[],
-  ingredients: RecipeIngredient[],
-  recipeText: string
-}
-*/
-type PartitialTodo = Partial<Recipe>;
+import {child, getDatabase, ref, set, push} from "firebase/database";
+import { useHistory } from 'react-router-dom';
+import { routes } from '../../utils/routes';
 
 const Input = (props: {}) => {
   return <input type='number' {...props} />
 }
 
 export const CreateRecipeFormComponent = () => {
-
-  const initStsteForm: PartitialTodo = {};
+  const initStsteForm: Recipe = {
+    id: "",
+    title: "",
+    description: "",
+    owner: "",
+    date: Date.now(),
+    duration: 0,
+    diameter: 0,
+    imgUrl: "",
+    tags: [],
+    ingredients: [],
+    recipeText: ""};
   const [form, setForm] = useState(initStsteForm);
+
   const initFile: any = null;
-  const [selectedFile, setSelectedFile] = React.useState(initFile);
+  const [selectedFile, setSelectedFile] = useState(initFile);
+
+  const [isEditForm, setIsEditForm] = useState(true);
+  const history = useHistory();
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log('form!!!', form);
+    setIsEditForm(false);
+    const db = getDatabase();
+    const recipeId = push(child(ref(db), 'recipes/')).key;
+    set(ref(db, 'recipes/' + recipeId), {...form, id: recipeId})
+      .then(() => {
+        history.replace(`${routes.recipe}/${recipeId}`);
+      })
+      .catch((e) => console.log('вывод ошибки', e.text));
   }
 
   const handleChange = (
@@ -151,25 +158,7 @@ const InputStyle = styled('input')({
             sx={{width: 450}}
             rows={7}
         /><br/>
-        <Button variant="contained" type="submit">Опубликовать</Button>
+        {isEditForm ? <Button variant="contained" type="submit">Опубликовать рецепт</Button> : <Button disabled variant="contained" type="submit">Опубликовать рецепт</Button>}
       </Box>
   )
 };
-
-/*
-Сделала:
-1. Ограничение на численные поля +
-2. Компонент ингредиенты +
-3. Компонент Теги +
-
-Осталось:
-1. Компонент Загрузка картинки +/-
-2. Обработка кнопки
-3. Отправить на сервер
-4. Декомпозировать на компоненты
-5. Стилизация
-Проблемы:
-Количество только целое
-Ошибка в консоли с ref и setState
-
-*/

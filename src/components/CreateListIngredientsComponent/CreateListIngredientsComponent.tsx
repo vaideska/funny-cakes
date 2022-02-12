@@ -30,6 +30,7 @@ export const CreateListIngredientsComponent = (props: propsType) => {
       const newState: RecipeIngredient[] = [...prev];
       newState[id] = ingredient;
       setIngredientsList(newState);
+      console.log(newState);
       return newState;
     })
   }
