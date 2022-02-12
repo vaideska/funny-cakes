@@ -1,4 +1,4 @@
-interface RecipeIngredient {
+export interface RecipeIngredient {
   name: string,
   unit: string,
   count: number

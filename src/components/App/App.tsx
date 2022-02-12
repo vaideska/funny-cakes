@@ -9,6 +9,7 @@ import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
+import { CreateRecipeFormComponent } from '../CreateRecipeFormComponent';
 
 (function() {
   const firebaseConfig = {
@@ -109,6 +110,9 @@ function App() {
             <FormLogin setUser={setUser}/>
           </Route>
           <Route path={routes.createRecipe} exact>
+            <br/>
+            <CreateRecipeFormComponent />
+
             <CreateRecipe/>
           </Route>
           <Route path={routes.recipe}>
