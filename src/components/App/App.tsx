@@ -9,6 +9,7 @@ import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { HeaderContainer } from '../../containers/HeaderContainer';
 import {RecipesFeed} from "../RecipesFeed";
 import {getDatabase, onValue, ref} from "firebase/database";
+import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 
 (function() {
   const firebaseConfig = {
@@ -22,11 +23,6 @@ import {getDatabase, onValue, ref} from "firebase/database";
   };
   const app = initializeApp(firebaseConfig)
 })();
-
-interface User {
-  email: string,
-  uid: string
-}
 
 interface RecipeIngredient {
   name: string,
@@ -49,7 +45,6 @@ export interface Recipe {
 }
 
 function App() {
-  const [user, setUser] = useState<User>({} as User);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const db = getDatabase();
   const recipesRef = ref(db, 'recipes/');
@@ -76,23 +71,15 @@ function App() {
 
   return (
     <div className="App">
-      <HeaderContainer isLoged={true}/>
-      <p>{`user email: ${user.email}`}</p>
+      <AuthZModalContainer />
+      <HeaderContainer />
       <div>
         <Link to={routes.main}>to main </Link>
-        <Link to={routes.signUp}>to register </Link>
-        <Link to={routes.signIn}>to login </Link>
         <Link to={routes.createRecipe}>to create recipe </Link>
       </div>
         <Switch>
           <Route path={routes.main} exact>
             <RecipesFeed recipes={recipes}/>
-          </Route>
-          <Route path={routes.signUp} exact>
-            <FormRegister/>
-          </Route>
-          <Route path={routes.signIn} exact>
-            <FormLogin setUser={setUser}/>
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipe/>
