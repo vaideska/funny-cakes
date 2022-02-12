@@ -1,26 +1,21 @@
-import {
-  Container,
-  Grid,
-} from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
-import {getDatabase, ref, onValue, off} from "firebase/database";
-import {Recipe} from "../../components/App/App";
-import {RecipeFeedItem} from "../../components/RecipeFeedItem";
+import { Box,  Grid } from "@mui/material";
+import {Recipe} from "../App/App";
+import {RecipeFeedItem} from "../RecipeFeedItem";
 
-interface RecipesContainerProps {
+interface RecipesFeedProps {
   recipes: Recipe[]
 }
 
-export const RecipesContainer = ({recipes}: RecipesContainerProps) => {
+export const RecipesFeed = ({recipes}: RecipesFeedProps) => {
 
   return (
-    <Container disableGutters={true}>
+    <Box sx={{py: 4}}>
       <Grid container spacing={4} alignItems={"center"}>
         {recipes.length > 0 && recipes.map((recipe) => (
           <RecipeFeedItem key={recipe.id} recipe={recipe}/>
         ))}
       </Grid>
-    </Container>
+    </Box>
   )
 }
 

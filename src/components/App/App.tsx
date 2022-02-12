@@ -6,9 +6,8 @@ import {FormRegister} from "../FormRegister/FormRegister";
 import {FormLogin} from "../FormLogin/FormLogin";
 import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
-import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import {RecipesContainer} from "../../containers/RecipesContainer";
+import {RecipesFeed} from "../RecipesFeed";
 import {getDatabase, onValue, ref} from "firebase/database";
 
 (function() {
@@ -78,8 +77,6 @@ function App() {
   return (
     <div className="App">
       <HeaderContainer isLoged={true}/>
-      <Container> {/*Этот контейнер может быть удален в дальнейшем.
-      Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
       <p>{`user email: ${user.email}`}</p>
       <div>
         <Link to={routes.main}>to main </Link>
@@ -89,7 +86,7 @@ function App() {
       </div>
         <Switch>
           <Route path={routes.main} exact>
-            <RecipesContainer recipes={recipes}/>
+            <RecipesFeed recipes={recipes}/>
           </Route>
           <Route path={routes.signUp} exact>
             <FormRegister/>
@@ -104,7 +101,6 @@ function App() {
             <FullRecipe/>
           </Route>
         </Switch>
-      </Container>
     </div>
   );
 }
