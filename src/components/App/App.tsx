@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Route, Switch, Link, useHistory} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
-import {FormRegister} from "../FormRegister/FormRegister";
-import {FormLogin} from "../FormLogin/FormLogin";
 import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
@@ -79,8 +77,6 @@ function App() {
       Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
       <div>
         <Link to={routes.main}>to main </Link>
-        <Link to={routes.signUp}>to register </Link>
-        <Link to={routes.signIn}>to login </Link>
         <Link to={routes.createRecipe}>to create recipe </Link>
       </div>
         <Switch>
@@ -96,12 +92,6 @@ function App() {
                 </div>
               ))}
             </div>
-          </Route>
-          <Route path={routes.signUp} exact>
-            <FormRegister/>
-          </Route>
-          <Route path={routes.signIn} exact>
-            <FormLogin />
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipe/>

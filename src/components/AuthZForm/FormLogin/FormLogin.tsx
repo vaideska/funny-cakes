@@ -1,42 +1,33 @@
-import React, { useState } from "react";
-import { getDatabase, ref, set, get, child } from "firebase/database";
 import { LockOpenOutlined } from '@mui/icons-material'
-import {
-  getAuth,
-  signInWithEmailAndPassword
-} from "firebase/auth";
 import {
   Avatar,
   Box,
   Button,
+  Link,
   TextField,
   Typography
 } from '@mui/material'
+import { ChangeEventHandler, FormEventHandler, MouseEventHandler } from 'react'
 
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { login } from '../../store/slices/authZ/authZSlice';
+interface FormLoginProps {
+  loginUser: FormEventHandler<HTMLFormElement>,
+  handleEmailChange: ChangeEventHandler<HTMLInputElement>,
+  handlePasswordChange: ChangeEventHandler<HTMLInputElement>,
+  handleSetFormVariantClick: MouseEventHandler<HTMLAnchorElement>,
 
-export const FormLogin: React.FC = () => {
-  const [emailLogin, setEmailLogin] = useState('');
-  const [passLogin, setPassLogin] = useState('');
-  const dispatch = useAppDispatch()
+  emailLogin: string,
+  passLogin: string,
+}
 
-  function loginUser(event: React.FormEvent) {
-    event.preventDefault();
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, emailLogin, passLogin)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const { email, uid } = user;
-        dispatch(login())
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
-      });
-  }
+export const FormLogin = ({
+  loginUser,
+  handleEmailChange,
+  handlePasswordChange,
+  handleSetFormVariantClick,
 
+  emailLogin,
+  passLogin,
+}: FormLoginProps) => {
   return (
     <Box
       sx={{
@@ -48,7 +39,7 @@ export const FormLogin: React.FC = () => {
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOpenOutlined />
       </Avatar>
-      <Typography component="h3" variant="h5">
+      <Typography component="h3" variant="h5" sx={{textAlign: 'center'}}>
         Вход в личный кабинет
       </Typography>
       <Box
@@ -64,7 +55,7 @@ export const FormLogin: React.FC = () => {
           required
           fullWidth
           value={emailLogin}
-          onChange={(evt) => setEmailLogin(evt.target.value)}
+          onChange={handleEmailChange}
           autoFocus
         />
         <TextField
@@ -75,7 +66,7 @@ export const FormLogin: React.FC = () => {
           required
           fullWidth
           value={passLogin}
-          onChange={(evt) => setPassLogin(evt.target.value)}
+          onChange={handlePasswordChange}
         />
         <Button
           type="submit"
@@ -86,6 +77,17 @@ export const FormLogin: React.FC = () => {
         >
           Войти
         </Button>
+        <Box 
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            pb: 1,
+          }}
+        >
+          <Link href="#" variant="body2" sx={{textAlign: 'center'}} onClick={handleSetFormVariantClick}>
+            Нет личного кабинета? Зарегистрироваться
+          </Link>
+        </Box>
       </Box>
     </Box>
   )
