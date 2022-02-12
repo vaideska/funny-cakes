@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setAuthZModalVariant } from '../../../store/slices/authZ/authZSlice';
 import { FormRegister } from '../../../components/AuthZForm/FormRegister';
 
-type WriteUserData = (userId: string, name: string, email: string | null, imageUrl: string) => void;
+type WriteUserData = (userId: string, firstName: string, lastName: string, email: string | null, profile_picture: string) => void;
 
 export const FormRegisterContainer = () => {
     const [firstNameReg, setFirstNameReg] = useState('')
@@ -70,9 +70,13 @@ export const FormRegisterContainer = () => {
             .then((userCredential) => {
                 const user = userCredential.user; // созданный юзер
                 console.log(user, 'user registered');
-                // создаем сущность юзера в базе для всякого рода дополнительных данных,
-                // пригодится в будущем, только структуру изменим
-                writeUserData(user.uid, 'userName', user.email, 'https://images.unsplash.com/photo-1643921330459-6fb64282f467?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80')
+                writeUserData(
+                  user.uid,
+                  firstNameReg,
+                  lastNameReg,
+                  user.email,
+                  'https://clck.ru/b87cr'
+                )
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -82,15 +86,24 @@ export const FormRegisterContainer = () => {
     }
 
 
-    const writeUserData: WriteUserData = (userId, name, email, imageUrl) => {
+    const writeUserData: WriteUserData = (
+      userId,
+      firstName,
+      lastName,
+      email,
+      profile_picture
+    ) => {
         const db = getDatabase();
         set(ref(db, 'users/' + userId), {
-            username: name,
-            email: email,
-            profile_picture: imageUrl
+            id: userId,
+            firstName,
+            email,
+            lastName,
+            profile_picture,
         })
             .then(() => {
                 console.log('success!')
+                dispatch(setAuthZModalVariant());
             })
     }
 

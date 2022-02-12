@@ -18,6 +18,7 @@ export interface authZStatus {
 export interface user {
     id: string | null,
     email: string | null,
-    name?: string | null,
-    avatar?: string | null,
+    firstName: string | undefined,
+    lastName: string | null,
+    profile_picture: string | undefined,
 }
