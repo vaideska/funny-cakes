@@ -7,7 +7,8 @@ import {
   MenuItem,
   SelectChangeEvent
 } from "@mui/material";
-import { RecipeIngredient } from '../../../types/recipeType'
+import { RecipeIngredient } from '../../../types/recipeType';
+import { unitList } from '../../../utils/dictionary';
 
 const Input = (props: {}) => {
   return <input type='number' {...props} />
@@ -58,9 +59,9 @@ export const CreateIngredientComponent = (props: propsCreteIngredient) => {
         value={ingredient.unit}
         onChange={handleSelectChange}
       >
-        <MenuItem value={'gr'}>гр</MenuItem>
-        <MenuItem value={'ml'}>мл</MenuItem>
-        <MenuItem value={'cups'}>стаканов</MenuItem>
+        {Object.keys(unitList).map((key) => (
+          <MenuItem key={key} value={key}>{unitList[key]}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   </>

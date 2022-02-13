@@ -2,15 +2,6 @@ import React, { useCallback, useState } from "react";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { CreateTagsComponent } from '../../../components/CreateRecipe/CreateTagsComponent';
 
-
-const tagList = ["Ванильный крем",
-  "Шоколадный крем",
-  "Красный бархат",
-   "Глазурь",
-  "Мастика",
-  "Ванильный корж"
-];
-
 type propsType = {
   setTagList: (tags: string[]) => void;
 }
@@ -26,6 +17,7 @@ export const CreateTagsContainer = (props: propsType) => {
     setTags(() => {
         const newTags = typeof value === 'string' ? value.split(',') : value;
         setTagList(newTags);
+        console.log(newTags);
         return newTags;
       } 
     );
@@ -33,9 +25,8 @@ export const CreateTagsContainer = (props: propsType) => {
 
   const propsCreateTags = {
     tags,
-    tagList,
     handleChange
   };
 
   return <CreateTagsComponent {...propsCreateTags}/>;
-}
+};

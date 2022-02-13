@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import { tagList } from '../../../utils/dictionary';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,14 +31,12 @@ const getStyles = (name: string, tag: readonly string[], theme: Theme) => {
 
 type propsCreateTags = {
   tags: string[],
-  tagList: string[],
   handleChange: (event: SelectChangeEvent<string[]>) => void
 }
 
 export const CreateTagsComponent = (props: propsCreateTags) => {
   const {
     tags,
-    tagList,
     handleChange
   } = props;
 
@@ -46,30 +45,31 @@ export const CreateTagsComponent = (props: propsCreateTags) => {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 450 }}>
-        <InputLabel id="demo-multiple-chip-label">Теги</InputLabel>
+        <InputLabel id="demo-multiple-chip-label">Теги *</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
+          required
           value={tags}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip key={tagList[value]} label={tagList[value]} />
               ))}
             </Box>
           )}
           MenuProps={MenuProps}
         >
-          {tagList.map((name) => (
+          {Object.keys(tagList).map((key) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, tags, theme)}
+              key={key}
+              value={key}
+              style={getStyles(tagList[key], tags, theme)}
             >
-              {name}
+              {tagList[key]}
             </MenuItem>
           ))}
         </Select>
