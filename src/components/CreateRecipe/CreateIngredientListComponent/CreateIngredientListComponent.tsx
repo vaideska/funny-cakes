@@ -23,8 +23,8 @@ export const CreateIngredientListComponent = (props: propsCreateIngredientList) 
     <>
       {arr.map((elem, index) => {
         return (
-        <Box component="div">
-          <CreateIngredientContainer key={index} id={index} setIngredientList={setIngredientList}/>
+        <Box component="div" key={index}>
+          <CreateIngredientContainer id={index} setIngredientList={setIngredientList}/>
           {index + 1 === countIngredient ? <IconButton aria-label="addIngredient" onClick={handleClick}>< AddCircleOutlineTwoToneIcon/></IconButton> : null }
         </Box>
         );
