@@ -1,13 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, Dispatch, SetStateAction } from "react";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { CreateTagsComponent } from '../../../components/CreateRecipe/CreateTagsComponent';
+import { Recipe } from '../../../types/recipeType';
 
 type propsType = {
-  setTagList: (tags: string[]) => void;
+  setForm: Dispatch<SetStateAction<Recipe>>,
+  form: Recipe
 }
 
 export const CreateTagsContainer = (props: propsType) => {
-  const { setTagList } = props;
+  const { setForm, form } = props;
   const [tags, setTags] = useState<string[]>([]);
 
   const handleChange = useCallback((event: SelectChangeEvent<string[]>) => {
@@ -16,11 +18,11 @@ export const CreateTagsContainer = (props: propsType) => {
     } = event;
     setTags(() => {
         const newTags = typeof value === 'string' ? value.split(',') : value;
-        setTagList(newTags);
+        setForm({...form, 'tags': newTags});
         return newTags;
       } 
     );
-  }, [setTagList]);
+  }, [setForm, form]);
 
   const propsCreateTags = {
     tags,

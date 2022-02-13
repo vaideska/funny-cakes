@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import { 
   Typography, 
   Box, 
@@ -13,22 +13,23 @@ import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
 
-import { RecipeIngredient } from '../../../types/recipeType';
-import { CreateIngredientListConteiner } from '../../../containers/CreateRecipeContainer/CreateIngredientListConteiner';
+import { Recipe, RecipeIngredient } from '../../../types/recipeType';
+import { CreateIngredientListContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientListContainer';
 import { CreateTagsContainer } from '../../../containers/CreateRecipeContainer/CreateTagsContainer';
 
 
 const Input = (props: {}) => {
   return <input type='number' {...props} />
-}
+};  
 
 type propsCreateRecipe = {
   selectedFile: any, 
   isEditForm: boolean, 
   handleSubmit: (e: React.SyntheticEvent) => void,
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
-  setIngredientsList: (igredientList: RecipeIngredient[]) => void,
-  setTagList: (tagList: string[]) => void,
+  setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
+  setForm: Dispatch<SetStateAction<Recipe>>,
+  form: Recipe
   handleUploadFile: (e: any) => void
 }
 
@@ -38,8 +39,9 @@ export const CreateRecipeFormComponent = (props: propsCreateRecipe) => {
     isEditForm, 
     handleSubmit,
     handleChange,
-    setIngredientsList,
-    setTagList,
+    setIngredientList,
+    setForm,
+    form,
     handleUploadFile
   } = props;
 
@@ -109,9 +111,9 @@ const InputStyle = styled('input')({
       />
       <br/>
       <Typography variant="h6" gutterBottom component="div">Состав</Typography>
-      <CreateIngredientListConteiner setIngredientsList={setIngredientsList}/>
+      <CreateIngredientListContainer setIngredientList={setIngredientList} />
       <br/>
-      <CreateTagsContainer setTagList={setTagList} />
+      <CreateTagsContainer setForm={setForm} form={form}/>
       <br/>
       <label htmlFor="icon-button-file">
         <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
@@ -131,7 +133,7 @@ const InputStyle = styled('input')({
         rows={7}
       />
       <br/>
-      {isEditForm ? <Button variant="contained" type="submit">Опубликовать рецепт</Button> : <Button disabled variant="contained" type="submit">Опубликовать рецепт</Button>}
+      <Button disabled={isEditForm ? false : true} variant="contained" type="submit">Опубликовать рецепт</Button>
     </Box>
   </Container>
   );

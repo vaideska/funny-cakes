@@ -14,13 +14,13 @@ const Input = (props: {}) => {
   return <input type='number' {...props} />
 }
 
-type propsCreteIngredient = {
+type propsCreateIngredient = {
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
   ingredient: RecipeIngredient,
   handleSelectChange: (e: SelectChangeEvent<string>) => void
 }
 
-export const CreateIngredientComponent = (props: propsCreteIngredient) => {
+export const CreateIngredientComponent = (props: propsCreateIngredient) => {
   const {
     handleChange,
     ingredient,
@@ -66,4 +66,4 @@ export const CreateIngredientComponent = (props: propsCreteIngredient) => {
     </FormControl>
   </>
   )
-}
+};

@@ -26,10 +26,9 @@ export const CreateRecipeFormContainer = () => {
     recipeText: ""};
 
   const [form, setForm] = useState(initStateForm);
-
   const [selectedFile, setSelectedFile] = useState(initFile);
-
   const [isEditForm, setIsEditForm] = useState(true);
+  const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>([{name: '', unit: 'gr', count: 0}]);
 
   const history = useHistory();
 
@@ -38,28 +37,18 @@ export const CreateRecipeFormContainer = () => {
     setIsEditForm(false);
     const db = getDatabase();
     const recipeId = push(child(ref(db), 'recipes/')).key;
-    set(ref(db, 'recipes/' + recipeId), {...form, id: recipeId})
+    set(ref(db, 'recipes/' + recipeId), {...form, id: recipeId, 'ingredients': ingredientList})
       .then(() => {
         history.replace(`${routes.recipe}/${recipeId}`);
       })
       .catch((e) => console.log('вывод ошибки', e.text));
-  }, [form, history]);
+  }, [form, history, ingredientList]);
 
-  const handleChange = useCallback((
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setForm({...form, [name]: value});
 }, [form]);
-
-  const setIngredientsList = useCallback((igredientList: RecipeIngredient[]) => {
-    setForm({...form, 'ingredients': igredientList});
-  }, [form]);
-
-  const setTagList = useCallback((tagList: string[]) => {
-    setForm({...form, 'tags': tagList});
-  }, [form]);
 
   const handleUploadFile = useCallback((e: any) => {      //TODO: не нашла какой тип события для загрузки
     setSelectedFile(e.target.files[0]);
@@ -71,11 +60,12 @@ export const CreateRecipeFormContainer = () => {
     isEditForm, 
     handleSubmit,
     handleChange,
-    setIngredientsList,
-    setTagList,
+    setIngredientList,
+    setForm,
+    form,
     handleUploadFile
   }
 
   return <CreateRecipeFormComponent {...propsCreateRecipe}/>
 
-}
+};
