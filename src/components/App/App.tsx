@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Route, Switch, Link, useHistory} from "react-router-dom";
+import React, {useCallback, useEffect, useState} from 'react';
+import {Route, Switch, Link} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
-import {child, get, getDatabase, ref} from "firebase/database";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
-import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
+import {RecipesFeed} from "../RecipesFeed";
+import {getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
 import { Recipe } from "../../types/recipeType";
-
-
+import { Container } from '@mui/material';
 
 (function() {
   const firebaseConfig = {
@@ -27,54 +26,40 @@ import { Recipe } from "../../types/recipeType";
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const history = useHistory();
+  const db = getDatabase();
+  const recipesRef = ref(db, 'recipes/');
+
   useEffect(() => {
     getRecipes();
-  }, [])
+  }, []);
 
-  const getRecipes = ():void => {
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, `recipes/`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        const resultArr: Array<Recipe> = [];
-        const result = snapshot.val(); // пришедший объект
-        const keysArr = Object.keys(result);
-        keysArr.forEach((el) => {
-          resultArr.push(result[el]); // из объекта с объектами делаем массив
+  const getRecipes = useCallback(
+    () => {
+      onValue(recipesRef, (snapshot) => { // колбэк срабатывает при каждом изменении бд
+        const recipes = snapshot.val();
+        const recipesArr: Array<Recipe> = [];
+        const keysArr = Object.keys(recipes);
+        keysArr.forEach((recipeKey) => {
+          recipesArr.push(recipes[recipeKey]);
         })
-        setRecipes(resultArr);
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
+        setRecipes(recipesArr);
+        console.log('сработало');
+      });
+    }, []
+  )
 
 
   return (
     <div className="App">
       <AuthZModalContainer />
       <HeaderContainer />
-      <Container> {/*Этот контейнер может быть удален в дальнейшем.
-      Используйте <Container></Container> внутри своих компонентов, не полагайтесь на этот */}
-      <div>
+      <Container>
         <Link to={routes.main}>to main </Link>
         <Link to={routes.createRecipe}>to create recipe </Link>
-      </div>
+      </Container>
         <Switch>
           <Route path={routes.main} exact>
-            <div>
-              {recipes.length > 0 && recipes.map((recipe, index) => ( // пока решение в лоб
-                // потом задемпозируем
-                <div key={recipe.id} onClick={() => {history.push(`/recipes/${recipe.id}`)}}>
-                  <p>{recipe.title}</p>
-                  <p>{recipe.id}</p>
-                  <p>{recipe.description}</p>
-                  <p>{recipe.owner}</p>
-                </div>
-              ))}
-            </div>
+            <RecipesFeed recipes={recipes}/>
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipeFormContainer />
@@ -83,7 +68,6 @@ function App() {
             <FullRecipe/>
           </Route>
         </Switch>
-      </Container>
     </div>
   );
 }
