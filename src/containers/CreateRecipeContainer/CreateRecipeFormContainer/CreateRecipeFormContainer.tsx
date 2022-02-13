@@ -4,28 +4,33 @@ import {child, getDatabase, ref, set, push} from "firebase/database";
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../../utils/routes';
 import { CreateRecipeFormComponent } from '../../../components/CreateRecipe/CreateRecipeFormComponent';
-
-const initStateForm: Recipe = {
-  id: "",
-  title: "",
-  description: "",
-  owner: "",
-  date: Date.now(),
-  duration: 0,
-  diameter: 0,
-  imgUrl: "",
-  tags: [],
-  ingredients: [],
-  recipeText: ""};
+import {userSelector} from "../../../store/slices/authZ/authZSelectors";
+import {useSelector} from "react-redux";
 
   const initFile: any = null;
 
 export const CreateRecipeFormContainer = () => {
+  const userId = useSelector(userSelector).id;
+
+  const initStateForm: Recipe = {
+    id: "",
+    title: "",
+    description: "",
+    owner: userId,
+    date: Date.now(),
+    duration: 0,
+    diameter: 0,
+    imgUrl: "",
+    tags: [],
+    ingredients: [],
+    recipeText: ""};
+
   const [form, setForm] = useState(initStateForm);
 
   const [selectedFile, setSelectedFile] = useState(initFile);
 
   const [isEditForm, setIsEditForm] = useState(true);
+
   const history = useHistory();
 
   const handleSubmit = useCallback((e: React.SyntheticEvent) => {

@@ -17,7 +17,6 @@ export const CreateTagsContainer = (props: propsType) => {
     setTags(() => {
         const newTags = typeof value === 'string' ? value.split(',') : value;
         setTagList(newTags);
-        console.log(newTags);
         return newTags;
       } 
     );

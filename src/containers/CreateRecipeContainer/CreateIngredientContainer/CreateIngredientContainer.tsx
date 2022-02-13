@@ -26,8 +26,8 @@ export const CreateIngredientContainer = (props: propsType) => {
     const value = e.target.value;
     const newIngredient = {...ingredient, 'unit': value};
     setIngredient(newIngredient);
-    updateIngredients(id, newIngredient);
-  }, [id, ingredient, updateIngredients]);
+    updateIngredients(id, newIngredient);                                       //это жесть, не могу понять как еще "толкать" в компоненту List инфу
+  }, [id, ingredient, updateIngredients]);                                      //когда попробовала сделать удаление - перерендеринг "верхних" компонент блокировал ввод
 
   const propsCreteIngredient = {
     handleChange,

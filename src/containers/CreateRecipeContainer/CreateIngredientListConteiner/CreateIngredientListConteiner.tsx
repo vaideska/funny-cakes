@@ -23,11 +23,11 @@ export const CreateIngredientListConteiner = (props: propsType) => {
   }, [countIngredient]);
   
   const updateIngredients = useCallback((id: number, ingredient: RecipeIngredient) => {
-    setIngredients((prev) => {
+    setIngredients((prev) => {                      
       const newState: RecipeIngredient[] = [...prev];
       newState[id] = ingredient;
-      setIngredientsList(newState);
-      return newState;
+      setIngredientsList(newState);                 //это жесть, не могу понять как еще "толкать" в компоненту Form инфу
+      return newState;                              //вызываю setIngredientsList в setIngredients потому что setIngredients ассихронный и в List попадает неактуальная инфа
     })
   }, [setIngredientsList]);
 
