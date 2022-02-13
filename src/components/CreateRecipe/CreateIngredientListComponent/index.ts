@@ -1,0 +1,1 @@
+export { CreateIngredientListComponent } from './CreateIngredientListComponent';

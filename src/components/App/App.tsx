@@ -8,6 +8,8 @@ import { Container } from '@mui/material';
 import { HeaderContainer } from '../../containers/HeaderContainer';
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
+import { Recipe } from "../../types/recipeType";
+
 
 
 (function() {
@@ -22,26 +24,6 @@ import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContaine
   };
   const app = initializeApp(firebaseConfig)
 })();
-
-interface RecipeIngredient {
-  name: string,
-  unit: string,
-  count: number
-}
-
-export interface Recipe {
-  id: string,
-  title: string,
-  description: string,
-  owner: string,
-  date: number,
-  duration: number,
-  diameter: number,
-  imgUrl: string,
-  tags: string[],
-  ingredients: RecipeIngredient[],
-  recipeText: string
-}
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

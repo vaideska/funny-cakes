@@ -19,15 +19,7 @@ const MenuProps = {
   },
 };
 
-const tags = ["Ванильный крем",
-  "Шоколадный крем",
-  "Красный бархат",
-   "Глазурь",
-  "Мастика",
-  "Ванильный корж"
-];
-
-function getStyles(name: string, tag: readonly string[], theme: Theme) {
+const getStyles = (name: string, tag: readonly string[], theme: Theme) => {
   return {
     fontWeight:
     tag.indexOf(name) === -1
@@ -36,26 +28,20 @@ function getStyles(name: string, tag: readonly string[], theme: Theme) {
   };
 }
 
-type propsType = {
-  setTagList: (tags: string[]) => void;
+type propsCreateTags = {
+  tags: string[],
+  tagList: string[],
+  handleChange: (event: SelectChangeEvent<string[]>) => void
 }
 
-export const CreateTagsComponent = (props: propsType) => {
-  const { setTagList } = props;
-  const theme = useTheme();
-  const [tag, setTag] = React.useState<string[]>([]);
+export const CreateTagsComponent = (props: propsCreateTags) => {
+  const {
+    tags,
+    tagList,
+    handleChange
+  } = props;
 
-  const handleChange = (event: SelectChangeEvent<typeof tag>) => {
-    const {
-      target: { value },
-    } = event;
-    setTag(() => {
-        const newTags = typeof value === 'string' ? value.split(',') : value;
-        setTagList(newTags);
-        return newTags;
-      } 
-    );
-  };
+  const theme = useTheme();
 
   return (
     <div>
@@ -65,7 +51,7 @@ export const CreateTagsComponent = (props: propsType) => {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={tag}
+          value={tags}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
@@ -77,11 +63,11 @@ export const CreateTagsComponent = (props: propsType) => {
           )}
           MenuProps={MenuProps}
         >
-          {tags.map((name) => (
+          {tagList.map((name) => (
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, tag, theme)}
+              style={getStyles(name, tags, theme)}
             >
               {name}
             </MenuItem>
@@ -91,4 +77,3 @@ export const CreateTagsComponent = (props: propsType) => {
     </div>
   );
 }
-

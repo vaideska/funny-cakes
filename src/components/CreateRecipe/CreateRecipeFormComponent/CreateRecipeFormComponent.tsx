@@ -13,8 +13,8 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
 
 import { RecipeIngredient } from '../../../types/recipeType';
-import { CreateListIngredientsComponent } from '../CreateListIngredientsComponent';
-import { CreateTagsComponent } from '../CreateTagsComponent';
+import { CreateIngredientListConteiner } from '../../../containers/CreateRecipeContainer/CreateIngredientListConteiner';
+import { CreateTagsContainer } from '../../../containers/CreateRecipeContainer/CreateTagsContainer';
 
 
 const Input = (props: {}) => {
@@ -107,9 +107,9 @@ const InputStyle = styled('input')({
     />
     <br/>
     <Typography variant="h6" gutterBottom component="div">Состав</Typography>
-    <CreateListIngredientsComponent setIngredientsList={setIngredientsList}/>
+    <CreateIngredientListConteiner setIngredientsList={setIngredientsList}/>
     <br/>
-    <CreateTagsComponent setTagList={setTagList} />
+    <CreateTagsContainer setTagList={setTagList} />
     <br/>
     <label htmlFor="icon-button-file">
       <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
