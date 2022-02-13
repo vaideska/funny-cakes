@@ -10,8 +10,9 @@ const initialState: authZState = {
     user: {
         id: null,
         email: null,
-        name: null,
-        avatar: null
+        firstName: undefined,
+        lastName: null,
+        profile_picture: undefined,
     },
     modal: {
         isOpen: false,
@@ -23,9 +24,9 @@ export const authZSlice = createSlice({
     name: 'AuthZ',
     initialState,
     reducers: {
-        login: (state, /* action: PayloadAction<boolean> */) => {
+        login: (state, action: PayloadAction<user>) => {
             state.status.isLoged = true
-
+            state.user = action.payload;
             //TODO: Реализовать закрытие вызовом экшена closeAuthZModal. Через Thunk
             state.modal.isOpen = false
             state.modal.variant = 'login'
