@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { getDatabase, ref, set, get, child } from "firebase/database";
+//import {getDatabase, ref, get, child} from "firebase/database";
 import {
     getAuth,
     signInWithEmailAndPassword
@@ -12,8 +12,7 @@ import { FormLogin } from '../../../components/AuthZForm/FormLogin';
 export const FormLoginContainer = () => {
     const [emailLogin, setEmailLogin] = useState('');
     const [passLogin, setPassLogin] = useState('');
-    const dispatch = useAppDispatch()
-
+    const dispatch = useAppDispatch();
     const handleEmailChange = useCallback(
         (evt: React.ChangeEvent<HTMLInputElement>) => setEmailLogin(evt.target.value),
         []
@@ -38,8 +37,10 @@ export const FormLoginContainer = () => {
         signInWithEmailAndPassword(auth, emailLogin, passLogin)
             .then((userCredential) => {
                 const user = userCredential.user;
-                const { email, uid } = user;
-                dispatch(login())
+                if (!user) {
+                    throw new Error('User not found')
+                }
+                //getUserData(user.uid);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -47,6 +48,7 @@ export const FormLoginContainer = () => {
                 console.log(errorMessage, errorCode);
             });
     }
+
     return (
         <FormLogin 
             loginUser={loginUser}

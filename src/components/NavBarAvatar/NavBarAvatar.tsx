@@ -15,7 +15,9 @@ interface NavBarAvatarProps {
     menuAnchorEl: any,
     handleLogoutBtnClick: () => void,
     handleOpenMenu: (e: MouseEvent) => void,
-    handleCloseMenu: () => void
+    handleCloseMenu: () => void,
+    avatar: string | undefined,
+    userName: string | undefined
 }
 
 export const NavBarAvatar = ({
@@ -24,13 +26,15 @@ export const NavBarAvatar = ({
     handleLogoutBtnClick,
     handleOpenMenu,
     handleCloseMenu,
+    avatar,
+    userName
 }: NavBarAvatarProps) => {
     return (
         <Box>
             <Tooltip title="Открыть меню пользователя">
                 <Badge>
                     <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
-                        <Avatar alt="Avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6HSmZ6V4r6Zb-1BxWZSgJob_SBk_8YIhHIA&usqp=CAU" />
+                        <Avatar alt="Avatar" src={avatar} />
                     </IconButton>
                 </Badge>
             </Tooltip>
@@ -48,6 +52,9 @@ export const NavBarAvatar = ({
                 }}
                 sx={{ mt: 1 }}
             >
+                <MenuItem>
+                    <Typography variant='body1' textAlign="center">{userName}</Typography>
+                </MenuItem>
                 <MenuItem onClick={handleCloseMenu}>
                     <Typography variant='body1' textAlign="center" onClick={handleLogoutBtnClick}>Выйти</Typography>
                 </MenuItem>
