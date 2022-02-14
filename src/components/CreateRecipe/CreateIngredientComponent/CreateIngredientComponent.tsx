@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from "react";
+import React, { ChangeEvent } from "react";
 import {
   TextField,
   FormControl,
@@ -15,14 +15,12 @@ const Input = (props: {}) => {
 }
 
 type propsCreateIngredient = {
-  handleChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>,
-  ingredient: RecipeIngredient,
-  handleSelectChange: (e: SelectChangeEvent<string>) => void
+  handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  ingredient: RecipeIngredient
 }
 
 export const CreateIngredientComponent = ({ handleChange, 
-                                            ingredient, 
-                                            handleSelectChange }: propsCreateIngredient) => {
+                                            ingredient }: propsCreateIngredient) => {
 
   return (
   <>
@@ -54,7 +52,7 @@ export const CreateIngredientComponent = ({ handleChange,
         name="unit"
         label="Unit"
         value={ingredient.unit}
-        onChange={handleSelectChange}
+        onChange={handleChange}
       >
         {Object.keys(unitList).map((key) => (
           <MenuItem key={key} value={key}>{unitList[key]}</MenuItem>

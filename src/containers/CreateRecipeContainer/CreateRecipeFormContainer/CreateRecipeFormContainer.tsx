@@ -33,7 +33,6 @@ export const CreateRecipeFormContainer = () => {
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
     setIsEditForm(false);
-    console.log('!!!!');
     const db = getDatabase();
     const recipeId = push(child(ref(db), 'recipes/')).key;
     set(ref(db, 'recipes/' + recipeId), {...form, id: recipeId, 'ingredients': ingredientList})
@@ -61,6 +60,7 @@ export const CreateRecipeFormContainer = () => {
     handleSubmit,
     handleChange,
     setIngredientList,
+    ingredientList,
     setForm,
     form,
     handleUploadFile

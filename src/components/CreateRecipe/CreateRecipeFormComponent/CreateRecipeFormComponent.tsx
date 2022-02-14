@@ -28,6 +28,7 @@ type propsCreateRecipe = {
   handleSubmit: FormEventHandler,
   handleChange: ChangeEventHandler,
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
+  ingredientList: RecipeIngredient[],
   setForm: Dispatch<SetStateAction<Recipe>>,
   form: Recipe
   handleUploadFile: ChangeEventHandler
@@ -38,6 +39,7 @@ export const CreateRecipeFormComponent = ({ selectedFile,
                                             handleSubmit,
                                             handleChange,
                                             setIngredientList,
+                                            ingredientList,
                                             setForm,
                                             form,
                                             handleUploadFile }: propsCreateRecipe) => {
@@ -110,7 +112,7 @@ const InputStyle = styled('input')({
       />
       <br/>
       <Typography variant="h6" gutterBottom component="div">Состав</Typography>
-      <CreateIngredientListContainer setIngredientList={setIngredientList} />
+      <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} />
       <br/>
       <CreateTagsContainer setForm={setForm} form={form}/>
       <br/>
