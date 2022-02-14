@@ -45,14 +45,14 @@ export const CreateRecipeFormContainer = () => {
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
-    setForm({...form, [name]: value});
-}, [form]);
+    setForm(prev => ({...prev, [name]: value}));
+  }, []);
 
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
     setSelectedFile(fileObject);
-    setForm({...form, 'imgUrl': fileObject.name});   //TODO: что именно загружать в объек для сервера? Отдельный метод с firebase?
-  }, [form]);
+    setForm(prev => ({...prev, 'imgUrl': fileObject.name}));   //TODO: что именно загружать в объек для сервера? Отдельный метод с firebase?
+  }, []);
 
   const propsCreateRecipe = {
     selectedFile, 
@@ -62,7 +62,6 @@ export const CreateRecipeFormContainer = () => {
     setIngredientList,
     ingredientList,
     setForm,
-    form,
     handleUploadFile
   }
 

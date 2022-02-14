@@ -14,13 +14,12 @@ const Input = (props: {}) => {
   return <input type='number' {...props} />
 }
 
-type propsCreateIngredient = {
+interface CreateIngredientComponentProps {
   handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
   ingredient: RecipeIngredient
 }
 
-export const CreateIngredientComponent = ({ handleChange, 
-                                            ingredient }: propsCreateIngredient) => {
+export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIngredientComponentProps) => {
 
   return (
   <>
@@ -55,7 +54,7 @@ export const CreateIngredientComponent = ({ handleChange,
         labelId="select-unit"
         id="select-unit"
         name="unit"
-        label="Unit"
+        label="Ед.изм."
         value={ingredient.unit}
         onChange={handleChange}
       >

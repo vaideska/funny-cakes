@@ -22,7 +22,7 @@ const Input = (props: {}) => {
   return <input type='number' {...props} />
 };  
 
-type propsCreateRecipe = {
+interface CreateRecipeFormComponentProps {
   selectedFile: File, 
   isEditForm: boolean, 
   handleSubmit: FormEventHandler,
@@ -30,21 +30,13 @@ type propsCreateRecipe = {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
   setForm: Dispatch<SetStateAction<Recipe>>,
-  form: Recipe
   handleUploadFile: ChangeEventHandler
 }
 
-export const CreateRecipeFormComponent = ({ selectedFile, 
-                                            isEditForm, 
-                                            handleSubmit,
-                                            handleChange,
-                                            setIngredientList,
-                                            ingredientList,
-                                            setForm,
-                                            form,
-                                            handleUploadFile }: propsCreateRecipe) => {
-
-
+export const CreateRecipeFormComponent = (
+  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile }
+  : CreateRecipeFormComponentProps) => {
+ 
 const InputStyle = styled('input')({
   display: 'none',
 });
@@ -114,15 +106,15 @@ const InputStyle = styled('input')({
       <Typography variant="h6" gutterBottom component="div">Состав</Typography>
       <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} />
       <br/>
-      <CreateTagsContainer setForm={setForm} form={form}/>
+      <CreateTagsContainer setForm={setForm} />
       <br/>
-      <label htmlFor="icon-button-file">
+      <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
         <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
         <IconButton color="primary" aria-label="upload picture" component="span">
           <PhotoCamera />
         </IconButton>
-        <label>{selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}</label>
-      </label>
+        {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
+      </Box>
       <br/>
       <TextField
         required

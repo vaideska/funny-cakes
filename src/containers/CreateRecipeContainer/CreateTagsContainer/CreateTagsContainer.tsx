@@ -3,26 +3,22 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { CreateTagsComponent } from '../../../components/CreateRecipe/CreateTagsComponent';
 import { Recipe } from '../../../types/recipeType';
 
-type propsType = {
+interface CreateTagsContainerProps {
   setForm: Dispatch<SetStateAction<Recipe>>,
-  form: Recipe
 }
 
-export const CreateTagsContainer = (props: propsType) => {
-  const { setForm, form } = props;
+export const CreateTagsContainer = ({ setForm }: CreateTagsContainerProps) => {
   const [tags, setTags] = useState<string[]>([]);
 
   const handleChange = useCallback((event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
+    const value = event.target.value;
     setTags(() => {
         const newTags = typeof value === 'string' ? value.split(',') : value;
-        setForm({...form, 'tags': newTags});
+        setForm(prev => ({...prev, 'tags': newTags}));
         return newTags;
       } 
     );
-  }, [setForm, form]);
+  }, [setForm]);
 
   const propsCreateTags = {
     tags,

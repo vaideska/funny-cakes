@@ -5,27 +5,28 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { IconButton, Box } from "@mui/material";
 import { RecipeIngredient } from '../../../types/recipeType'
 
-type propsCreateIngredientList = {
+interface CreateIngredientListComponentProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
   handleAddClick: MouseEventHandler,
   handleDeleteClick: (id: number) => MouseEventHandler
 };
 
-export const CreateIngredientListComponent = ({ setIngredientList,
-                                                ingredientList,
-                                                handleAddClick,
-                                                handleDeleteClick }: propsCreateIngredientList) => {
+export const CreateIngredientListComponent = ({ setIngredientList, ingredientList, handleAddClick, handleDeleteClick }: CreateIngredientListComponentProps) => {
   const countIngredient = ingredientList.length;
 
   return (
     <>
       {ingredientList.map((ingredient, index) => {
         return (
-        <Box component="div" key={`${countIngredient}${index}`}>
+        <Box key={`${countIngredient}${index}`}>
           <CreateIngredientContainer id={index} setIngredientList={setIngredientList} ingredient={ingredient}/>
-          {index + 1 === countIngredient ? <IconButton aria-label="addIngredient" onClick={handleAddClick}>< AddCircleOutlineOutlinedIcon/></IconButton> : null }
-          {countIngredient > 1 ? <IconButton aria-label="deleteIngredient" onClick={handleDeleteClick(index)}>< RemoveCircleOutlineOutlinedIcon/></IconButton> : null }
+          {countIngredient > 1 ? 
+            <IconButton aria-label="deleteIngredient" onClick={handleDeleteClick(index)}>< RemoveCircleOutlineOutlinedIcon/></IconButton>
+            : null }
+          {index + 1 === countIngredient ? 
+            <IconButton aria-label="addIngredient" onClick={handleAddClick}>< AddCircleOutlineOutlinedIcon/></IconButton>
+            : null }
         </Box>
         );
       })}

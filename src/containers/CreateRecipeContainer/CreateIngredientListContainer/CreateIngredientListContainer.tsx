@@ -2,27 +2,27 @@ import React, { useCallback, Dispatch, SetStateAction, MouseEvent } from "react"
 import { RecipeIngredient } from '../../../types/recipeType'
 import { CreateIngredientListComponent } from '../../../components/CreateRecipe/CreateIngredientListComponent';
 
-type propsType = {
+interface CreateIngredientListContainerProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
 }
 
-export const CreateIngredientListContainer = ({ setIngredientList, ingredientList }: propsType) => {
+export const CreateIngredientListContainer = ({ setIngredientList, ingredientList }: CreateIngredientListContainerProps) => {
 
   const handleAddClick = useCallback((e: MouseEvent) => {
     setIngredientList((prev) => {
-      const newState: RecipeIngredient[] = [...ingredientList];
+      const newState: RecipeIngredient[] = [...prev];
       newState.push({name: '', unit: 'gr', count: 0});
       return newState;
     });
-  }, [setIngredientList, ingredientList]);
+  }, [setIngredientList]);
 
   const handleDeleteClick = useCallback((id: number) => (e: MouseEvent) => {
     setIngredientList((prev) => {
-      const newState: RecipeIngredient[] = ingredientList.filter((ingredient, index) => index !== id);
+      const newState: RecipeIngredient[] = prev.filter((ingredient, index) => index !== id);
       return newState;
     });
-  }, [setIngredientList, ingredientList]);
+  }, [setIngredientList]);
 
   const propsCreateIngredientList = {
     ingredientList,

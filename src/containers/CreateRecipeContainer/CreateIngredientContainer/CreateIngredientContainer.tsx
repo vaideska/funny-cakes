@@ -3,13 +3,13 @@ import { RecipeIngredient } from '../../../types/recipeType'
 import { CreateIngredientComponent } from '../../../components/CreateRecipe/CreateIngredientComponent';
 import { SelectChangeEvent } from "@mui/material";
 
-type propsType = {
+interface CreateIngredientContainerProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredient: RecipeIngredient,
   id: number
 }
 
-export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }: propsType) => {
+export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }: CreateIngredientContainerProps) => {
 
   const initIngredientState: RecipeIngredient = {...ingredient};
   const [ingredientInForm, setIngredientInForm] = useState(initIngredientState);
@@ -17,14 +17,16 @@ export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }:
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
     const value = e.target.value;
-    const newIngredient = {...ingredientInForm, [name]: value};
-    setIngredientInForm(newIngredient);
-    setIngredientList((prev) => {                      
-      const newState: RecipeIngredient[] = [...prev];
-      newState[id] = newIngredient;
-      return newState;
+    setIngredientInForm(prev => {
+      const newIngredient = {...prev, [name]: value};
+      setIngredientList((prev) => {                      
+        const newState: RecipeIngredient[] = [...prev];
+        newState[id] = newIngredient;
+        return newState;
+      });
+      return newIngredient;
     });
-  }, [id, ingredientInForm, setIngredientList]);
+  }, [id, setIngredientList]);
 
   const propsCreateIngredient = {
     handleChange,
