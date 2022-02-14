@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, MouseEventHandler } from "react";
 import { CreateIngredientContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientContainer';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
-import { IconButton, Box } from "@mui/material";
+import { IconButton, Box, Grid } from "@mui/material";
 import { RecipeIngredient } from '../../../types/recipeType'
 
 interface CreateIngredientListComponentProps {
@@ -19,15 +19,24 @@ export const CreateIngredientListComponent = ({ setIngredientList, ingredientLis
     <>
       {ingredientList.map((ingredient, index) => {
         return (
-        <Box key={`${countIngredient}${index}`}>
-          <CreateIngredientContainer id={index} setIngredientList={setIngredientList} ingredient={ingredient}/>
-          {countIngredient > 1 ? 
-            <IconButton aria-label="deleteIngredient" onClick={handleDeleteClick(index)}>< RemoveCircleOutlineOutlinedIcon/></IconButton>
-            : null }
-          {index + 1 === countIngredient ? 
-            <IconButton aria-label="addIngredient" onClick={handleAddClick}>< AddCircleOutlineOutlinedIcon/></IconButton>
-            : null }
-        </Box>
+          <Grid item xs={12}>
+            <Box key={`${countIngredient}${index}`}>
+              <Grid container>
+                <Grid item xs={12} sm={11}>
+                  <CreateIngredientContainer id={index} setIngredientList={setIngredientList} ingredient={ingredient}/>
+                </Grid>
+                {countIngredient > 1 ? 
+                  <Grid item xs={12} sm={0.5}>
+                    <IconButton aria-label="deleteIngredient" onClick={handleDeleteClick(index)} sx={{mt: 1}}>< RemoveCircleOutlineOutlinedIcon/></IconButton>
+                  </Grid>
+                : null }
+                {index + 1 === countIngredient ? 
+                  <Grid item xs={12} sm={0.5}>
+                    <IconButton aria-label="addIngredient" onClick={handleAddClick} sx={{mt: 1}}>< AddCircleOutlineOutlinedIcon/></IconButton>
+                  </Grid>
+                : null }</Grid>
+            </Box>
+          </Grid>
         );
       })}
     </>

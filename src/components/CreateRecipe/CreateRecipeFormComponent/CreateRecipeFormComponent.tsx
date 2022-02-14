@@ -6,7 +6,8 @@ import {
   InputAdornment,
   Button,
   IconButton,
-  Container
+  Container,
+  Grid
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
@@ -43,92 +44,113 @@ const InputStyle = styled('input')({
 });
 
   return (
-  <Container >
-    <Typography variant="h5" gutterBottom component="div">Создание рецепта</Typography>
+  <Container sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}>
     <Box
       name="create-form"
       component="form"
+      maxWidth={800}
       sx={{
-        '& .MuiTextField-root': { m: 1 },
-        '.MuiTypography-root': {m: 1, mb: 0},
-        '.MuiButtonBase-root': {m: 1}
+        pt: 4, 
+        pb: 10
       }}
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <TextField
-        required
-        name="title"
-        label="Название"
-        onChange={handleChange}
-        sx={{width: 450}}
-      />
-      <br/>
-      <TextField
-        required
-        name="description"
-        label="Краткое описание"
-        multiline
-        onChange={handleChange}
-        sx={{width: 450}}
-        rows={3}
-      />
-      <br/>
-      <TextField
-        name="diameter"
-        type="number"
-        label="Диаметр"
-        sx={{width: 200}}
-        onChange={handleChange}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
-          inputComponent: Input,
-          inputProps: {
-            min: 5,
-            max: 50
-          }
-        }}
-      />
-      <TextField
-        name="duration"
-        type="number"
-        label="Общее время"
-        sx={{width: 200}}
-        onChange={handleChange}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">мин. <AccessTimeTwoToneIcon/></InputAdornment>,
-          inputComponent: Input,
-          inputProps: {
-            min: 1
-          }
-        }}
-      />
-      <br/>
-      <Typography variant="h6" gutterBottom component="div">Состав</Typography>
-      <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} />
-      <br/>
-      <CreateTagsContainer setForm={setForm} />
-      <br/>
-      <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
-        <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
-        <IconButton color="primary" aria-label="upload picture" component="span">
-          <PhotoCamera />
-        </IconButton>
-        {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
-      </Box>
-      <br/>
-      <TextField
-        required
-        name="recipeText"
-        label="Описание рецепта"
-        multiline
-        onChange={handleChange}
-        sx={{width: 450}}
-        rows={7}
-      />
-      <br/>
-      <Button disabled={isEditForm ? false : true} variant="contained" type="submit">Опубликовать рецепт</Button>
-      {error !== '' ? <Typography color={"red"}>{error}</Typography> : null}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom component="div">Создание рецепта</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            name="title"
+            label="Название"
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            name="description"
+            label="Краткое описание"
+            multiline
+            onChange={handleChange}
+            rows={3}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            name="diameter"
+            type="number"
+            label="Диаметр"
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
+              inputComponent: Input,
+              inputProps: {
+                min: 5,
+                max: 50
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            name="duration"
+            type="number"
+            label="Общее время"
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">мин. <AccessTimeTwoToneIcon/></InputAdornment>,
+              inputComponent: Input,
+              inputProps: {
+                min: 1
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>Состав</Typography>
+        </Grid>
+        <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} />
+        <Grid item xs={12}></Grid>
+        <Grid item xs={12} sm={6}>
+          <CreateTagsContainer setForm={setForm} /></Grid>
+        <Grid item xs={12}>
+          <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
+            <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
+            <IconButton color="primary" aria-label="upload picture" component="span">
+              <PhotoCamera />
+            </IconButton>
+            {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+            <TextField
+            required
+            fullWidth
+            name="recipeText"
+            label="Описание рецепта"
+            multiline
+            onChange={handleChange}
+            rows={7}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button disabled={isEditForm ? false : true} variant="contained" type="submit">Опубликовать рецепт</Button>
+        </Grid>
+        {error !== '' ? <Grid item xs={12}><Typography color={"red"}>{error}</Typography></Grid> : null}
+      </Grid>
     </Box>
   </Container>
   );

@@ -16,7 +16,7 @@ interface CreateTagsComponentProps {
 export const CreateTagsComponent = ({ tags, handleChange }: CreateTagsComponentProps) => {
   return (
     <Box>
-      <FormControl sx={{ m: 1, width: 450 }}>
+      <FormControl fullWidth>
         <InputLabel id="demo-multiple-chip-label">Теги *</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
