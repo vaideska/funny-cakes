@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, MouseEventHandler } from "react";
 import { CreateIngredientContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientContainer';
 import AddCircleOutlineTwoToneIcon from '@mui/icons-material/AddCircleOutlineTwoTone';
 import { IconButton, Box } from "@mui/material";
@@ -7,15 +7,12 @@ import { RecipeIngredient } from '../../../types/recipeType'
 type propsCreateIngredientList = {
   countIngredient: number,
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
-  handleClick: (e: React.SyntheticEvent) => void
+  handleClick: MouseEventHandler,
 };
 
-export const CreateIngredientListComponent = (props: propsCreateIngredientList) => {
-  const {
-    countIngredient,
-    setIngredientList,
-    handleClick
-  } = props;
+export const CreateIngredientListComponent = ({ countIngredient,
+                                                setIngredientList,
+                                                handleClick}: propsCreateIngredientList) => {
 
   const arr = Array(countIngredient + 1).join('*').split('');         //TODO: переделаю на просто массив ингредиентов
 

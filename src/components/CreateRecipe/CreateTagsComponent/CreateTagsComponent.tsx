@@ -34,11 +34,7 @@ type propsCreateTags = {
   handleChange: (event: SelectChangeEvent<string[]>) => void
 }
 
-export const CreateTagsComponent = (props: propsCreateTags) => {
-  const {
-    tags,
-    handleChange
-  } = props;
+export const CreateTagsComponent = ({ tags, handleChange }: propsCreateTags) => {
 
   const theme = useTheme();
 

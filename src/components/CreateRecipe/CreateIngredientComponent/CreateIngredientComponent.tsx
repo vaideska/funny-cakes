@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import {
   TextField,
   FormControl,
@@ -15,17 +15,14 @@ const Input = (props: {}) => {
 }
 
 type propsCreateIngredient = {
-  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  handleChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>,
   ingredient: RecipeIngredient,
   handleSelectChange: (e: SelectChangeEvent<string>) => void
 }
 
-export const CreateIngredientComponent = (props: propsCreateIngredient) => {
-  const {
-    handleChange,
-    ingredient,
-    handleSelectChange
-  } = props;
+export const CreateIngredientComponent = ({ handleChange, 
+                                            ingredient, 
+                                            handleSelectChange }: propsCreateIngredient) => {
 
   return (
   <>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, Dispatch, SetStateAction } from "react";
+import React, { useCallback, useState, Dispatch, SetStateAction, MouseEvent } from "react";
 import { RecipeIngredient } from '../../../types/recipeType'
 import { CreateIngredientListComponent } from '../../../components/CreateRecipe/CreateIngredientListComponent';
 
@@ -10,7 +10,7 @@ export const CreateIngredientListContainer = (props: propsType) => {
   const { setIngredientList } = props;
   const [countIngredient, setCountIngrediend] = useState(1);            //TODO: переделаю на ingredientList.length
 
-  const handleClick = useCallback((e: React.SyntheticEvent) => {
+  const handleClick = useCallback((e: MouseEvent) => {
     setCountIngrediend(countIngredient + 1);
     setIngredientList((prev) => {
       const newState: RecipeIngredient[] = [...prev];

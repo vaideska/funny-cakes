@@ -1,4 +1,4 @@
-import React, { useCallback, useState, Dispatch, SetStateAction } from "react";
+import React, { useCallback, useState, Dispatch, SetStateAction, ChangeEvent } from "react";
 import { RecipeIngredient } from '../../../types/recipeType'
 import { CreateIngredientComponent } from '../../../components/CreateRecipe/CreateIngredientComponent';
 import { SelectChangeEvent } from "@mui/material";
@@ -15,7 +15,7 @@ export const CreateIngredientContainer = (props: propsType) => {
   const initIngredientState: RecipeIngredient = {unit: 'gr', count: 0, name: ''};
   const [ingredient, setIngredient] = useState(initIngredientState);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     const newIngredient = {...ingredient, [name]: value};

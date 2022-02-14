@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, FormEventHandler, ChangeEventHandler} from 'react';
 import { 
   Typography, 
   Box, 
@@ -23,27 +23,25 @@ const Input = (props: {}) => {
 };  
 
 type propsCreateRecipe = {
-  selectedFile: any, 
+  selectedFile: File, 
   isEditForm: boolean, 
-  handleSubmit: (e: React.SyntheticEvent) => void,
-  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  handleSubmit: FormEventHandler,
+  handleChange: ChangeEventHandler,
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   setForm: Dispatch<SetStateAction<Recipe>>,
   form: Recipe
-  handleUploadFile: (e: any) => void
+  handleUploadFile: ChangeEventHandler
 }
 
-export const CreateRecipeFormComponent = (props: propsCreateRecipe) => {
-  const {
-    selectedFile, 
-    isEditForm, 
-    handleSubmit,
-    handleChange,
-    setIngredientList,
-    setForm,
-    form,
-    handleUploadFile
-  } = props;
+export const CreateRecipeFormComponent = ({ selectedFile, 
+                                            isEditForm, 
+                                            handleSubmit,
+                                            handleChange,
+                                            setIngredientList,
+                                            setForm,
+                                            form,
+                                            handleUploadFile }: propsCreateRecipe) => {
+
 
 const InputStyle = styled('input')({
   display: 'none',
@@ -53,6 +51,7 @@ const InputStyle = styled('input')({
   <Container >
     <Typography variant="h5" gutterBottom component="div">Создание рецепта</Typography>
     <Box
+      name="create-form"
       component="form"
       sx={{
         '& .MuiTextField-root': { m: 1 },
@@ -120,7 +119,7 @@ const InputStyle = styled('input')({
         <IconButton color="primary" aria-label="upload picture" component="span">
           <PhotoCamera />
         </IconButton>
-        <label>{selectedFile ? selectedFile.name : "Загрузить фотографию"}</label>
+        <label>{selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}</label>
       </label>
       <br/>
       <TextField
