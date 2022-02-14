@@ -14,10 +14,11 @@ import { NavBarAvatarContainer } from '../../containers/NavBarAvatarContainer';
 interface HeaderProps {
    isLoged: boolean,
    handleLoginBtnClick: () => void,
-   handleLogoClick: (e: MouseEvent) => void
+   handleLogoClick: (e: MouseEvent) => void,
+   handleCreateRecipeClick: (e: MouseEvent) => void
 }
 
-export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick }: HeaderProps) => {
+export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCreateRecipeClick }: HeaderProps) => {
    return (
       <AppBar position="static">
          <Container>
@@ -36,7 +37,8 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick }: Header
                            <Add />
                         }
                         size='medium'
-                        sx={{ mx: 3 }}>
+                        sx={{ mx: 3 }}
+                        onClick={handleCreateRecipeClick}>
                         Добавить рецепт
                      </Button>
                      <NavBarAvatarContainer />

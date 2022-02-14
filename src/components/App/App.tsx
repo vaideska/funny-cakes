@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Route, Switch, Link} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
@@ -9,7 +9,6 @@ import {child, get, getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
 import { Recipe } from "../../types/recipeType";
-import { Container } from '@mui/material';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {login} from "../../store/slices/authZ/authZSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
@@ -85,10 +84,6 @@ function App() {
     <div className="App">
       <AuthZModalContainer />
       <HeaderContainer />
-      <Container>
-        <Link to={routes.main}>to main </Link>
-        <Link to={routes.createRecipe}>to create recipe </Link>
-      </Container>
         <Switch>
           <Route path={routes.main} exact>
             <RecipesFeed recipes={recipes}/>
