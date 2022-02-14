@@ -28,6 +28,7 @@ export const CreateIngredientComponent = ({ handleChange,
       required
       name="name"
       label="Ингредиент"
+      value={ingredient.name}
       onChange={handleChange}
     />
     <TextField
@@ -36,11 +37,15 @@ export const CreateIngredientComponent = ({ handleChange,
       name="count"
       label="Количество"
       onChange={handleChange}
+      value={ingredient.count === 0 ? '' : ingredient.count}
       type="number"
+      InputLabelProps={{
+        shrink: ingredient.count === 0 ? false : true,
+      }}
       InputProps={{
         inputComponent: Input,
         inputProps: {
-          min: 0
+          min: 1
         }
       }}
     />
