@@ -30,11 +30,12 @@ interface CreateRecipeFormComponentProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
   setForm: Dispatch<SetStateAction<Recipe>>,
-  handleUploadFile: ChangeEventHandler
+  handleUploadFile: ChangeEventHandler,
+  error: string
 }
 
 export const CreateRecipeFormComponent = (
-  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile }
+  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error }
   : CreateRecipeFormComponentProps) => {
  
 const InputStyle = styled('input')({
@@ -127,6 +128,7 @@ const InputStyle = styled('input')({
       />
       <br/>
       <Button disabled={isEditForm ? false : true} variant="contained" type="submit">Опубликовать рецепт</Button>
+      {error !== '' ? <Typography color={"red"}>{error}</Typography> : null}
     </Box>
   </Container>
   );

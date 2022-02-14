@@ -26,6 +26,7 @@ export const CreateRecipeFormContainer = () => {
   const [form, setForm] = useState(initStateForm);
   const [selectedFile, setSelectedFile] = useState(new File([], ''));
   const [isEditForm, setIsEditForm] = useState(true);
+  const [error, setError] = useState('');
   const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>([{name: '', unit: 'gr', count: 0}]);
 
   const history = useHistory();
@@ -39,7 +40,10 @@ export const CreateRecipeFormContainer = () => {
       .then(() => {
         history.replace(`${routes.recipe}/${recipeId}`);
       })
-      .catch((e) => console.log('вывод ошибки', e.text));
+      .catch((e) => {
+        setError('Что-то пошло не так... Попробуйте позже.');
+        console.log(e);
+      });
   }, [form, history, ingredientList]);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -62,7 +66,8 @@ export const CreateRecipeFormContainer = () => {
     setIngredientList,
     ingredientList,
     setForm,
-    handleUploadFile
+    handleUploadFile,
+    error
   }
 
   return <CreateRecipeFormComponent {...propsCreateRecipe}/>
