@@ -17,3 +17,7 @@ export interface Recipe {
   ingredients: RecipeIngredient[],
   recipeText: string
 }
+
+export interface recipesTypes {
+  recipes: Recipe[]
+}

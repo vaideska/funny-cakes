@@ -5,7 +5,7 @@ import {selectRecipeById, selectRecipes} from "../../store/slices/recipes/recipe
 import {useCallback, useEffect} from "react";
 import {getDatabase, onValue, ref} from "firebase/database";
 import {setRecipes} from "../../store/slices/recipes/recipesSlice";
-import {Recipe} from "../../components/App/App";
+import {Recipe} from "../../types/recipeType";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 
 export const RecipesFeedContainer = () => {

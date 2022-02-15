@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Recipe} from "../../../components/App/App";
-import {recipesZTypes} from "../../../types/recipesZTypes";
+import {Recipe} from "../../../types/recipeType"
+import {recipesTypes} from "../../../types/recipeType";
 
-const initialState: recipesZTypes = {
+const initialState: recipesTypes = {
   recipes: []
 }
 
