@@ -10,45 +10,14 @@ import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContaine
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {login} from "../../store/slices/authZ/authZSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useFirebase} from "../../hooks/useFirebase";
 
 
 function App() {
-  const dispatch = useAppDispatch();
+  const { listenUser } = useFirebase();
   useEffect(() => {
     listenUser();
   }, []);
-
-  const listenUser = useCallback( // подписываемся на юзера, если залогинены, то грузим его данные и кладем в стор.
-    () => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        console.log(user);
-        if (user) {
-          getUserData(user.uid);
-        } else {
-          console.log('signed out');
-        }
-      });
-    }, []
-  )
-
-  const getUserData = useCallback(
-    (userId: string) => {
-      const dbRef = ref(getDatabase());
-      get(child(dbRef, `users/${userId}`)).then((snapshot) => {
-        console.log('SNAPSHOT', snapshot.val());
-        if (snapshot.exists()) {
-          const userData = snapshot.val();
-          dispatch(login(userData))
-        } else {
-          throw new Error('User data not found');
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-    }, []
-  )
-
 
   return (
     <div className="App">

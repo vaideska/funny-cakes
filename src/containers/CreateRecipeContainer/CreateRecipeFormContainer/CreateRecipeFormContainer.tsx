@@ -6,6 +6,7 @@ import { routes } from '../../../utils/routes';
 import { CreateRecipeFormComponent } from '../../../components/CreateRecipe/CreateRecipeFormComponent';
 import {userSelector} from "../../../store/slices/authZ/authZSelectors";
 import {useSelector} from "react-redux";
+import { getStorage, ref as storeRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export const CreateRecipeFormContainer = () => {
   const userId = useSelector(userSelector).id;
@@ -35,6 +36,7 @@ export const CreateRecipeFormContainer = () => {
     e.preventDefault();
     setIsEditForm(false);
     const db = getDatabase();
+    //TODO: Вынести в хук обращения к фб
     const recipeId = push(child(ref(db), 'recipes/')).key;
     set(ref(db, 'recipes/' + recipeId), {...form, id: recipeId, 'ingredients': ingredientList})
       .then(() => {
@@ -55,7 +57,14 @@ export const CreateRecipeFormContainer = () => {
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
     setSelectedFile(fileObject);
-    setForm(prev => ({...prev, 'imgUrl': fileObject.name}));   //TODO: что именно загружать в объек для сервера? Отдельный метод с firebase?
+       //TODO: придумать как вынести обращение к фб в хук
+    const storage = getStorage();
+    const storageRef = storeRef(storage, fileObject.name);
+    uploadBytes(storageRef, fileObject).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setForm(prev => ({...prev, 'imgUrl': url}));
+      })
+    });
   }, []);
 
   const propsCreateRecipe = {

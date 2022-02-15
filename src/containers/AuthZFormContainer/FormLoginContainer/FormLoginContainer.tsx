@@ -8,11 +8,14 @@ import {
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { login, setAuthZModalVariant } from '../../../store/slices/authZ/authZSlice';
 import { FormLogin } from '../../../components/AuthZForm/FormLogin';
+import {useFirebase} from "../../../hooks/useFirebase";
 
 export const FormLoginContainer = () => {
     const [emailLogin, setEmailLogin] = useState('');
     const [passLogin, setPassLogin] = useState('');
     const dispatch = useAppDispatch();
+    const { loginUser } = useFirebase();
+
     const handleEmailChange = useCallback(
         (evt: React.ChangeEvent<HTMLInputElement>) => setEmailLogin(evt.target.value),
         []
@@ -31,27 +34,14 @@ export const FormLoginContainer = () => {
         [],
     )
 
-    function loginUser(event: React.FormEvent) {
+    function handleLoginUser(event: React.FormEvent) {
         event.preventDefault();
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, emailLogin, passLogin)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                if (!user) {
-                    throw new Error('User not found')
-                }
-                //getUserData(user.uid);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage, errorCode);
-            });
+        loginUser(emailLogin, passLogin);
     }
 
     return (
         <FormLogin 
-            loginUser={loginUser}
+            loginUser={handleLoginUser}
             handleEmailChange={handleEmailChange}
             handlePasswordChange={handlePasswordChange}
             handleSetFormVariantClick={handleSetFormVariantClick}
