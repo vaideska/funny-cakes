@@ -13,8 +13,8 @@ export const RecipesFeedContainer = () => {
   const recipesRef = ref(db, 'recipes/');
   const dispatch = useAppDispatch();
   const { recipes } = useSelector(selectRecipes);
-  const recipe = useSelector(selectRecipeById('-MviMYM9m7LqVV2w2Jr1'));
-  console.log(recipe);
+  //const recipe = useSelector(selectRecipeById('-MviMYM9m7LqVV2w2Jr1'));
+  //console.log(recipe);
   useEffect(() => {
     if (recipes.length === 0) {
       getRecipes();
