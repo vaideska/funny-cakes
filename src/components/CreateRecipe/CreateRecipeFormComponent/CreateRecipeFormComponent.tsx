@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, FormEventHandler, ChangeEventHandler} from 'react';
+import React, {Dispatch, SetStateAction, FormEventHandler, ChangeEventHandler, useRef} from 'react';
 import { 
   Typography, 
   Box, 
@@ -7,7 +7,7 @@ import {
   Button,
   IconButton,
   Container,
-  Grid
+  Grid,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
@@ -17,11 +17,7 @@ import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutl
 import { Recipe, RecipeIngredient } from '../../../types/recipeType';
 import { CreateIngredientListContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientListContainer';
 import { CreateTagsContainer } from '../../../containers/CreateRecipeContainer/CreateTagsContainer';
-
-
-const Input = (props: {}) => {
-  return <input type='number' {...props} />
-};  
+import { InputNumberComponent } from '../InputNumberComponent';
 
 interface CreateRecipeFormComponentProps {
   selectedFile: File, 
@@ -39,9 +35,10 @@ export const CreateRecipeFormComponent = (
   { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error }
   : CreateRecipeFormComponentProps) => {
  
-const InputStyle = styled('input')({
-  display: 'none',
-});
+  const InputStyle = styled('input')({
+    display: 'none',
+  });
+  const ref = useRef();
 
   return (
   <Container sx={{
@@ -94,10 +91,12 @@ const InputStyle = styled('input')({
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
-              inputComponent: Input,
               inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
                 min: 5,
-                max: 50
+                max: 50,
+                step: 0.5
               }
             }}
           />
@@ -112,8 +111,9 @@ const InputStyle = styled('input')({
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">мин. <AccessTimeTwoToneIcon/></InputAdornment>,
-              inputComponent: Input,
               inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
                 min: 1
               }
             }}

@@ -5,7 +5,9 @@ interface Map {
 export const unitList: Map = {
   'gr': 'гр',
   'ml': 'мл',
-  'cups': 'стаканов',
+  'cups': 'стак.',
+  'tablespoon': 'ст. л.',
+  'tea spoon': 'ч. л.'
 };
 
 export const tagList: Map = {

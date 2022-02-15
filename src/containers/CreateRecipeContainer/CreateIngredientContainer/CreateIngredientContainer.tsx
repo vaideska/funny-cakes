@@ -11,26 +11,19 @@ interface CreateIngredientContainerProps {
 
 export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }: CreateIngredientContainerProps) => {
 
-  const initIngredientState: RecipeIngredient = {...ingredient};
-  const [ingredientInForm, setIngredientInForm] = useState(initIngredientState);
-
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
     const value = e.target.value;
-    setIngredientInForm(prev => {
-      const newIngredient = {...prev, [name]: value};
-      setIngredientList((prev) => {                      
-        const newState: RecipeIngredient[] = [...prev];
-        newState[id] = newIngredient;
-        return newState;
-      });
-      return newIngredient;
+    setIngredientList((prev) => {                      
+      const newState: RecipeIngredient[] = [...prev];
+      newState[id] = {...prev[id], [name]: value};
+      return newState;
     });
-  }, [id, setIngredientList]);
+  }, [id, setIngredientList]); 
 
   const propsCreateIngredient = {
     handleChange,
-    ingredient: ingredientInForm,
+    ingredient,
   }
 
   return <CreateIngredientComponent {...propsCreateIngredient}/>

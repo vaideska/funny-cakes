@@ -10,10 +10,7 @@ import {
 } from "@mui/material";
 import { RecipeIngredient } from '../../../types/recipeType';
 import { unitList } from '../../../utils/dictionary';
-
-const Input = (props: {}) => {
-  return <input type='number' {...props} />
-}
+import { InputNumberComponent } from '../InputNumberComponent';
 
 interface CreateIngredientComponentProps {
   handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
@@ -21,7 +18,7 @@ interface CreateIngredientComponentProps {
 }
 
 export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIngredientComponentProps) => {
-
+  const ref = React.createRef();
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
@@ -47,9 +44,11 @@ export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIn
             shrink: ingredient.count === 0 ? false : true,
           }}
           InputProps={{
-            inputComponent: Input,
             inputProps: {
-              min: 1
+              inputcomponent: InputNumberComponent,
+              ref: {ref},
+              min: 0.1,
+              step: 0.1
             }
           }}
         />

@@ -19,8 +19,8 @@ export const CreateIngredientListComponent = ({ setIngredientList, ingredientLis
     <>
       {ingredientList.map((ingredient, index) => {
         return (
-          <Grid item xs={12}>
-            <Box key={`${countIngredient}${index}`}>
+          <Grid item xs={12} key={`${countIngredient}${index}`}>
+            <Box >
               <Grid container>
                 <Grid item xs={12} sm={11}>
                   <CreateIngredientContainer id={index} setIngredientList={setIngredientList} ingredient={ingredient}/>
