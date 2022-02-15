@@ -58,16 +58,14 @@ export const FormRegisterContainer = () => {
         []
     )
 
-    const registerUser = useCallback(
-      (event: FormEvent) => {
+    const registerUser = (event: FormEvent) => {
           event.preventDefault();
           if (passReg !== passRepeatReg || passReg.length < 6) {
               console.log('пароли не совпадают или пароль должен быть минимум 6 символов');
               return
           }
           regUser(emailReg, passReg, firstNameReg, lastNameReg);
-      }, []
-    )
+      }
 
     return (
         <FormRegister
