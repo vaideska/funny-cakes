@@ -1,12 +1,12 @@
 import React, { useCallback, useState, FormEvent, ChangeEvent } from 'react';
 import { Recipe, RecipeIngredient } from '../../../types/recipeType';
-import {child, getDatabase, ref, set, push} from "firebase/database";
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../../utils/routes';
 import { CreateRecipeFormComponent } from '../../../components/CreateRecipe/CreateRecipeFormComponent';
 import {userSelector} from "../../../store/slices/authZ/authZSelectors";
 import {useSelector} from "react-redux";
-import { getStorage, ref as storeRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useFirebase } from "../../../hooks/useFirebase";
+
 
 export const CreateRecipeFormContainer = () => {
   const userId = useSelector(userSelector).id;
@@ -31,6 +31,7 @@ export const CreateRecipeFormContainer = () => {
   const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>([{name: '', unit: 'gr', count: 0}]);
 
   const history = useHistory();
+  const { createRecipe, uploadFile } = useFirebase();
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
@@ -41,18 +42,16 @@ export const CreateRecipeFormContainer = () => {
       setError('');
     }
     setIsEditForm(false);
-    const db = getDatabase();
-    //TODO: Вынести в хук обращения к фб
-    const recipeId = push(child(ref(db), 'recipes/')).key;
-    set(ref(db, 'recipes/' + recipeId), {...form, id: recipeId, 'ingredients': ingredientList})
-      .then(() => {
+    const recipeObject = {...form, 'ingredients': ingredientList};
+    createRecipe(recipeObject)
+      .then((recipeId) => {
         history.replace(`${routes.recipe}/${recipeId}`);
       })
       .catch((e) => {
         setError('Что-то пошло не так... Попробуйте позже.');
         console.log(e);
       });
-  }, [form, history, ingredientList]);
+  }, [form, history, createRecipe, ingredientList]);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const name = e.target.name;
@@ -62,14 +61,10 @@ export const CreateRecipeFormContainer = () => {
 
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
+    if (fileObject.name === '') return;
     setSelectedFile(fileObject);
-       //TODO: придумать как вынести обращение к фб в хук
-    const storage = getStorage();
-    const storageRef = storeRef(storage, fileObject.name);
-    uploadBytes(storageRef, fileObject).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
+    uploadFile(fileObject).then((url) => {
         setForm(prev => ({...prev, 'imgUrl': url}));
-      })
     });
   }, []);
 

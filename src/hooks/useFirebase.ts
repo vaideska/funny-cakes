@@ -1,13 +1,17 @@
 import {useCallback, useEffect} from "react";
-import {child, get, getDatabase, ref, set} from "firebase/database";
+import {child, get, getDatabase, ref, set, push} from "firebase/database";
+import { getStorage, ref as storeRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import {login, setAuthZModalVariant} from "../store/slices/authZ/authZSlice";
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword} from "firebase/auth";
 import {useAppDispatch} from "./useAppDispatch";
+import { Recipe } from "../types/recipeType";
 
 type WriteUserData = (userId: string, firstName: string, lastName: string, email: string | null, profile_picture: string) => void;
 type CreateUser = (email: string, password: string, firstName: string, lastName: string) => void;
 type GetUserData = (userId: string) => void;
 type UserLogin = (email: string, password: string) => void;
+type CreateRecipe = (recipe: Recipe) => Promise<string | null>;
+type UploadFile = (fileObject: File) => Promise<string>;
 
 export const useFirebase = () => {
   const dispatch = useAppDispatch();
@@ -112,11 +116,27 @@ export const useFirebase = () => {
     }, []
   )
 
+  const createRecipe:CreateRecipe = useCallback((recipe) => {
+    const db = getDatabase();
+    const recipeId = push(child(ref(db), 'recipes/')).key;
+    return set(ref(db, 'recipes/' + recipeId), {...recipe, id: recipeId}).then(() => recipeId)
+    }, []
+  )
+
+  const uploadFile:UploadFile = useCallback((fileObject) => {
+    const storage = getStorage();
+    const storageRef = storeRef(storage, fileObject.name);
+    return uploadBytes(storageRef, fileObject).then((snapshot) => getDownloadURL(snapshot.ref));
+    }, []
+  )
+
   return {
     getterUser: getUserData,
     listenUser: listenUser,
     regUser: createUser,
     writeUserData,
-    loginUser
+    loginUser,
+    createRecipe,
+    uploadFile
   }
 }
