@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {child, get, getDatabase, ref} from "firebase/database";
-import {Recipe} from "../App/App";
+import {Recipe} from "../../types/recipeType";
 import {useRouteMatch} from "react-router-dom";
 
 interface MatchParams {

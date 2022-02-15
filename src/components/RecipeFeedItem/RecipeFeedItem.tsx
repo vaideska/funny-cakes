@@ -1,7 +1,7 @@
 import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import React, {useCallback} from "react";
 import {useHistory} from "react-router-dom";
-import {Recipe} from "../App/App";
+import {Recipe} from "../../types/recipeType";
 
 interface RecipeFeedItemProps {
   recipe: Recipe
