@@ -1,59 +1,28 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Route, Switch} from "react-router-dom";
 import { routes } from '../../utils/routes';
-import { initializeApp } from "firebase/app";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import {RecipesFeed} from "../RecipesFeed";
+import {RecipesFeedContainer} from "../../containers/RecipesFeedContainer";
 import {child, get, getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
-import { Recipe } from "../../types/recipeType";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {login} from "../../store/slices/authZ/authZSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 
-(function() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyCCalDHvx-N-OD-UE4P7XQKdjj3bdCnDN0",
-    authDomain: "napoleon-tech.firebaseapp.com",
-    databaseURL: "https://napoleon-tech-default-rtdb.firebaseio.com",
-    projectId: "napoleon-tech",
-    storageBucket: "napoleon-tech.appspot.com",
-    messagingSenderId: "674037683443",
-    appId: "1:674037683443:web:abc96f116192681c5a5386"
-  };
-  const app = initializeApp(firebaseConfig)
-})();
 
 function App() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const db = getDatabase();
-  const recipesRef = ref(db, 'recipes/');
   const dispatch = useAppDispatch();
   useEffect(() => {
-    getRecipes();
     listenUser();
   }, []);
-
-  const getRecipes = useCallback(
-    () => {
-      onValue(recipesRef, (snapshot) => { // колбэк срабатывает при каждом изменении бд
-        const recipes = snapshot.val();
-        const recipesArr: Array<Recipe> = [];
-        const keysArr = Object.keys(recipes);
-        keysArr.forEach((recipeKey) => {
-          recipesArr.push(recipes[recipeKey]);
-        })
-        setRecipes(recipesArr);
-      });
-    }, []
-  )
 
   const listenUser = useCallback( // подписываемся на юзера, если залогинены, то грузим его данные и кладем в стор.
     () => {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
+        console.log(user);
         if (user) {
           getUserData(user.uid);
         } else {
@@ -67,6 +36,7 @@ function App() {
     (userId: string) => {
       const dbRef = ref(getDatabase());
       get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+        console.log('SNAPSHOT', snapshot.val());
         if (snapshot.exists()) {
           const userData = snapshot.val();
           dispatch(login(userData))
@@ -86,7 +56,7 @@ function App() {
       <HeaderContainer />
         <Switch>
           <Route path={routes.main} exact>
-            <RecipesFeed recipes={recipes}/>
+            <RecipesFeedContainer/>
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipeFormContainer />
