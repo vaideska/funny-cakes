@@ -12,6 +12,7 @@ import {login} from "../../store/slices/authZ/authZSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useFirebase} from "../../hooks/useFirebase";
 import {MainPageContainer} from "../../containers/MainPageContainer";
+import { Recipe } from '../Recipe';
 
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
       <AuthZModalContainer />
       <HeaderContainer />
         <Switch>
+          <Route path={'/recipe'} exact>
+            <Recipe />
+          </Route>
           <Route path={routes.main} exact>
             <MainPageContainer/>
           </Route>
