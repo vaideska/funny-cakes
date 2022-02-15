@@ -14,10 +14,11 @@ import { InputNumberComponent } from '../InputNumberComponent';
 
 interface CreateIngredientComponentProps {
   handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
-  ingredient: RecipeIngredient
+  ingredient: RecipeIngredient,
+  isEditForm: boolean
 }
 
-export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIngredientComponentProps) => {
+export const CreateIngredientComponent = ({ handleChange, ingredient, isEditForm }: CreateIngredientComponentProps) => {
   const ref = React.createRef();
   return (
     <Grid container spacing={2}>
@@ -25,6 +26,7 @@ export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIn
         <TextField
           required
           fullWidth
+          disabled={!isEditForm}
           name="name"
           label="Ингредиент"
           value={ingredient.name}
@@ -35,6 +37,7 @@ export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIn
         <TextField
           required
           fullWidth
+          disabled={!isEditForm}
           name="count"
           label="Количество"
           onChange={handleChange}
@@ -61,6 +64,7 @@ export const CreateIngredientComponent = ({ handleChange, ingredient }: CreateIn
             id="select-unit"
             name="unit"
             label="Ед.изм."
+            disabled={!isEditForm}
             value={ingredient.unit}
             onChange={handleChange}
           >

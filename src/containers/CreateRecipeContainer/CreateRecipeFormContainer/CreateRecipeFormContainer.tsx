@@ -33,6 +33,12 @@ export const CreateRecipeFormContainer = () => {
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
+    if (form.imgUrl === '') {
+      setError('Добавьте фотографию!');
+      return;
+    } else {
+      setError('');
+    }
     setIsEditForm(false);
     const db = getDatabase();
     const recipeId = push(child(ref(db), 'recipes/')).key;

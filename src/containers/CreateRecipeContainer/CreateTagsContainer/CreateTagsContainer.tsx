@@ -5,9 +5,10 @@ import { Recipe } from '../../../types/recipeType';
 
 interface CreateTagsContainerProps {
   setForm: Dispatch<SetStateAction<Recipe>>,
+  isEditForm: boolean
 }
 
-export const CreateTagsContainer = ({ setForm }: CreateTagsContainerProps) => {
+export const CreateTagsContainer = ({ setForm, isEditForm }: CreateTagsContainerProps) => {
   const [tags, setTags] = useState<string[]>([]);
 
   const handleChange = useCallback((event: SelectChangeEvent<string[]>) => {
@@ -22,7 +23,8 @@ export const CreateTagsContainer = ({ setForm }: CreateTagsContainerProps) => {
 
   const propsCreateTags = {
     tags,
-    handleChange
+    handleChange,
+    isEditForm
   };
 
   return <CreateTagsComponent {...propsCreateTags}/>;

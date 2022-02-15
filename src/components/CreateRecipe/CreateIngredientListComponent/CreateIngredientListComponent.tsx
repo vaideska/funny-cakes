@@ -9,10 +9,11 @@ interface CreateIngredientListComponentProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
   handleAddClick: MouseEventHandler,
-  handleDeleteClick: (id: number) => MouseEventHandler
+  handleDeleteClick: (id: number) => MouseEventHandler,
+  isEditForm: boolean
 };
 
-export const CreateIngredientListComponent = ({ setIngredientList, ingredientList, handleAddClick, handleDeleteClick }: CreateIngredientListComponentProps) => {
+export const CreateIngredientListComponent = ({ setIngredientList, ingredientList, handleAddClick, handleDeleteClick, isEditForm }: CreateIngredientListComponentProps) => {
   const countIngredient = ingredientList.length;
 
   return (
@@ -23,16 +24,16 @@ export const CreateIngredientListComponent = ({ setIngredientList, ingredientLis
             <Box >
               <Grid container>
                 <Grid item xs={12} sm={11}>
-                  <CreateIngredientContainer id={index} setIngredientList={setIngredientList} ingredient={ingredient}/>
+                  <CreateIngredientContainer id={index} setIngredientList={setIngredientList} ingredient={ingredient} isEditForm={isEditForm}/>
                 </Grid>
                 {countIngredient > 1 ? 
                   <Grid item xs={12} sm={0.5}>
-                    <IconButton aria-label="deleteIngredient" onClick={handleDeleteClick(index)} sx={{mt: 1}}>< RemoveCircleOutlineOutlinedIcon/></IconButton>
+                    <IconButton aria-label="deleteIngredient" onClick={handleDeleteClick(index)} sx={{mt: 1}} disabled={!isEditForm}>< RemoveCircleOutlineOutlinedIcon/></IconButton>
                   </Grid>
                 : null }
                 {index + 1 === countIngredient ? 
                   <Grid item xs={12} sm={0.5}>
-                    <IconButton aria-label="addIngredient" onClick={handleAddClick} sx={{mt: 1}}>< AddCircleOutlineOutlinedIcon/></IconButton>
+                    <IconButton aria-label="addIngredient" onClick={handleAddClick} sx={{mt: 1}} disabled={!isEditForm}>< AddCircleOutlineOutlinedIcon/></IconButton>
                   </Grid>
                 : null }</Grid>
             </Box>

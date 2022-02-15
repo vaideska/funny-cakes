@@ -65,6 +65,7 @@ export const CreateRecipeFormComponent = (
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="title"
             label="Название"
             onChange={handleChange}
@@ -74,6 +75,7 @@ export const CreateRecipeFormComponent = (
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="description"
             label="Краткое описание"
             multiline
@@ -85,6 +87,7 @@ export const CreateRecipeFormComponent = (
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="diameter"
             type="number"
             label="Диаметр"
@@ -105,6 +108,7 @@ export const CreateRecipeFormComponent = (
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="duration"
             type="number"
             label="Общее время"
@@ -122,13 +126,13 @@ export const CreateRecipeFormComponent = (
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>Состав</Typography>
         </Grid>
-        <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} />
+        <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} isEditForm={isEditForm}/>
         <Grid item xs={12}></Grid>
         <Grid item xs={12} sm={6}>
-          <CreateTagsContainer setForm={setForm} /></Grid>
+          <CreateTagsContainer setForm={setForm} isEditForm={isEditForm}/></Grid>
         <Grid item xs={12}>
           <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
-            <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
+            <InputStyle disabled={!isEditForm} accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
             <IconButton color="primary" aria-label="upload picture" component="span">
               <PhotoCamera />
             </IconButton>
@@ -139,6 +143,7 @@ export const CreateRecipeFormComponent = (
             <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="recipeText"
             label="Описание рецепта"
             multiline
@@ -146,10 +151,10 @@ export const CreateRecipeFormComponent = (
             rows={7}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Button disabled={isEditForm ? false : true} variant="contained" type="submit">Опубликовать рецепт</Button>
-        </Grid>
         {error !== '' ? <Grid item xs={12}><Typography color={"red"}>{error}</Typography></Grid> : null}
+        <Grid item xs={12}>
+          <Button disabled={!isEditForm} variant="contained" type="submit">Опубликовать рецепт</Button>
+        </Grid>
       </Grid>
     </Box>
   </Container>

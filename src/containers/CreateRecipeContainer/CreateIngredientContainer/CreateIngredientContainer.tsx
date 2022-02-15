@@ -1,4 +1,4 @@
-import React, { useCallback, useState, Dispatch, SetStateAction, ChangeEvent } from "react";
+import React, { useCallback, Dispatch, SetStateAction, ChangeEvent } from "react";
 import { RecipeIngredient } from '../../../types/recipeType'
 import { CreateIngredientComponent } from '../../../components/CreateRecipe/CreateIngredientComponent';
 import { SelectChangeEvent } from "@mui/material";
@@ -6,10 +6,11 @@ import { SelectChangeEvent } from "@mui/material";
 interface CreateIngredientContainerProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredient: RecipeIngredient,
-  id: number
+  id: number,
+  isEditForm: boolean
 }
 
-export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }: CreateIngredientContainerProps) => {
+export const CreateIngredientContainer = ({ setIngredientList, id, ingredient, isEditForm }: CreateIngredientContainerProps) => {
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
@@ -24,6 +25,7 @@ export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }:
   const propsCreateIngredient = {
     handleChange,
     ingredient,
+    isEditForm
   }
 
   return <CreateIngredientComponent {...propsCreateIngredient}/>
