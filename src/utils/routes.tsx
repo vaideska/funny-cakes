@@ -3,5 +3,5 @@ export const routes = {
   signUp: '/sign-up',
   signIn: '/sign-in',
   createRecipe: '/create-recipe',
-  recipe: '/recipes/:id'
+  recipe: '/recipes'
 }

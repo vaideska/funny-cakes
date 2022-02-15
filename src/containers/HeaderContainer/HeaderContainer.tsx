@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { selectAuthZStatus } from '../../store/slices/authZ/authZSelectors';
 import { openAuthZModal } from '../../store/slices/authZ/authZSlice';
 import { Header } from '../../components/Header';
+import { routes } from '../../utils/routes';
 
 export const HeaderContainer = () => {
    const history = useHistory()
@@ -27,7 +28,15 @@ export const HeaderContainer = () => {
       [],
    )
 
+   const handleCreateRecipeClick = useCallback(
+      (e) => {
+         e.preventDefault();
+         history.push(routes.createRecipe);
+      },
+      [],
+   )
+
    return (
-      <Header handleLogoClick={handleLogoClick} isLoged={isLoged} handleLoginBtnClick={handleModalOpen} />
+      <Header handleLogoClick={handleLogoClick} isLoged={isLoged} handleLoginBtnClick={handleModalOpen} handleCreateRecipeClick={handleCreateRecipeClick} />
    )
 }

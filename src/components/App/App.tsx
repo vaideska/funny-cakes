@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Route, Switch, Link} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import { initializeApp } from "firebase/app";
-import {CreateRecipe} from "../CreateRecipe/CreateRecipe";
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { HeaderContainer } from '../../containers/HeaderContainer';
 import {RecipesFeed} from "../RecipesFeed";
 import {child, get, getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
-import { Container } from '@mui/material';
+import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
+import { Recipe } from "../../types/recipeType";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {login} from "../../store/slices/authZ/authZSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
@@ -25,26 +25,6 @@ import {useAppDispatch} from "../../hooks/useAppDispatch";
   };
   const app = initializeApp(firebaseConfig)
 })();
-
-interface RecipeIngredient {
-  name: string,
-  unit: string,
-  count: number
-}
-
-export interface Recipe {
-  id: string,
-  title: string,
-  description: string,
-  owner: string,
-  date: number,
-  duration: number,
-  diameter: number,
-  imgUrl: string,
-  tags: string[],
-  ingredients: RecipeIngredient[],
-  recipeText: string
-}
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -104,18 +84,14 @@ function App() {
     <div className="App">
       <AuthZModalContainer />
       <HeaderContainer />
-      <Container>
-        <Link to={routes.main}>to main </Link>
-        <Link to={routes.createRecipe}>to create recipe </Link>
-      </Container>
         <Switch>
           <Route path={routes.main} exact>
             <RecipesFeed recipes={recipes}/>
           </Route>
           <Route path={routes.createRecipe} exact>
-            <CreateRecipe/>
+            <CreateRecipeFormContainer />
           </Route>
-          <Route path={routes.recipe}>
+          <Route path={`${routes.recipe}/:id`}>
             <FullRecipe/>
           </Route>
         </Switch>

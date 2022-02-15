@@ -1,5 +1,5 @@
 import { Box,  Container,  Grid } from "@mui/material";
-import {Recipe} from "../App/App";
+import {Recipe} from "../../types/recipeType";
 import {RecipeFeedItem} from "../RecipeFeedItem";
 
 interface RecipesFeedProps {
