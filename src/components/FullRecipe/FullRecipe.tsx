@@ -39,7 +39,7 @@ export const FullRecipe = (): React.ReactElement => {
     <div>
       <p>{recipe?.title}</p>
       <p>{recipe?.description}</p>
-      <p>{recipe?.owner}</p>
+      <p>{`${recipe?.owner.firstName} ${recipe?.owner.lastName}`}</p>
     </div>
   )
 }
