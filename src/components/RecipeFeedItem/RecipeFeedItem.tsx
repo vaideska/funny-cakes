@@ -36,7 +36,7 @@ export const RecipeFeedItem = ({recipe}: RecipeFeedItemProps) => {
               {recipe.description}
             </Typography>
             <Typography variant="subtitle2" color="text.secondary" align="right">
-              {recipe.owner}
+              {`${recipe.owner.firstName} ${recipe.owner.lastName}`}
             </Typography>
           </CardContent>
         </CardActionArea>

@@ -8,13 +8,13 @@ import {useSelector} from "react-redux";
 import { useFirebase } from "../../../hooks/useFirebase";
 
 export const CreateRecipeFormContainer = () => {
-  const userId = useSelector(userSelector).id;
+  const owner = useSelector(userSelector);
 
   const initStateForm: Recipe = {
     id: "",
     title: "",
     description: "",
-    owner: userId,
+    owner: owner,
     date: Date.now(),
     duration: 0,
     diameter: 0,
@@ -34,7 +34,7 @@ export const CreateRecipeFormContainer = () => {
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
-    if (form.imgUrl === '') {
+    if (selectedFile.name === '') {
       setError('Добавьте фотографию!');
       return;
     } else {
@@ -50,7 +50,7 @@ export const CreateRecipeFormContainer = () => {
         setError('Что-то пошло не так... Попробуйте позже.');
         console.log(e);
       });
-  }, [form, history, createRecipe, ingredientList]);
+  }, [form, history, createRecipe, ingredientList, selectedFile]);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const name = e.target.name;
@@ -65,7 +65,7 @@ export const CreateRecipeFormContainer = () => {
     uploadFile(fileObject).then((url) => {
         setForm(prev => ({...prev, 'imgUrl': url}));
     });
-  }, []);
+  }, [uploadFile]);
 
   const propsCreateRecipe = {
     selectedFile, 
