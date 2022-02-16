@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, FormEventHandler, ChangeEventHandler} from 'react';
+import React, {Dispatch, SetStateAction, FormEventHandler, ChangeEventHandler, useRef} from 'react';
 import { 
   Typography, 
   Box, 
@@ -7,7 +7,7 @@ import {
   Button,
   IconButton,
   Container,
-  Grid
+  Grid,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
@@ -17,11 +17,7 @@ import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutl
 import { Recipe, RecipeIngredient } from '../../../types/recipeType';
 import { CreateIngredientListContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientListContainer';
 import { CreateTagsContainer } from '../../../containers/CreateRecipeContainer/CreateTagsContainer';
-
-
-const Input = (props: {}) => {
-  return <input type='number' {...props} />
-};  
+import { InputNumberComponent } from '../InputNumberComponent';
 
 interface CreateRecipeFormComponentProps {
   selectedFile: File, 
@@ -39,9 +35,10 @@ export const CreateRecipeFormComponent = (
   { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error }
   : CreateRecipeFormComponentProps) => {
  
-const InputStyle = styled('input')({
-  display: 'none',
-});
+  const InputStyle = styled('input')({
+    display: 'none',
+  });
+  const ref = useRef();
 
   return (
   <Container sx={{
@@ -68,6 +65,7 @@ const InputStyle = styled('input')({
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="title"
             label="Название"
             onChange={handleChange}
@@ -77,6 +75,7 @@ const InputStyle = styled('input')({
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="description"
             label="Краткое описание"
             multiline
@@ -88,16 +87,19 @@ const InputStyle = styled('input')({
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="diameter"
             type="number"
             label="Диаметр"
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
-              inputComponent: Input,
               inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
                 min: 5,
-                max: 50
+                max: 50,
+                step: 0.5
               }
             }}
           />
@@ -106,14 +108,16 @@ const InputStyle = styled('input')({
           <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="duration"
             type="number"
             label="Общее время"
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">мин. <AccessTimeTwoToneIcon/></InputAdornment>,
-              inputComponent: Input,
               inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
                 min: 1
               }
             }}
@@ -122,13 +126,13 @@ const InputStyle = styled('input')({
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>Состав</Typography>
         </Grid>
-        <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} />
+        <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} isEditForm={isEditForm}/>
         <Grid item xs={12}></Grid>
         <Grid item xs={12} sm={6}>
-          <CreateTagsContainer setForm={setForm} /></Grid>
+          <CreateTagsContainer setForm={setForm} isEditForm={isEditForm}/></Grid>
         <Grid item xs={12}>
           <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
-            <InputStyle accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
+            <InputStyle disabled={!isEditForm} accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
             <IconButton color="primary" aria-label="upload picture" component="span">
               <PhotoCamera />
             </IconButton>
@@ -139,6 +143,7 @@ const InputStyle = styled('input')({
             <TextField
             required
             fullWidth
+            disabled={!isEditForm}
             name="recipeText"
             label="Описание рецепта"
             multiline
@@ -146,10 +151,10 @@ const InputStyle = styled('input')({
             rows={7}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Button disabled={isEditForm ? false : true} variant="contained" type="submit">Опубликовать рецепт</Button>
-        </Grid>
         {error !== '' ? <Grid item xs={12}><Typography color={"red"}>{error}</Typography></Grid> : null}
+        <Grid item xs={12}>
+          <Button disabled={!isEditForm} variant="contained" type="submit">Опубликовать рецепт</Button>
+        </Grid>
       </Grid>
     </Box>
   </Container>

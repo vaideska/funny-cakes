@@ -10,10 +10,11 @@ import { tagList } from '../../../utils/dictionary';
 
 interface CreateTagsComponentProps {
   tags: string[],
-  handleChange: (event: SelectChangeEvent<string[]>) => void
+  handleChange: (event: SelectChangeEvent<string[]>) => void,
+  isEditForm: boolean
 }
 
-export const CreateTagsComponent = ({ tags, handleChange }: CreateTagsComponentProps) => {
+export const CreateTagsComponent = ({ tags, handleChange, isEditForm }: CreateTagsComponentProps) => {
   return (
     <Box>
       <FormControl fullWidth>
@@ -23,6 +24,7 @@ export const CreateTagsComponent = ({ tags, handleChange }: CreateTagsComponentP
           id="demo-multiple-chip"
           multiple
           required
+          disabled={!isEditForm}
           value={tags}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}

@@ -5,9 +5,10 @@ import { CreateIngredientListComponent } from '../../../components/CreateRecipe/
 interface CreateIngredientListContainerProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
+  isEditForm: boolean
 }
 
-export const CreateIngredientListContainer = ({ setIngredientList, ingredientList }: CreateIngredientListContainerProps) => {
+export const CreateIngredientListContainer = ({ setIngredientList, ingredientList, isEditForm }: CreateIngredientListContainerProps) => {
 
   const handleAddClick = useCallback((e: MouseEvent) => {
     setIngredientList((prev) => {
@@ -28,7 +29,8 @@ export const CreateIngredientListContainer = ({ setIngredientList, ingredientLis
     ingredientList,
     setIngredientList,
     handleAddClick,
-    handleDeleteClick
+    handleDeleteClick,
+    isEditForm
   }
 
   return <CreateIngredientListComponent {...propsCreateIngredientList}/>;

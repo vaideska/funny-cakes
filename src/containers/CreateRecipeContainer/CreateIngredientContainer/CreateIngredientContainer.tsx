@@ -1,4 +1,4 @@
-import React, { useCallback, useState, Dispatch, SetStateAction, ChangeEvent } from "react";
+import React, { useCallback, Dispatch, SetStateAction, ChangeEvent } from "react";
 import { RecipeIngredient } from '../../../types/recipeType'
 import { CreateIngredientComponent } from '../../../components/CreateRecipe/CreateIngredientComponent';
 import { SelectChangeEvent } from "@mui/material";
@@ -6,31 +6,26 @@ import { SelectChangeEvent } from "@mui/material";
 interface CreateIngredientContainerProps {
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredient: RecipeIngredient,
-  id: number
+  id: number,
+  isEditForm: boolean
 }
 
-export const CreateIngredientContainer = ({ setIngredientList, id, ingredient }: CreateIngredientContainerProps) => {
-
-  const initIngredientState: RecipeIngredient = {...ingredient};
-  const [ingredientInForm, setIngredientInForm] = useState(initIngredientState);
+export const CreateIngredientContainer = ({ setIngredientList, id, ingredient, isEditForm }: CreateIngredientContainerProps) => {
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
     const value = e.target.value;
-    setIngredientInForm(prev => {
-      const newIngredient = {...prev, [name]: value};
-      setIngredientList((prev) => {                      
-        const newState: RecipeIngredient[] = [...prev];
-        newState[id] = newIngredient;
-        return newState;
-      });
-      return newIngredient;
+    setIngredientList((prev) => {                      
+      const newState: RecipeIngredient[] = [...prev];
+      newState[id] = {...prev[id], [name]: value};
+      return newState;
     });
-  }, [id, setIngredientList]);
+  }, [id, setIngredientList]); 
 
   const propsCreateIngredient = {
     handleChange,
-    ingredient: ingredientInForm,
+    ingredient,
+    isEditForm
   }
 
   return <CreateIngredientComponent {...propsCreateIngredient}/>
