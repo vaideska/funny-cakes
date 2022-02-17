@@ -29,10 +29,10 @@ export const RecipeFeedItem = ({recipe}: RecipeFeedItemProps) => {
             onClick={showFullRecipe}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography  sx={{ height: 66, overflow: 'hidden' }} gutterBottom variant="h5" component="div">
               {recipe.title}
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography sx={{ height: 56, overflow: 'hidden' }} variant="subtitle1">
               {recipe.description}
             </Typography>
             <Typography variant="subtitle2" color="text.secondary" align="right">
