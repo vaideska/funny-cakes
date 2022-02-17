@@ -5,15 +5,17 @@ import {useFirebase} from "../../hooks/useFirebase";
 import {useHistory} from "react-router-dom";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {MainPage} from "../../pages/MainPage/MainPage";
+import { selectRecipes, selectRecipesStatus} from "../../store/slices/recipes/recipesSelectors";
 
 export const MainPageContainer = () => {
+  const { getRecipes } = useFirebase();
+  const { loadedAll } = useSelector(selectRecipesStatus)
   const [tags, setTags] = useState<string[]>([]);
   const recipes = useSelector(selectRecipesByTags(tags));
-  const { getRecipes } = useFirebase();
   const history = useHistory();
 
   useEffect(() => {
-    if (recipes.length === 0) {
+    if (loadedAll === false) {
       getRecipes();
     }
   }, [getRecipes]);
@@ -38,6 +40,7 @@ export const MainPageContainer = () => {
 
   return (
     <MainPage
+      loadedAll={loadedAll}
       tags={tags}
       handleChange={handleChange}
       handleCardClick={handleCardClick}
