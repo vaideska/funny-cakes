@@ -10,13 +10,16 @@ export const recipesSlice = createSlice({
   initialState: initialState,
   name: 'recipes',
   reducers: {
-    setRecipes: (state, action:PayloadAction<Recipe[]>) => {
-      state.recipes = action.payload
+    setRecipes: (state, { payload }:PayloadAction<Recipe[]>) => {
+      state.recipes = payload
+    },
+    addRecipe: (state, { payload }:PayloadAction<Recipe>) => {
+      state.recipes.push(payload)
     }
   }
 })
 
 // Action creator
-export const { setRecipes } = recipesSlice.actions;
+export const { setRecipes, addRecipe } = recipesSlice.actions;
 // Reducer
 export const recipesReducer = recipesSlice.reducer;
