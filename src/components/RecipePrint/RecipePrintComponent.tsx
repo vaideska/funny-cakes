@@ -3,7 +3,7 @@ import style from './RecipePrintComponent.module.css';
 import { Recipe } from '../../types/recipeType';
 import { unitList } from '../../utils/dictionary';
 import ReactToPrint from 'react-to-print';
-import { Button } from '@mui/material';
+import { Button, Typography, List, ListItem } from '@mui/material';
 
 interface PrintComponentProps {
   recipe: Recipe,
@@ -14,19 +14,21 @@ const PrintComponent = React.forwardRef(({ recipe }: PrintComponentProps, ref: R
 
   return (
     <div className={style.print} ref={ref}>
-      <h3>{title}</h3>
-      <p>{`Автор: ${owner.firstName} ${owner.lastName}`}</p>
-      <p>{description}</p>
-      <p>Время приготовления: {duration} мин.</p>
-      <p>Диаметр торта: {diameter} см.</p>
-      <h4>Состав:</h4>
-      <ul>
+      <Typography variant="h4">{title}</Typography>
+      <Typography>{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
+      <Typography>{description}</Typography>
+      <Typography>Время приготовления: {duration} мин.</Typography>
+      <Typography>Диаметр торта: {diameter} см.</Typography>
+      <br/>
+      <Typography variant="h5">Состав:</Typography>
+      <List>
         {ingredients.map(({ name, unit, count}, index) => {
-          return <li key={index}>{`${name} — ${count} ${unitList[unit]}`}</li>
+          return <ListItem key={index}>{`${name} — ${count} ${unitList[unit]}`}</ListItem>
         })}
-      </ul>
-      <h4>Инструкция приготовления:</h4>
-      <p>{recipeText}</p>
+      </List>
+      <br/>
+      <Typography variant="h5">Инструкция приготовления:</Typography>
+      <Typography>{recipeText}</Typography>
     </div>
   );
 });
