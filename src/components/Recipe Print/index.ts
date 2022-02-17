@@ -1,0 +1,1 @@
+export { RecipePrintComponent } from './RecipePrintComponent';
