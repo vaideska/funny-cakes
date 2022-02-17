@@ -8,6 +8,7 @@ export interface RecipeIngredient {
 
 export interface Recipe {
   id: string,
+  type: string
   title: string,
   description: string,
   owner: user,
