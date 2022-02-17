@@ -11,6 +11,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {login} from "../../store/slices/authZ/authZSlice";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useFirebase} from "../../hooks/useFirebase";
+import {MainPageFeedContainer} from "../../containers/MainPageFeedContainer";
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
       <HeaderContainer />
         <Switch>
           <Route path={routes.main} exact>
-            <RecipesFeedContainer/>
+            <MainPageFeedContainer/>
           </Route>
           <Route path={routes.createRecipe} exact>
             <CreateRecipeFormContainer />
