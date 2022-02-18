@@ -1,19 +1,17 @@
 import {tagList} from "../../utils/dictionary";
 import {MenuItem, Box, Chip} from "@mui/material";
-import React, {useCallback, useState} from "react";
+import React from "react";
 import Select, {SelectChangeEvent} from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import {selectRecipesByTags} from "../../store/slices/recipes/recipesSelectors";
-import {useSelector} from "react-redux";
 
 interface MainPageTagsContainerProps {
   tags: string[],
   handleChange: (event: SelectChangeEvent<string[]>) => void
 }
 
-export const MainPageTagsContainer = ({tags, handleChange}: MainPageTagsContainerProps) => {
+export const MainPageTags = ({tags, handleChange}: MainPageTagsContainerProps) => {
 
   return (
     <Box>
@@ -24,7 +22,6 @@ export const MainPageTagsContainer = ({tags, handleChange}: MainPageTagsContaine
           id="demo-multiple-chip"
           multiple
           required
-          //disabled={!isEditForm}
           value={tags}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}

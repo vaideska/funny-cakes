@@ -1,14 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {selectRecipes, selectRecipesByTags} from "../../store/slices/recipes/recipesSelectors";
+import {selectRecipesByTags} from "../../store/slices/recipes/recipesSelectors";
 import {useFirebase} from "../../hooks/useFirebase";
-import {RecipesFeed} from "../../components/RecipesFeed";
 import {useHistory} from "react-router-dom";
-import {Container} from "@mui/material";
-import {MainPageTagsContainer} from "../MainPageTagsContainer";
 import {SelectChangeEvent} from "@mui/material/Select";
+import {MainPage} from "../../pages/MainPage/MainPage";
 
-export const MainPageFeedContainer = () => {
+export const MainPageContainer = () => {
   const [tags, setTags] = useState<string[]>([]);
   const recipes = useSelector(selectRecipesByTags(tags));
   const { getRecipes } = useFirebase();
@@ -39,9 +37,11 @@ export const MainPageFeedContainer = () => {
   )
 
   return (
-    <Container >
-      <MainPageTagsContainer tags={tags} handleChange={handleChange}/>
-      <RecipesFeed handleCardClick={handleCardClick} recipes={recipes}/>
-    </Container>
+    <MainPage
+      tags={tags}
+      handleChange={handleChange}
+      handleCardClick={handleCardClick}
+      recipes={recipes}
+    />
   )
 }
