@@ -3,7 +3,7 @@ import {Route, Switch} from "react-router-dom";
 import { routes } from '../../utils/routes';
 import {FullRecipe} from "../FullRecipe/FullRecipe";
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import {RecipesFeedContainer} from "../../containers/RecipesFeedContainer";
+import {RecipesFeed} from "../RecipesFeed";
 import {child, get, getDatabase, onValue, ref} from "firebase/database";
 import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
 import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';

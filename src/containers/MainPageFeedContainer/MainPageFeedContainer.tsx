@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectRecipes, selectRecipesByTags} from "../../store/slices/recipes/recipesSelectors";
 import {useFirebase} from "../../hooks/useFirebase";
-import {RecipesFeedContainer} from "../RecipesFeedContainer";
+import {RecipesFeed} from "../../components/RecipesFeed";
 import {useHistory} from "react-router-dom";
 import {Container} from "@mui/material";
 import {MainPageTagsContainer} from "../MainPageTagsContainer";
@@ -41,7 +41,7 @@ export const MainPageFeedContainer = () => {
   return (
     <Container >
       <MainPageTagsContainer tags={tags} handleChange={handleChange}/>
-      <RecipesFeedContainer handleCardClick={handleCardClick} recipes={recipes}/>
+      <RecipesFeed handleCardClick={handleCardClick} recipes={recipes}/>
     </Container>
   )
 }
