@@ -1,11 +1,11 @@
 import {useCallback, useEffect} from "react";
-import {child, get, getDatabase, ref, set, push, onValue} from "firebase/database";
+import {child, get, getDatabase, ref, set, push, onValue, DataSnapshot} from "firebase/database";
 import { getStorage, ref as storeRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import {login, setAuthZModalVariant} from "../store/slices/authZ/authZSlice";
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword} from "firebase/auth";
 import {useAppDispatch} from "./useAppDispatch";
 import { Recipe } from "../types/recipeType";
-import {setRecipes} from "../store/slices/recipes/recipesSlice";
+import { setRecipes, addRecipe } from "../store/slices/recipes/recipesSlice";
 
 type WriteUserData = (userId: string, firstName: string, lastName: string, email: string | null, profile_picture: string) => void;
 type CreateUser = (email: string, password: string, firstName: string, lastName: string) => void;
@@ -126,6 +126,23 @@ export const useFirebase = () => {
     }, []
   )
 
+  const getRecipeById = (id: string): Promise<void> => {
+    const dbRef = ref(getDatabase());
+    return get(child(dbRef, `recipes/${id}`))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            const result = snapshot.val(); // пришедший объект
+            dispatch(addRecipe(result))
+        } else {
+            console.log("No data available");
+            //
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }
+
   const uploadFile:UploadFile = useCallback((fileObject) => {
     const storage = getStorage();
     const storageRef = storeRef(storage, fileObject.name);
@@ -155,6 +172,7 @@ export const useFirebase = () => {
     loginUser,
     createRecipe,
     uploadFile,
-    getRecipes
+    getRecipes,
+    getRecipeById,
   }
 }
