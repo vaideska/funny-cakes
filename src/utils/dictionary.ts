@@ -18,3 +18,10 @@ export const tagList: Map = {
   'mastic': "Мастика",
   'vanilla cake': 'Ванильный корж'
 };
+
+export const typeRecipe: Map = {
+  'full recipe': 'Полный рецепт',
+  'cream': 'Крем',
+  'cake layer': 'Корж',
+  'surface': 'Поверхность торта'
+};

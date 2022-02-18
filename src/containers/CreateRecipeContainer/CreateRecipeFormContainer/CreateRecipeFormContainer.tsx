@@ -13,6 +13,7 @@ export const CreateRecipeFormContainer = () => {
   const initStateForm: Recipe = {
     id: "",
     title: "",
+    type: "full recipe",
     description: "",
     owner: owner,
     date: Date.now(),
