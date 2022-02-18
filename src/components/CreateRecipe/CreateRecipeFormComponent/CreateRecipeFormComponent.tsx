@@ -4,7 +4,6 @@ import {
   Box, 
   TextField, 
   InputAdornment,
-  Button,
   IconButton,
   Container,
   Grid,
@@ -13,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
+import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';import { LoadingButton } from '@mui/lab';
 
 import { Recipe, RecipeIngredient } from '../../../types/recipeType';
 import { CreateIngredientListContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientListContainer';
@@ -28,11 +28,12 @@ interface CreateRecipeFormComponentProps {
   ingredientList: RecipeIngredient[],
   setForm: Dispatch<SetStateAction<Recipe>>,
   handleUploadFile: ChangeEventHandler,
-  error: string
+  error: string,
+  isLoadFile: boolean
 }
 
 export const CreateRecipeFormComponent = (
-  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error }
+  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error, isLoadFile }
   : CreateRecipeFormComponentProps) => {
  
   const InputStyle = styled('input')({
@@ -153,7 +154,16 @@ export const CreateRecipeFormComponent = (
         </Grid>
         {error !== '' ? <Grid item xs={12}><Typography color={"red"}>{error}</Typography></Grid> : null}
         <Grid item xs={12}>
-          <Button disabled={!isEditForm} variant="contained" type="submit">Опубликовать рецепт</Button>
+          <LoadingButton 
+            loading={isLoadFile}
+            loadingPosition="start"
+            disabled={!isEditForm}
+            startIcon={<LibraryAddOutlinedIcon/>}
+            variant="contained" 
+            type="submit"
+          >
+            Опубликовать рецепт
+          </LoadingButton>
         </Grid>
       </Grid>
     </Box>

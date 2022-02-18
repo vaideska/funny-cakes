@@ -24,6 +24,7 @@ export const CreateRecipeFormContainer = () => {
     recipeText: ""};
 
   const [form, setForm] = useState(initStateForm);
+  const [isLoadFile, setIsLoadFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState(new File([], ''));
   const [isEditForm, setIsEditForm] = useState(true);
   const [error, setError] = useState('');
@@ -61,9 +62,13 @@ export const CreateRecipeFormContainer = () => {
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
     if (fileObject.name === '') return;
+    setIsLoadFile(true);
     setSelectedFile(fileObject);
     uploadFile(fileObject).then((url) => {
-        setForm(prev => ({...prev, 'imgUrl': url}));
+        setForm(prev => {
+          setIsLoadFile(false);
+          return {...prev, 'imgUrl': url};
+        });
     });
   }, [uploadFile]);
 
@@ -76,7 +81,8 @@ export const CreateRecipeFormContainer = () => {
     ingredientList,
     setForm,
     handleUploadFile,
-    error
+    error,
+    isLoadFile
   }
 
   return <CreateRecipeFormComponent {...propsCreateRecipe}/>
