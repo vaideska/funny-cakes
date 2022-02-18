@@ -3,9 +3,10 @@ import { Recipe, RecipeIngredient } from '../../../types/recipeType';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../../utils/routes';
 import { CreateRecipeFormComponent } from '../../../components/CreateRecipe/CreateRecipeFormComponent';
-import {userSelector} from "../../../store/slices/authZ/authZSelectors";
-import {useSelector} from "react-redux";
+import { userSelector} from "../../../store/slices/authZ/authZSelectors";
+import { useSelector } from "react-redux";
 import { useFirebase } from "../../../hooks/useFirebase";
+import { SelectChangeEvent } from '@mui/material';
 
 export const CreateRecipeFormContainer = () => {
   const owner = useSelector(userSelector);
@@ -43,18 +44,19 @@ export const CreateRecipeFormContainer = () => {
       setError('');
     }
     setIsEditForm(false);
-    const recipeObject = {...form, 'ingredients': ingredientList};
+    const tags = form.type !== "full recipe" ? [] : form.tags;
+    const recipeObject = {...form, 'ingredients': ingredientList, tags, owner};
     createRecipe(recipeObject)
       .then((recipeId) => {
-        history.replace(`${routes.recipe}/${recipeId}`);
+        form.type === "full recipe" ? history.replace(`${routes.recipe}/${recipeId}`) : history.replace(routes.main);
       })
       .catch((e) => {
         setError('Что-то пошло не так... Попробуйте позже.');
         console.log(e);
       });
-  }, [form, history, createRecipe, ingredientList, selectedFile]);
+  }, [form, history, createRecipe, ingredientList, selectedFile, owner]);
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
     const value = e.target.value;
     setForm(prev => ({...prev, [name]: value}));
@@ -75,7 +77,8 @@ export const CreateRecipeFormContainer = () => {
 
   const propsCreateRecipe = {
     selectedFile, 
-    isEditForm, 
+    isEditForm,
+    form,
     handleSubmit,
     handleChange,
     setIngredientList,
