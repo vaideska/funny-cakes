@@ -1,40 +1,23 @@
 import { Box,  Container,  Grid } from "@mui/material";
 import {Recipe} from "../../types/recipeType";
-import {RecipeFeedItem} from "../RecipeFeedItem";
+import {RecipeFeedItem} from "../RecipesFeedItem";
 
-interface RecipesFeedProps {
+interface RecipesFeedContainerProps {
+  handleCardClick: (recipeId: string) => void;
   recipes: Recipe[]
 }
 
-export const RecipesFeed = ({recipes}: RecipesFeedProps) => {
+export const RecipesFeed = ({handleCardClick, recipes}:RecipesFeedContainerProps) => {
 
   return (
-    <Container >
-      <Box sx={{py: 4}}>
-        <Grid container spacing={4} alignItems={"center"}>
-          {recipes.length > 0 && recipes.map((recipe) => (
-            <RecipeFeedItem key={recipe.id} recipe={recipe}/>
-          ))}
-        </Grid>
-      </Box>
-    </Container>
+    <Box sx={{py: 4}}>
+      <Grid container spacing={4} alignItems={"center"}>
+        {recipes.length > 0 && recipes.map((recipe) => (
+          // Не придумал как сделать по другому. Такой подход позволит полностью переиспользовать RecipesFeed
+          // в степере передав в него функцию, которая будет открывать диалоговое окно.
+          <RecipeFeedItem key={recipe.id} recipe={recipe} handleCardClick={() => handleCardClick(recipe.id)}/>
+        ))}
+      </Grid>
+    </Box>
   )
 }
-
-// Вариант с единоразовой загрузкой рецептов
-// const dbRef = ref(getDatabase());
-// get(child(dbRef, `recipes/`)).then((snapshot) => {
-//   if (snapshot.exists()) {
-//     const resultArr: Array<Recipe> = [];
-//     const result = snapshot.val(); // пришедший объект
-//     const keysArr = Object.keys(result);
-//     keysArr.forEach((el) => {
-//       resultArr.push(result[el]); // из объекта с объектами делаем массив
-//     })
-//     setRecipes(resultArr);
-//   } else {
-//     console.log("No data available");
-//   }
-// }).catch((error) => {
-//   console.error(error);
-// });

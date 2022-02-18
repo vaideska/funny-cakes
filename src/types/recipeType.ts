@@ -20,6 +20,13 @@ export interface Recipe {
   recipeText: string
 }
 
-export interface recipesTypes {
+export interface RecipesStatus {
+  loadedAll: boolean,
+  loading: boolean,
+  error: string | null,
+}
+
+export interface RecipesTypes {
+  status: RecipesStatus
   recipes: Recipe[]
 }
