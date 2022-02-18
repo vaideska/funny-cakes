@@ -1,38 +1,27 @@
-import { ChangeEventHandler, FormEventHandler, MouseEventHandler } from 'react';
 import { Avatar, Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
+import { RegFormFields } from '../../../types/authZTypes';
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 interface FormRegisterProps {
-  registerUser: FormEventHandler<HTMLFormElement>,
-  handleChangeFirstName: ChangeEventHandler<HTMLInputElement>,
-  handleChangeLastName: ChangeEventHandler<HTMLInputElement>,
-  handleChangeEmailReg: ChangeEventHandler<HTMLInputElement>,
-  handleChangePassReg: ChangeEventHandler<HTMLInputElement>,
-  handleChangePassRepeatReg: ChangeEventHandler<HTMLInputElement>,
-  handleSetFormVariantClick: MouseEventHandler<HTMLAnchorElement>,
-  
-  firstNameReg: string,
-  lastNameReg: string,
-  emailReg: string,
-  passReg: string,
-  passRepeatReg: string,
+  RequestIsPending: boolean
+  formController: UseFormReturn<RegFormFields>,
+  registerUser: SubmitHandler<RegFormFields>,
+  handleSetFormVariantClick: () => void
 }
 
-export const FormRegister: React.FC<FormRegisterProps> = ({
+export const FormRegister = ({
+  RequestIsPending,
+  formController,
   registerUser,
-  handleChangeFirstName,
-  handleChangeLastName,
-  handleChangeEmailReg,
-  handleChangePassReg,
-  handleChangePassRepeatReg,
   handleSetFormVariantClick,
+}: FormRegisterProps) => {
 
-  firstNameReg,
-  lastNameReg,
-  emailReg,
-  passReg,
-  passRepeatReg,
-}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = formController;
 
   return (
     <Box
@@ -48,69 +37,62 @@ export const FormRegister: React.FC<FormRegisterProps> = ({
       <Typography component="h1" variant="h5">
         Регистрация
       </Typography>
-      <Box component="form" noValidate onSubmit={registerUser} sx={{ mt: 3 }}>
+      <Box component="form" noValidate onSubmit={handleSubmit(registerUser)} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              autoComplete="given-name"
+              {...register('firstName')}
+              disabled={RequestIsPending}
+              error={errors.lastName && true}
               name="firstName"
-              required
               fullWidth
               label="Имя"
               autoFocus
-              value={firstNameReg}
-              onChange={handleChangeFirstName}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
+              {...register('lastName')}
+              disabled={RequestIsPending}
+              error={errors.lastName && true}
               fullWidth
               label="Фамилия"
-              name="lastName"
-              autoComplete="family-name"
-              value={lastNameReg}
-              onChange={handleChangeLastName}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
+              {...register('email')}
+              disabled={RequestIsPending}
+              error={errors.email && true}
               fullWidth
               label="Email Address"
-              type='email'
-              name="email"
-              autoComplete="email"
-              value={emailReg}
-              onChange={handleChangeEmailReg}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
+              {...register('pass')}
+              disabled={RequestIsPending}
+              error={(errors.pass || errors.repeatPass?.type === 'oneOf') && true}
+              helperText={errors.pass?.type === 'min' ? errors.pass?.message : ''}
               fullWidth
-              name="password"
               type='password'
               label="Password"
-              autoComplete="new-password"
-              value={passReg}
-              onChange={handleChangePassReg}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
+              {...register('repeatPass')}
+              disabled={RequestIsPending}
+              error={errors.repeatPass && true}
+              helperText={errors?.repeatPass?.type === 'oneOf' ? errors?.repeatPass?.message : ''}
               fullWidth
-              name="password"
               type='password'
               label="Repeat password"
-              autoComplete="new-password"
-              value={passRepeatReg}
-              onChange={handleChangePassRepeatReg}
             />
           </Grid>
         </Grid>
         <Button
+          disabled={RequestIsPending}
           type="submit"
           fullWidth
           variant="contained"

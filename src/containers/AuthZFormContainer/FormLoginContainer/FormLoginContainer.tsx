@@ -14,22 +14,22 @@ import { useSelector } from 'react-redux';
 const validateRules = yup.object({
         email: yup
             .string()
-            .required('Поле обязательно для заполнения')
+            .required()
             .email('Некорректный email адрес '),
         pass: yup
             .string()
-            .required('Поле обязательно для заполнения')
+            .required()
             .min(6, 'Пароль должен быть не менее 6 символов'),
     })
 
 export const FormLoginContainer = () => {
     const dispatch = useAppDispatch();
     const { loginUser } = useFirebase();
+    const RequestIsPending = useSelector(selectAuthZStatus).loading
     const formController = useForm<LoginFormFields>({
         resolver: yupResolver(validateRules),
         mode: 'onSubmit',
     });
-    const RequestIsPending = useSelector(selectAuthZStatus).loading
 
     const handleSetFormVariantClick = useCallback(
         (evt: React.MouseEvent<HTMLAnchorElement>) => {
@@ -40,8 +40,7 @@ export const FormLoginContainer = () => {
     )
 
     const handleLoginUser = useCallback(
-        (formData:any) => {
-            console.log('srabotal');
+        (formData: LoginFormFields) => {
             loginUser(formData.email, formData.pass)
         },
         []

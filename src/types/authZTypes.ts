@@ -27,3 +27,11 @@ export interface LoginFormFields {
     email: string,
     pass: string
 }
+
+export interface RegFormFields {
+    firstName: string
+    lastName: string 
+    email: string,
+    pass: string,
+    repeatPass: string
+}

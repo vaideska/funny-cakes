@@ -24,6 +24,7 @@ export const FormLogin = ({
   formController,
   RequestIsPending
 }: FormLoginProps) => {
+  
   const { 
     register, 
     handleSubmit,
@@ -54,19 +55,17 @@ export const FormLogin = ({
           label="Email Address *"
           disabled={RequestIsPending}
           error={errors.email && true}
-          helperText={errors.email ? errors.email?.message : ''}
           margin="normal"
           fullWidth
           autoFocus
         />
-        {console.log(errors)}
         <TextField
           {...register('pass')}
           type="password"
           label="Password *"
           disabled={RequestIsPending}
           error={errors.pass && true}
-          helperText={errors.pass ? errors.pass?.message : ''}
+          helperText={errors.pass?.type === 'min' ? errors.pass?.message : ''}
           fullWidth
           margin="normal"
         />
