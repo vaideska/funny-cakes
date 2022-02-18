@@ -4,7 +4,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useSelector } from 'react-redux';
 import { selectRecipeById } from '../../../store/slices/recipes/recipesSelectors';
 import { MatchParams } from '../../../types/globalTypes';
-import { RecipeIngredient } from '../../../types/recipeType';
+import { Recipe, RecipeIngredient } from '../../../types/recipeType';
 import { FullRecipeInfoIngredients } from '../../../components/FullRecipe/FullRecipeHero/FullRecipeInfo/FullRecipeInfoIngredients'
 
 export const FullRecipeInfoIngredientsContainer = () => {
@@ -71,6 +71,7 @@ export const FullRecipeInfoIngredientsContainer = () => {
             diameter={diameter}
             handleInputChange={handleInputChange}
             handleSliderChange={handleSliderChange}
+            recipe={recipe as Recipe}
         />
     )
 }

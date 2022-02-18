@@ -2,19 +2,23 @@ import { List, ListItem, Slider, ListItemText, TextField, Stack } from '@mui/mat
 import { ChangeEventHandler, SyntheticEvent } from 'react';
 import { Recipe as RecipeType, RecipeIngredient } from '../../../../../types/recipeType';
 import { unitList } from '../../../../../utils/dictionary';
+import { FullRecipePrint } from '../../../FullRecipePrint';
 
 interface FullRecipeInfoIngredientsProps {
     customIngredients?: RecipeIngredient[],
     diameter: number | number[],
     handleInputChange: ChangeEventHandler,
-    handleSliderChange: (event: Event | SyntheticEvent, value: number | number[]) => void
+    handleSliderChange: (event: Event | SyntheticEvent, value: number | number[]) => void,
+    recipe: RecipeType
 }
 
 export const FullRecipeInfoIngredients = ({
     diameter,
     customIngredients,
     handleInputChange,
-    handleSliderChange }: FullRecipeInfoIngredientsProps) => {
+    handleSliderChange,
+    recipe }: FullRecipeInfoIngredientsProps) => {
+    const diametrPrint = typeof diameter === "number" ? diameter : diameter[0];             //Какой-то костыль для ТС
     return (
         customIngredients ? (
             <Stack alignItems={'center'}>
@@ -51,6 +55,7 @@ export const FullRecipeInfoIngredients = ({
                         </ListItem>
                     ))}
                 </List>
+                <FullRecipePrint recipe={{...recipe, ingredients: customIngredients, diameter: diametrPrint }}/>
             </Stack>
         ) : (
             null // выведем лоадер
