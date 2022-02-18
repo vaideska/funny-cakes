@@ -1,21 +1,14 @@
 import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from "@mui/material";
-import React, {useCallback} from "react";
-import {useHistory} from "react-router-dom";
+import React from "react";
 import {Recipe} from "../../types/recipeType";
 
 interface RecipeFeedItemProps {
-  recipe: Recipe
+  recipe: Recipe,
+  handleCardClick?: () => void, //TODO: убрать опциональность. без нее ошибка.
 }
 
 
-export const RecipeFeedItem = ({recipe}: RecipeFeedItemProps) => {
-  const history = useHistory();
-
-  const showFullRecipe = useCallback(
-    () => {
-      history.push(`/recipes/${recipe.id}`)
-    }, []
-  )
+export const RecipeFeedItem = ({recipe, handleCardClick}: RecipeFeedItemProps) => {
 
   return (
     <Grid item key={recipe.id} xs={12} sm={6} md={4}>
@@ -26,7 +19,7 @@ export const RecipeFeedItem = ({recipe}: RecipeFeedItemProps) => {
             height="220"
             image={recipe.imgUrl}
             title={recipe.title}
-            onClick={showFullRecipe}
+            onClick={handleCardClick}
           />
           <CardContent>
             <Typography  sx={{ height: 66, overflow: 'hidden' }} gutterBottom variant="h5" component="div">
