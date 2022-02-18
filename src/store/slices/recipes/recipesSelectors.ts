@@ -13,11 +13,6 @@ export const selectRecipeById = (id: string) =>
             (recipe: Recipe) => recipe.id === id
         );
     }
-export const selectRecipeByType = (type: string) => 
-    (state: RootState) => 
-        state.recipes.recipes.find(
-          recipe => recipe.type === type
-        );
 export const selectRecipesByTags = (tagsArr: string[]) => ({ recipes: { recipes }}: RootState) => {
     if (!tagsArr.length) {
         return recipes
