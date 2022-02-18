@@ -1,6 +1,6 @@
 import { Box,  Container,  Grid } from "@mui/material";
-import {RecipeFeedItem} from "../RecipeFeedItem";
 import {Recipe} from "../../types/recipeType";
+import {RecipeFeedItem} from "../RecipesFeedItem";
 
 interface RecipesFeedContainerProps {
   handleCardClick: (recipeId: string) => void;
