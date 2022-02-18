@@ -22,3 +22,8 @@ export interface user {
     lastName: string | null,
     profile_picture: string | undefined,
 }
+
+export interface LoginFormFields {
+    email: string,
+    pass: string
+}

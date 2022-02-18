@@ -1,7 +1,7 @@
 import {useCallback, useEffect} from "react";
 import {child, get, getDatabase, ref, set, push, onValue, DataSnapshot} from "firebase/database";
 import { getStorage, ref as storeRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import {login, setAuthZModalVariant} from "../store/slices/authZ/authZSlice";
+import { login, setAuthZModalVariant, setLoading} from "../store/slices/authZ/authZSlice";
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword} from "firebase/auth";
 import {useAppDispatch} from "./useAppDispatch";
 import { Recipe } from "../types/recipeType";
@@ -26,37 +26,42 @@ export const useFirebase = () => {
 
   const listenUser = useCallback( // подписываемся на юзера, если залогинены, то грузим его данные и кладем в стор.
     () => {
+      dispatch(setLoading(true))
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log(user.uid);
           getUserData(user.uid);
         } else {
           console.log('signed out');
+          dispatch(setLoading(false))
         }
       });
     }, []
   )
 
-  const getUserData:GetUserData = useCallback(
+  const getUserData: GetUserData = useCallback(
     (userId) => {
       const dbRef = ref(getDatabase());
       get(child(dbRef, `users/${userId}`)).then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           dispatch(login(userData))
-          console.log(userData);
         } else {
           console.log('error');
           throw new Error('User data not found');
         }
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
     }, []
   )
 
   const createUser:CreateUser = useCallback(
     (email, password, firstName, lastName) => {
+      dispatch(setLoading(true))
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user; // созданный юзер
@@ -74,6 +79,7 @@ export const useFirebase = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage, errorCode);
+          dispatch(setLoading(false))
         });
     }, []
   )
@@ -94,15 +100,16 @@ export const useFirebase = () => {
         lastName,
         profile_picture,
       })
-        .then(() => {
-          console.log('success!')
-          dispatch(setAuthZModalVariant());
-        })
+      .then(() => {
+        console.log('success!')
+        dispatch(setAuthZModalVariant());
+      })
     }, []
   )
 
   const loginUser:UserLogin = useCallback(
     (email, password) => {
+      dispatch(setLoading(true))
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
@@ -115,6 +122,7 @@ export const useFirebase = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage, errorCode);
+          dispatch(setLoading(false))
         });
     }, []
   )

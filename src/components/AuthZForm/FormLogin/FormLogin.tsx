@@ -7,27 +7,29 @@ import {
   TextField,
   Typography
 } from '@mui/material'
-import { ChangeEventHandler, FormEventHandler, MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { LoginFormFields } from '../../../types/authZTypes'
 
 interface FormLoginProps {
-  loginUser: FormEventHandler<HTMLFormElement>,
-  handleEmailChange: ChangeEventHandler<HTMLInputElement>,
-  handlePasswordChange: ChangeEventHandler<HTMLInputElement>,
+  formController: UseFormReturn<LoginFormFields>
+  loginUser: SubmitHandler<LoginFormFields>,
   handleSetFormVariantClick: MouseEventHandler<HTMLAnchorElement>,
-
-  emailLogin: string,
-  passLogin: string,
+  RequestIsPending: boolean
 }
 
 export const FormLogin = ({
   loginUser,
-  handleEmailChange,
-  handlePasswordChange,
   handleSetFormVariantClick,
-
-  emailLogin,
-  passLogin,
+  formController,
+  RequestIsPending
 }: FormLoginProps) => {
+  const { 
+    register, 
+    handleSubmit,
+    formState: { errors }
+  } = formController;
+
   return (
     <Box
       sx={{
@@ -45,31 +47,32 @@ export const FormLogin = ({
       <Box
           component="form"
           sx={{ mt: 1 }}
-          onSubmit={loginUser}
+          onSubmit={handleSubmit(loginUser)}
       >
         <TextField
-          type="email"
-          label="Email Address"
-          autoComplete="email"
+          {...register('email')}
+          label="Email Address *"
+          disabled={RequestIsPending}
+          error={errors.email && true}
+          helperText={errors.email ? errors.email?.message : ''}
           margin="normal"
-          required
           fullWidth
-          value={emailLogin}
-          onChange={handleEmailChange}
           autoFocus
         />
+        {console.log(errors)}
         <TextField
+          {...register('pass')}
           type="password"
-          label="Password"
-          autoComplete="current-password"
-          margin="normal"
-          required
+          label="Password *"
+          disabled={RequestIsPending}
+          error={errors.pass && true}
+          helperText={errors.pass ? errors.pass?.message : ''}
           fullWidth
-          value={passLogin}
-          onChange={handlePasswordChange}
+          margin="normal"
         />
         <Button
           type="submit"
+          disabled={RequestIsPending}
           fullWidth
           variant="contained"
           size="large"
