@@ -6,6 +6,7 @@ import {useHistory} from "react-router-dom";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {MainPage} from "./MainPage";
 import { selectRecipesStatus} from "../../store/slices/recipes/recipesSelectors";
+import {Recipe} from "../../types/recipeType";
 
 export const MainPageContainer = () => {
   const { getRecipes } = useFirebase();
@@ -33,8 +34,8 @@ export const MainPageContainer = () => {
 
 
   const handleCardClick = useCallback(
-    (recipeId:string) => {
-      history.push(`/recipes/${recipeId}`)
+    (recipe: Recipe) => {
+      history.push(`/recipes/${recipe.id}`)
     }, [history]
   )
 

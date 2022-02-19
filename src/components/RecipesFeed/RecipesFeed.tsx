@@ -3,7 +3,7 @@ import {Recipe} from "../../types/recipeType";
 import {RecipeFeedItem} from "../RecipesFeedItem";
 
 interface RecipesFeedContainerProps {
-  handleCardClick: (recipeId: string) => void;
+  handleCardClick: (recipe: Recipe) => void;
   recipes: Recipe[]
 }
 
@@ -15,7 +15,7 @@ export const RecipesFeed = ({handleCardClick, recipes}:RecipesFeedContainerProps
         {recipes.length > 0 && recipes.map((recipe) => (
           // Не придумал как сделать по другому. Такой подход позволит полностью переиспользовать RecipesFeed
           // в степере передав в него функцию, которая будет открывать диалоговое окно.
-          <RecipeFeedItem key={recipe.id} recipe={recipe} handleCardClick={() => handleCardClick(recipe.id)}/>
+          <RecipeFeedItem key={recipe.id} recipe={recipe} handleCardClick={() => handleCardClick(recipe)}/>
         ))}
       </Grid>
     </Box>

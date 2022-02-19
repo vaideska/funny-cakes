@@ -9,7 +9,7 @@ import { PageLoader } from '../../components/UI/PageLoader';
 interface MainPageProps {
   tags: string[],
   handleChange: (event: SelectChangeEvent<string[]>) => void,
-  handleCardClick: (recipeId: string) => void,
+  handleCardClick: (recipe: Recipe) => void,
   recipes: Recipe[],
   loadedAll: boolean
 }
