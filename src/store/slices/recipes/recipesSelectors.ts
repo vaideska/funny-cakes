@@ -13,14 +13,20 @@ export const selectRecipeById = (id: string) =>
             (recipe: Recipe) => recipe.id === id
         );
     }
-export const selectRecipesByTags = (tagsArr: string[]) => ({ recipes: { recipes }}: RootState) => {
+export const selectRecipesByTags = (tagsArr: string[], type:string) => ({ recipes: { recipes }}: RootState) => {
     if (!tagsArr.length) {
-        return recipes
+        return recipes.filter((recipe) => recipe.type === type)
     }
     const tagsMap:TagsMap = {};
     for (const tag of tagsArr) {
         tagsMap[tag] = true;
     }
 
-    return recipes.filter((recipe: Recipe) => recipe.tags.some((tag) => tagsMap[tag]))
+    return recipes.filter((recipe) =>
+      tagsArr.every(tag =>
+        recipe.tags.some(rTag =>
+          (rTag === tag) && (recipe.type === type)
+        )
+      )
+    )
 }

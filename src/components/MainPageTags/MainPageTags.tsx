@@ -14,9 +14,9 @@ interface MainPageTagsContainerProps {
 export const MainPageTags = ({tags, handleChange}: MainPageTagsContainerProps) => {
 
   return (
-    <Box>
+    <Box sx={{pt: 2}}>
       <FormControl fullWidth>
-        <InputLabel id="demo-multiple-chip-label">Выберите теги</InputLabel>
+        <InputLabel id="demo-multiple-chip-label">Поиск по тегам</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
@@ -24,7 +24,7 @@ export const MainPageTags = ({tags, handleChange}: MainPageTagsContainerProps) =
           required
           value={tags}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Поиск по тегам" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
