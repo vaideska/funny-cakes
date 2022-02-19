@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from '@mui/material'
-import { FormRegisterContainer } from '../../containers/AuthZFormContainer/FormRegisterContainer'
-import { FormLoginContainer } from '../../containers/AuthZFormContainer/FormLoginContainer'
+import { FormRegisterContainer } from '../AuthZForm/FormRegister/FormRegisterContainer'
+import { FormLoginContainer } from '../AuthZForm/FormLogin/FormLoginContainer'
 
 interface AuthZModalProps {
     isOpen: boolean,

@@ -1,1 +1,0 @@
-export { CreateTagsContainer } from './CreateTagsContainer';

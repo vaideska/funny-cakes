@@ -1,1 +1,0 @@
-export { CreateTagsComponent } from './CreateTagsComponent';
