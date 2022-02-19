@@ -31,7 +31,7 @@ export const CreateInstructionList = ({
             <Box >
               <Grid container>
                 <Grid item xs={12} sm={11}>
-                  <Typography variant="h5" gutterBottom component="div" sx={{mb: -1}}>{`${index+1} шаг`}</Typography>
+                  <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>{`${index+1} шаг`}</Typography>
                 </Grid>
                 {countInstruction > 1 ? 
                   <Grid item xs={12} sm={0.5}>
