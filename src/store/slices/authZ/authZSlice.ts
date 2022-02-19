@@ -27,9 +27,11 @@ export const authZSlice = createSlice({
         login: (state, action: PayloadAction<user>) => {
             state.status.isLoged = true
             state.user = action.payload;
-            //TODO: Реализовать закрытие вызовом экшена closeAuthZModal. Через Thunk
             state.modal.isOpen = false
             state.modal.variant = 'login'
+        },
+        setLoading: (state, { payload }: PayloadAction<boolean>) => {
+            state.status.loading = payload
         },
         logout: (state, /* action: PayloadAction<boolean> */) => {
             state.status.isLoged = false
@@ -49,6 +51,7 @@ export const authZSlice = createSlice({
 
 export const { 
     login,
+    setLoading,
     logout,
     openAuthZModal,
     closeAuthZModal,

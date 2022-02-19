@@ -1,87 +1,63 @@
 import { useCallback, useState, MouseEvent, ChangeEvent, FormEvent } from 'react';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setAuthZModalVariant } from '../../../store/slices/authZ/authZSlice';
 import { FormRegister } from '../../../components/AuthZForm/FormRegister';
-import {useFirebase} from "../../../hooks/useFirebase";
+import { useFirebase } from "../../../hooks/useFirebase";
+import { RegFormFields } from '../../../types/authZTypes';
+import { useSelector } from 'react-redux';
+import { selectAuthZStatus } from '../../../store/slices/authZ/authZSelectors';
 
+const validateRules = yup.object({
+    firstName: yup
+        .string()
+        .required(),
+    lastName: yup
+        .string()
+        .required(),
+    email: yup
+        .string()
+        .required()
+        .email('Некорректный email адрес '),
+    pass: yup
+        .string()
+        .required()
+        .min(6, 'Пароль должен быть не менее 6 символов'),
+    repeatPass: yup
+        .string()
+        .required()
+        .oneOf([yup.ref('pass'), null], 'Пароли не совпадают')
+})
 
 export const FormRegisterContainer = () => {
-    const [firstNameReg, setFirstNameReg] = useState('')
-    const [lastNameReg, setLastNameReg] = useState('')
-    const [emailReg, setEmailReg] = useState('');
-    const [passReg, setPassReg] = useState('');
-    const [passRepeatReg, setPassRepeatReg] = useState('');
     const dispatch = useAppDispatch()
-    const { regUser } = useFirebase();
+    const { regUser } = useFirebase()
+    const RequestIsPending = useSelector(selectAuthZStatus).loading
+    const formController = useForm<RegFormFields>({
+        resolver: yupResolver(validateRules),
+        mode: 'onSubmit',
+    });
 
     const handleSetFormVariantClick = useCallback(
-        (evt: MouseEvent<HTMLAnchorElement>) => {
-            evt.preventDefault()
+        () => {
             dispatch(setAuthZModalVariant())
         },
         [],
     )
 
-    const handleChangeFirstName = useCallback(
-        (evt: ChangeEvent<HTMLInputElement>) => {
-            setFirstNameReg(evt.target.value)
-        },
-        []
-    )
-
-    const handleChangeLastName = useCallback(
-        (evt: React.ChangeEvent<HTMLInputElement>) => {
-            setLastNameReg(evt.target.value)
-        },
-        []
-    )
-
-    const handleChangeEmailReg = useCallback(
-        (evt: React.ChangeEvent<HTMLInputElement>) => {
-            setEmailReg(evt.target.value)
-        },
-        []
-    )
-
-    const handleChangePassReg = useCallback(
-        (evt: React.ChangeEvent<HTMLInputElement>) => {
-            setPassReg(evt.target.value)
-        },
-        []
-    )
-
-    const handleChangePassRepeatReg = useCallback(
-        (evt: React.ChangeEvent<HTMLInputElement>) => {
-            setPassRepeatReg(evt.target.value)
-        },
-        []
-    )
-
-    const registerUser = (event: FormEvent) => {
-          event.preventDefault();
-          if (passReg !== passRepeatReg || passReg.length < 6) {
-              console.log('пароли не совпадают или пароль должен быть минимум 6 символов');
-              return
-          }
-          regUser(emailReg, passReg, firstNameReg, lastNameReg);
-      }
+    const registerUser = ({ email, firstName, lastName, pass }: RegFormFields) => {
+        regUser(email, pass, firstName, lastName);
+    }
 
     return (
         <FormRegister
-            firstNameReg={firstNameReg}
-            lastNameReg={lastNameReg}
-            emailReg={emailReg}
-            passReg={passReg}
-            passRepeatReg={passRepeatReg}
-
+            formController={formController}
             registerUser={registerUser}
-            handleChangeFirstName={handleChangeFirstName}
-            handleChangeLastName={handleChangeLastName}
-            handleChangeEmailReg={handleChangeEmailReg}
-            handleChangePassReg={handleChangePassReg}
-            handleChangePassRepeatReg={handleChangePassRepeatReg}
             handleSetFormVariantClick={handleSetFormVariantClick}
+            RequestIsPending={RequestIsPending}
         />
     )
 }
