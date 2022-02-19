@@ -1,5 +1,5 @@
 import React, { useCallback, useState, FormEvent, ChangeEvent } from 'react';
-import { Recipe, RecipeIngredient } from '../../../types/recipeType';
+import { Recipe, RecipeIngredient, RecipeInstruction } from '../../../types/recipeType';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../../utils/routes';
 import { CreateRecipeForm } from './';
@@ -23,7 +23,7 @@ export const CreateRecipeFormContainer = () => {
     imgUrl: "",
     tags: [],
     ingredients: [],
-    recipeText: ""};
+    recipeText: []};
 
   const [form, setForm] = useState(initStateForm);
   const [isLoadFile, setIsLoadFile] = useState(false);
@@ -31,6 +31,8 @@ export const CreateRecipeFormContainer = () => {
   const [isEditForm, setIsEditForm] = useState(true);
   const [error, setError] = useState('');
   const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>([{name: '', unit: 'gr', count: 0}]);
+  const [instructionList, setInstructionList] = useState<RecipeInstruction[]>([{title: '', text: ''}]);
+
 
   const history = useHistory();
   const { createRecipe, uploadFile } = useFirebase();
@@ -45,7 +47,7 @@ export const CreateRecipeFormContainer = () => {
     }
     setIsEditForm(false);
     const tags = form.type !== "full recipe" ? [] : form.tags;
-    const recipeObject = {...form, 'ingredients': ingredientList, tags, owner};
+    const recipeObject = {...form, 'ingredients': ingredientList, tags, owner, recipeText: instructionList};
     createRecipe(recipeObject)
       .then((recipeId) => {
         form.type === "full recipe" ? history.replace(`${routes.recipe}/${recipeId}`) : history.replace(routes.main);
@@ -54,7 +56,7 @@ export const CreateRecipeFormContainer = () => {
         setError('Что-то пошло не так... Попробуйте позже.');
         console.log(e);
       });
-  }, [form, history, createRecipe, ingredientList, selectedFile, owner]);
+  }, [form, history, createRecipe, ingredientList, selectedFile, owner, instructionList]);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
@@ -65,6 +67,7 @@ export const CreateRecipeFormContainer = () => {
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
     if (fileObject.name === '') return;
+    console.log('!!!!');
     setIsLoadFile(true);
     setSelectedFile(fileObject);
     uploadFile(fileObject).then((url) => {
@@ -83,10 +86,13 @@ export const CreateRecipeFormContainer = () => {
     handleChange,
     setIngredientList,
     ingredientList,
+    instructionList,
+    setInstructionList,
     setForm,
     handleUploadFile,
     error,
-    isLoadFile
+    isLoadFile,
+    setIsLoadFile
   }
 
   return <CreateRecipeForm {...propsCreateRecipe}/>

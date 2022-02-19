@@ -6,6 +6,12 @@ export interface RecipeIngredient {
   count: number
 }
 
+export interface RecipeInstruction  {
+  title: string,
+  text: string,
+  imgURL?: string
+}
+
 export interface Recipe {
   id: string,
   type: string
@@ -18,7 +24,7 @@ export interface Recipe {
   imgUrl: string,
   tags: string[],
   ingredients: RecipeIngredient[],
-  recipeText: string
+  recipeText: RecipeInstruction[]
 }
 
 export interface RecipesStatus {
