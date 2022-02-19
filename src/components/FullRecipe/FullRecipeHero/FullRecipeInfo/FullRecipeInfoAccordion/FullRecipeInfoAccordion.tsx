@@ -2,9 +2,9 @@ import { ExpandMoreRounded } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { FullRecipeInfoIngredientsContainer } from '../../../../../containers/FullRecipeContainer/FullRecipeInfoIngredientsContainer';
 import { selectRecipeById } from '../../../../../store/slices/recipes/recipesSelectors';
 import { MatchParams } from '../../../../../types/globalTypes';
+import { FullRecipeInfoIngredientsContainer } from '../FullRecipeInfoIngredients';
 
 export const FullRecipeInfoAccordion = () => {
     const routeParams = useParams<MatchParams>()
