@@ -1,1 +1,0 @@
-export { CreateIngredientComponent } from "./CreateIngredientComponent";

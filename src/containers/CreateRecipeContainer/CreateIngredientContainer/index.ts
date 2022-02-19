@@ -1,1 +1,0 @@
-export { CreateIngredientContainer } from './CreateIngredientContainer';

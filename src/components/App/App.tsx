@@ -1,12 +1,12 @@
 import {useEffect} from 'react';
 import {Route, Switch} from "react-router-dom";
 import { routes } from '../../utils/routes';
-import { HeaderContainer } from '../../containers/HeaderContainer';
-import { AuthZModalContainer } from '../../containers/AuthZModalContainer';
-import { CreateRecipeFormContainer } from '../../containers/CreateRecipeContainer/CreateRecipeFormContainer';
+import { HeaderContainer } from '../Header';
+import { AuthZModalContainer } from '../AuthZModal/AuthZModalContainer';
+import { CreateRecipeFormContainer } from '../CreateRecipe/CreateRecipeForm';
 import {useFirebase} from "../../hooks/useFirebase";
-import {MainPageContainer} from "../../containers/MainPageContainer";
-import { FullRecipeContainer } from '../../containers/FullRecipeContainer';
+import {MainPageContainer} from "../../pages/MainPage";
+import { FullRecipeContainer } from '../FullRecipe';
 
 
 function App() {

@@ -1,0 +1,38 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { selectRecipes } from '../../store/slices/recipes/recipesSelectors';
+import { FullRecipe } from '.'
+import { MatchParams } from '../../types/globalTypes';
+import { useFirebase } from '../../hooks/useFirebase';
+import { PageLoader } from '../UI/PageLoader';
+
+export const FullRecipeContainer = () => {
+    const [loading, setLoading] = useState(true)
+    const { getRecipeById } = useFirebase()
+    const routeParams = useParams<MatchParams>()
+    const recipesStoreIsEmpty = !Boolean(useSelector(selectRecipes).recipes.length)
+
+    useEffect(() => {
+        if (routeParams.id) {
+            if (recipesStoreIsEmpty) {
+                getRecipeById(routeParams.id)
+                .then((res) => {
+                    setLoading(false)
+                })
+            } else {
+                setLoading(false)
+            }
+        } else {
+            console.log('РЕЦЕПТ НЕ НАЙДЕН');
+            // здесь сделаем редирект на 404
+        }
+    }, []);
+
+    return (
+        loading ?
+        <PageLoader />
+        :
+        <FullRecipe />
+    )
+}
