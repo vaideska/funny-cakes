@@ -36,7 +36,16 @@ export const HeaderContainer = () => {
       [],
    )
 
+   const handleRecipeBuilderClick = useCallback(
+      (e) => {
+         e.preventDefault();
+         history.push(routes.recipeBuilder);
+      },
+      [],
+   )
+
    return (
-      <Header handleLogoClick={handleLogoClick} isLoged={isLoged} handleLoginBtnClick={handleModalOpen} handleCreateRecipeClick={handleCreateRecipeClick} />
+      <Header handleLogoClick={handleLogoClick} isLoged={isLoged} handleLoginBtnClick={handleModalOpen} 
+      handleCreateRecipeClick={handleCreateRecipeClick} handleRecipeBuilderClick={handleRecipeBuilderClick}/>
    )
 }

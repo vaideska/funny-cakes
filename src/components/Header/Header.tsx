@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
 import { AccountCircleRounded, Add } from '@mui/icons-material';
+import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import {
    AppBar,
    Toolbar,
@@ -15,10 +16,11 @@ interface HeaderProps {
    isLoged: boolean,
    handleLoginBtnClick: () => void,
    handleLogoClick: (e: MouseEvent) => void,
-   handleCreateRecipeClick: (e: MouseEvent) => void
+   handleCreateRecipeClick: (e: MouseEvent) => void,
+   handleRecipeBuilderClick: (e: MouseEvent) => void,
 }
 
-export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCreateRecipeClick }: HeaderProps) => {
+export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCreateRecipeClick, handleRecipeBuilderClick }: HeaderProps) => {
    return (
       <AppBar position="static">
          <Container>
@@ -28,6 +30,17 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCr
                      Napoleon
                   </Link>
                </Box>
+               <Button
+                  color="inherit"
+                  variant='text'
+                  startIcon={
+                      <AutoFixHighOutlinedIcon />
+                  }
+                  size='medium'
+                  sx={{ mx: 3 }}
+                  onClick={handleRecipeBuilderClick}>
+                  Конструктор рецепта
+               </Button>
                {isLoged ? (
                   <>
                      <Button
