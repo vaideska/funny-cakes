@@ -1,0 +1,219 @@
+import React, {Dispatch, SetStateAction, FormEventHandler, ChangeEventHandler, useRef, ChangeEvent} from 'react';
+import { 
+  Typography, 
+  Box, 
+  TextField, 
+  InputAdornment,
+  IconButton,
+  Container,
+  Grid,
+  SelectChangeEvent,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
+import MonitorWeightOutlinedIcon from '@mui/icons-material/MonitorWeightOutlined';
+import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
+import { LoadingButton } from '@mui/lab';
+
+import { Recipe, RecipeIngredient } from '../../../types/recipeType';
+import { CreateIngredientListContainer } from '../../../containers/CreateRecipeContainer/CreateIngredientListContainer';
+import { CreateTagsContainer } from '../../../containers/CreateRecipeContainer/CreateTagsContainer';
+import { InputNumberComponent } from '../InputNumberComponent';
+import { typeRecipe } from '../../../utils/dictionary';
+
+interface CreateRecipeFormComponentProps {
+  selectedFile: File, 
+  isEditForm: boolean,
+  handleSubmit: FormEventHandler,
+  handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
+  ingredientList: RecipeIngredient[],
+  setForm: Dispatch<SetStateAction<Recipe>>,
+  form: Recipe,
+  handleUploadFile: ChangeEventHandler,
+  error: string,
+  isLoadFile: boolean
+}
+
+export const CreateRecipeFormComponent = (
+  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error, isLoadFile, form }
+  : CreateRecipeFormComponentProps) => {
+ 
+  const InputStyle = styled('input')({
+    display: 'none',
+  });
+  const ref = useRef();
+
+  return (
+  <Container sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}>
+    <Box
+      name="create-form"
+      component="form"
+      maxWidth={800}
+      sx={{
+        pt: 4, 
+        pb: 10
+      }}
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h5" gutterBottom component="div">Создание рецепта</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6} sx={{p: 0}}>
+          <FormControl variant="standard" fullWidth >
+            <InputLabel id="select-type">Тип</InputLabel>
+            <Select
+              labelId="select-type"
+              id="select-type"
+              name="type"
+              label="Тип"
+              value={form.type}
+              disabled={!isEditForm}
+              onChange={handleChange}
+            >
+              {Object.keys(typeRecipe).map((key) => (
+                <MenuItem key={key} value={key}>{typeRecipe[key]}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            disabled={!isEditForm}
+            name="title"
+            label="Название"
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            disabled={!isEditForm}
+            name="description"
+            label="Краткое описание"
+            multiline
+            onChange={handleChange}
+            rows={3}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {form.type === "cream" ?
+          <TextField
+            required
+            fullWidth
+            disabled={!isEditForm}
+            name="diameter"
+            type="number"
+            label="Количество"
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">гр.  <MonitorWeightOutlinedIcon/></InputAdornment>,
+              inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
+                min: 1,
+                step: 0.5
+              }
+            }}
+          /> :
+          <TextField
+            required
+            fullWidth
+            disabled={!isEditForm}
+            name="diameter"
+            type="number"
+            label="Диаметр"
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
+              inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
+                min: 5,
+                max: 50,
+                step: 0.5
+              }
+            }}
+          />}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            disabled={!isEditForm}
+            name="duration"
+            type="number"
+            label="Общее время"
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">мин. <AccessTimeOutlinedIcon/></InputAdornment>,
+              inputProps: {
+                inputcomponent: InputNumberComponent,
+                ref: {ref},
+                min: 1
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>Состав</Typography>
+        </Grid>
+        <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} isEditForm={isEditForm}/>
+        <Grid item xs={12}></Grid>
+        <Grid item xs={12} sm={6}>
+          {form.type === "full recipe" ? <CreateTagsContainer setForm={setForm} isEditForm={isEditForm}/> : null}
+        </Grid>
+        <Grid item xs={12}>
+          <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
+            <InputStyle disabled={!isEditForm} accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
+            <IconButton color="primary" aria-label="upload picture" component="span">
+              <PhotoCamera />
+            </IconButton>
+            {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+            <TextField
+            required
+            fullWidth
+            disabled={!isEditForm}
+            name="recipeText"
+            label="Инструкция приготовления"
+            multiline
+            onChange={handleChange}
+            rows={7}
+          />
+        </Grid>
+        {error !== '' ? <Grid item xs={12}><Typography color={"red"}>{error}</Typography></Grid> : null}
+        <Grid item xs={12}>
+          <LoadingButton 
+            loading={isLoadFile}
+            loadingPosition="start"
+            disabled={!isEditForm}
+            startIcon={<LibraryAddOutlinedIcon/>}
+            variant="contained" 
+            type="submit"
+          >
+            Опубликовать рецепт
+          </LoadingButton>
+        </Grid>
+      </Grid>
+    </Box>
+  </Container>
+  );
+};

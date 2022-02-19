@@ -9,7 +9,7 @@ import {
    Box
 } from '@mui/material'
 
-import { NavBarAvatarContainer } from '../NavBarAvatar';
+import { NavBarAvatarContainer } from '../../containers/NavBarAvatarContainer';
 
 interface HeaderProps {
    isLoged: boolean,
