@@ -7,16 +7,20 @@ import { MatchParams } from '../../types/globalTypes';
 import { useFirebase } from '../../hooks/useFirebase';
 import { PageLoader } from '../UI/PageLoader';
 
-export const FullRecipeContainer = () => {
+interface FullRecipeContainerProps {
+    recipeId?: string
+}
+
+export const FullRecipeContainer = ({ recipeId }: FullRecipeContainerProps) => {
     const [loading, setLoading] = useState(true)
     const { getRecipeById } = useFirebase()
     const routeParams = useParams<MatchParams>()
     const recipesStoreIsEmpty = !Boolean(useSelector(selectRecipes).recipes.length)
 
     useEffect(() => {
-        if (routeParams.id) {
+        if (recipeId || routeParams.id) {
             if (recipesStoreIsEmpty) {
-                getRecipeById(routeParams.id)
+                getRecipeById(recipeId || routeParams.id)
                 .then((res) => {
                     setLoading(false)
                 })

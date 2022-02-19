@@ -8,6 +8,7 @@ import {useFirebase} from "../../hooks/useFirebase";
 import {MainPageContainer} from "../../pages/MainPage";
 import { FullRecipeContainer } from '../FullRecipe';
 import {RecipeBuilderContainer} from "../RecipeBuilder";
+import { FullScreenModal } from '../FullScreenModal';
 
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
       <AuthZModalContainer />
       <HeaderContainer />
         <Switch>
+          <Route path={'/fullModal'} exact>
+            <FullScreenModal />
+          </Route>
           <Route path={routes.main} exact>
             <MainPageContainer/>
           </Route>
