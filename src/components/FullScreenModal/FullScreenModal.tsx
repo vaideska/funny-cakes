@@ -1,16 +1,9 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
+import { forwardRef, useState } from 'react';
+import { Slide, Toolbar, AppBar, Dialog, Button, Box, Container } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { Box, Container } from '@mui/material';
 import { FullRecipeContainer } from '../FullRecipe';
 
-const Transition = React.forwardRef(function Transition(
+const Transition = forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement;
     },
@@ -19,46 +12,32 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function FullScreenModal() {
-    const [open, setOpen] = React.useState(false);
+interface FullScreenModalProps {
+    children: React.ReactElement,
+    isOpen: boolean,
+    handleClose: () => void
+}
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
+export const FullScreenModal = ({ children, handleClose, isOpen }: FullScreenModalProps) => {
     return (
         <Box>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open full-screen dialog
-            </Button>
             <Dialog
+                transitionDuration={500}
                 fullScreen
-                open={open}
+                open={isOpen}
                 onClose={handleClose}
                 TransitionComponent={Transition}
             >
-                <AppBar sx={{ position: 'relative' }}>
+                <AppBar sx={{ position: 'fixed' }}>
                     <Container>
                         <Toolbar>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                onClick={handleClose}
-                                aria-label="close"
-                                sx={{ml: 'auto'}}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                            
+                            <Button onClick={handleClose} color='inherit' variant="outlined" sx={{ml: 'auto'}}>Вернуться назад</Button>
                         </Toolbar>
                     </Container>
                 </AppBar>
+                <Toolbar />
                 <Container>
-                    <FullRecipeContainer recipeId='Mw1bm_GgRSFarvcawF8'/>
+                    {children}
                 </Container>
             </Dialog>
         </Box>
