@@ -15,14 +15,15 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined';
 import MonitorWeightOutlinedIcon from '@mui/icons-material/MonitorWeightOutlined';
 import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
 import { LoadingButton } from '@mui/lab';
 
-import { Recipe, RecipeIngredient } from '../../../types/recipeType';
+import { Recipe, RecipeIngredient, RecipeInstruction } from '../../../types/recipeType';
 import { CreateIngredientListContainer } from '../CreateIngredientList';
+import { CreateInstructionListContainer } from '../CreateInstructionList';
 import { CreateTagsContainer } from '../CreateTags';
 import { InputNumberComponent } from '../InputNumber';
 import { typeRecipe } from '../../../utils/dictionary';
@@ -38,11 +39,16 @@ interface CreateRecipeFormProps {
   form: Recipe,
   handleUploadFile: ChangeEventHandler,
   error: string,
-  isLoadFile: boolean
+  isLoadFile: boolean,
+  setIsLoadFile: Dispatch<SetStateAction<boolean>>,
+  instructionList: RecipeInstruction[],
+  setInstructionList: Dispatch<SetStateAction<RecipeInstruction[]>>
 }
 
 export const CreateRecipeForm = (
-  { selectedFile, isEditForm, handleSubmit, handleChange, setIngredientList, ingredientList, setForm, handleUploadFile, error, isLoadFile, form }
+  { selectedFile, isEditForm, handleSubmit, handleChange,
+    setIngredientList, ingredientList, setForm, handleUploadFile, 
+    error, isLoadFile, form, instructionList, setInstructionList, setIsLoadFile }
   : CreateRecipeFormProps) => {
  
   const InputStyle = styled('input')({
@@ -180,25 +186,17 @@ export const CreateRecipeForm = (
         </Grid>
         <Grid item xs={12}>
           <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">
-            <InputStyle disabled={!isEditForm} accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
-            <IconButton color="primary" aria-label="upload picture" component="span">
-              <PhotoCamera />
+            <InputStyle disabled={!isEditForm || isLoadFile} accept="image/jpeg" id="icon-button-file" type="file" onChange={handleUploadFile}/>
+            <IconButton color="primary" disabled={!isEditForm || isLoadFile} aria-label="upload picture" component="span">
+              <PhotoCameraOutlinedIcon />
             </IconButton>
             {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
           </Box>
         </Grid>
         <Grid item xs={12}>
-            <TextField
-            required
-            fullWidth
-            disabled={!isEditForm}
-            name="recipeText"
-            label="Инструкция приготовления"
-            multiline
-            onChange={handleChange}
-            rows={7}
-          />
+          <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>Инструкция приготовления</Typography>
         </Grid>
+        <CreateInstructionListContainer {...{setInstructionList, instructionList, isEditForm, isLoadFile, setIsLoadFile}} />
         {error !== '' ? <Grid item xs={12}><Typography color={"red"}>{error}</Typography></Grid> : null}
         <Grid item xs={12}>
           <LoadingButton 
