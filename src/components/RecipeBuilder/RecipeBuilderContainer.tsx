@@ -19,7 +19,7 @@ export const RecipeBuilderContainer = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [recipeSelected, setRecipeSelected] = useState(false);
   const [resultRecipe, setResultRecipe] = useState<Recipe[]>([]);
-  const biscuitsRecipes = useSelector(selectRecipesByType('cake layer'));
+  const biscuitsRecipes = useSelector(selectRecipesByType('biscuit'));
   const creamRecipes = useSelector(selectRecipesByType('cream'));
   const surfaceRecipes = useSelector(selectRecipesByType('surface'));
 
