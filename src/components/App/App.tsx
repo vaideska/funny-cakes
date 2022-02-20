@@ -7,7 +7,7 @@ import { CreateRecipeFormContainer } from '../CreateRecipe/CreateRecipeForm';
 import {useFirebase} from "../../hooks/useFirebase";
 import {MainPageContainer} from "../../pages/MainPage";
 import { FullRecipeContainer } from '../FullRecipe';
-import {RecipeBuilder} from "../RecipeBuilder";
+import {RecipeBuilderContainer} from "../RecipeBuilder";
 
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <CreateRecipeFormContainer />
           </Route>
           <Route path={routes.recipeBuilder} exact>
-            <RecipeBuilder/>
+            <RecipeBuilderContainer/>
           </Route>
           <Route path={`${routes.recipe}/:id`}>
             <FullRecipeContainer />
