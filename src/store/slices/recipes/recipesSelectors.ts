@@ -7,27 +7,27 @@ interface TagsMap {
 
 export const selectRecipes = (state: RootState) => state.recipes
 export const selectRecipesStatus = (state: RootState) => state.recipes.status
-export const selectRecipeById = (id: string) => 
+export const selectRecipeById = (id: string) =>
     (state: RootState) => {
         return state.recipes.recipes.find(
             (recipe: Recipe) => recipe.id === id
         );
     }
-export const selectRecipesByTags = (tagsArr: string[], type:string) => ({ recipes: { recipes }}: RootState) => {
+export const selectRecipesByTags = (tagsArr: string[], type: string) => ({ recipes: { recipes } }: RootState) => {
     if (!tagsArr.length) {
         return recipes.filter((recipe) => recipe.type === type)
     }
-    const tagsMap:TagsMap = {};
+    const tagsMap: TagsMap = {};
     for (const tag of tagsArr) {
         tagsMap[tag] = true;
     }
 
     return recipes.filter((recipe) =>
-      tagsArr.every(tag =>
-        recipe.tags.some(rTag =>
-          (rTag === tag) && (recipe.type === type)
+        tagsArr.every(tag =>
+            recipe.tags.some(rTag =>
+                (rTag === tag) && (recipe.type === type)
+            )
         )
-      )
     )
 }
 
