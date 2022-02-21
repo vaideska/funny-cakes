@@ -22,6 +22,6 @@ export const tagList: Map = {
 export const typeRecipe: Map = {
   'full recipe': 'Полный рецепт',
   'cream': 'Крем',
-  'cake layer': 'Корж',
+  'biscuit': 'Бисквит',
   'surface': 'Поверхность торта'
 };

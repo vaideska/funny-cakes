@@ -30,3 +30,8 @@ export const selectRecipesByTags = (tagsArr: string[], type:string) => ({ recipe
       )
     )
 }
+
+//TODO: переделаю верхний селектор, чтобы использовать и на главной и в билдере
+export const selectRecipesByType = (type: string) => ({ recipes: { recipes }} :RootState) => {
+  return recipes.filter((recipe) => recipe.type === type)
+}
