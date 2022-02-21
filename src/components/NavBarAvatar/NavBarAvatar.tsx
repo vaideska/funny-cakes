@@ -17,7 +17,7 @@ interface NavBarAvatarProps {
     handleOpenMenu: (e: MouseEvent) => void,
     handleCloseMenu: () => void,
     avatar: string | undefined,
-    userName: string | undefined
+    handleMyRecipesButton: () => void
 }
 
 export const NavBarAvatar = ({
@@ -27,7 +27,7 @@ export const NavBarAvatar = ({
     handleOpenMenu,
     handleCloseMenu,
     avatar,
-    userName
+    handleMyRecipesButton
 }: NavBarAvatarProps) => {
     return (
         <Box>
@@ -53,7 +53,7 @@ export const NavBarAvatar = ({
                 sx={{ mt: 1 }}
             >
                 <MenuItem>
-                    <Typography variant='body1' textAlign="center">{userName}</Typography>
+                    <Typography variant='body1' textAlign="center" onClick={handleMyRecipesButton}>Мои рецепты</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseMenu}>
                     <Typography variant='body1' textAlign="center" onClick={handleLogoutBtnClick}>Выйти</Typography>
