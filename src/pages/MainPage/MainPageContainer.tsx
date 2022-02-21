@@ -24,7 +24,6 @@ export const MainPageContainer = () => {
 
   const handleChange = useCallback((event: SelectChangeEvent<string[]>) => {
     const value = event.target.value;
-    console.log(value);
     setTags(() => {
         const newTags = typeof value === 'string' ? value.split(',') : value;
         return newTags;
