@@ -18,9 +18,12 @@ export const useFirebase = () => {
   const dispatch = useAppDispatch();
   const auth = getAuth();
   const db = getDatabase();
+  const dbRef = ref(db);
   const recipesRef = ref(db, 'recipes/');
   useEffect(() => {
-    //deleteRecipe('-MwH8vqjHqlL6qpYoGIT');
+    //const recipeId = '-MwH8vqjHqlL6qpYoGIT';
+    //deleteRecipe(recipeId).then(() => console.log(`recipe ${recipeId} deleted`)) // вызов удаления рецепта. в .then нужно добавить логику
+    //либо редиректа на главную, либо всплывающее окно с текстом об успешности операции
   }, [])
 
   const listenUser = useCallback(
@@ -39,8 +42,7 @@ export const useFirebase = () => {
 
   const getUserData: GetUserData = useCallback(
     (userId) => {
-      const dbRef = ref(db);
-      get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+      getData(`users/${userId}`).then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           dispatch(login(userData))
@@ -124,14 +126,13 @@ export const useFirebase = () => {
   )
 
   const createRecipe:CreateRecipe = useCallback((recipe) => {
-    const recipeId = push(child(ref(db), 'recipes/')).key;
+    const recipeId = getNewItemKey('/recipes');
     return setData('recipes/' + recipeId, {...recipe, id: recipeId}).then(() => recipeId);
     }, []
   )
 
   const getRecipeById = (id: string): Promise<void> => {
-    const dbRef = ref(getDatabase());
-    return get(child(dbRef, `recipes/${id}`))
+    return getData(`recipes/${id}`)
     .then((snapshot) => {
         if (snapshot.exists()) {
             const result = snapshot.val(); // пришедший объект
@@ -169,13 +170,25 @@ export const useFirebase = () => {
 
   const deleteRecipe = useCallback(
     (recipeId) => {
-      setData(`/recipes/${recipeId}`, null).then(result => console.log(result))
+      return setData(`/recipes/${recipeId}`, null)
     }, []
   )
 
   const setData = useCallback(
     (path, data) => {
       return set(ref(db, path), data)
+    }, []
+  )
+
+  const getData = useCallback(
+    (path) => {
+      return get(child(dbRef, path))
+    }, []
+  )
+
+  const getNewItemKey = useCallback(
+    (path) => {
+      return push(child(dbRef, path)).key;
     }, []
   )
 
@@ -189,5 +202,6 @@ export const useFirebase = () => {
     uploadFile,
     getRecipes,
     getRecipeById,
+    deleteRecipe
   }
 }
