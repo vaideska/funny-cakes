@@ -16,7 +16,7 @@ export const FullRecipeTags = () => {
                 pt={3} 
                 justifyContent={'center'}
             >
-                {recipe?.tags.map((tag: string) => (
+                {recipe?.tags?.map((tag: string) => (
                     <Grid item key={tag}>
                         <Chip clickable variant="outlined" label={tagList[tag]}/>
                     </Grid>

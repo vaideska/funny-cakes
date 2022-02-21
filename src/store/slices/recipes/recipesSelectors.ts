@@ -24,7 +24,7 @@ export const selectRecipesByTags = (tagsArr: string[], type:string) => ({ recipe
 
     return recipes.filter((recipe) =>
       tagsArr.every(tag =>
-        recipe.tags.some(rTag =>
+        recipe.tags?.some(rTag =>
           (rTag === tag) && (recipe.type === type)
         )
       )
