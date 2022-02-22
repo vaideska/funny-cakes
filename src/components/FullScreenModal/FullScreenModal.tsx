@@ -1,7 +1,6 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { Slide, Toolbar, AppBar, Dialog, Button, Box, Container } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { FullRecipeContainer } from '../FullRecipe';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -16,7 +15,7 @@ interface FullScreenModalProps {
     children: React.ReactElement,
     isOpen: boolean,
     handleClose: () => void,
-    handleSelect: (x: any) => void,
+    handleSelect: () => void,
 }
 
 export const FullScreenModal = ({ children, handleClose, isOpen, handleSelect }: FullScreenModalProps) => {
