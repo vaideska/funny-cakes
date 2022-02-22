@@ -33,6 +33,7 @@ interface CreateRecipeFormProps {
   selectedFile: File, 
   isEditForm: boolean,
   handleSubmit: FormEventHandler,
+  handleUpdate: FormEventHandler,
   handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
   setIngredientList: Dispatch<SetStateAction<RecipeIngredient[]>>,
   ingredientList: RecipeIngredient[],
@@ -43,13 +44,15 @@ interface CreateRecipeFormProps {
   isLoadFile: boolean,
   setIsLoadFile: Dispatch<SetStateAction<boolean>>,
   instructionList: RecipeInstruction[],
-  setInstructionList: Dispatch<SetStateAction<RecipeInstruction[]>>
+  setInstructionList: Dispatch<SetStateAction<RecipeInstruction[]>>,
+  isUpdateRecipe: boolean
 }
 
 export const CreateRecipeForm = (
   { selectedFile, isEditForm, handleSubmit, handleChange,
     setIngredientList, ingredientList, setForm, handleUploadFile, 
-    error, isLoadFile, form, instructionList, setInstructionList, setIsLoadFile }
+    error, isLoadFile, form, instructionList, setInstructionList, 
+    setIsLoadFile, isUpdateRecipe, handleUpdate }
   : CreateRecipeFormProps) => {
  
   const InputStyle = styled('input')({
@@ -72,11 +75,11 @@ export const CreateRecipeForm = (
         pb: 10
       }}
       autoComplete="off"
-      onSubmit={handleSubmit}
+      onSubmit={isUpdateRecipe ? handleUpdate : handleSubmit}
     >
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="h5" gutterBottom component="div">Создание рецепта</Typography>
+          <Typography variant="h5" gutterBottom component="div">{isUpdateRecipe ? 'Редактирование рецепта' : 'Создание рецепта'}</Typography>
         </Grid>
         <Grid item xs={12} sm={6} sx={{p: 0}}>
           <FormControl variant="standard" fullWidth >
@@ -223,8 +226,9 @@ export const CreateRecipeForm = (
             variant="contained" 
             type="submit"
           >
-            Опубликовать рецепт
+            {isUpdateRecipe ? 'Сохранить изменения' : 'Опубликовать рецепт'}
           </LoadingButton>
+
         </Grid>
       </Grid>
     </Box>

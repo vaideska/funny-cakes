@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { routes } from '../../../utils/routes';
 import { CreateRecipeForm } from './';
 import { userSelector} from "../../../store/slices/authZ/authZSelectors";
-import {selectRecipeById} from '../../../store/slices/recipes/recipesSelectors'
 import { useSelector } from "react-redux";
 import { useFirebase } from "../../../hooks/useFirebase";
 import { SelectChangeEvent } from '@mui/material';
@@ -15,8 +14,6 @@ interface CreateRecipeFormContainerProps {
 
 export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerProps) => {
   const owner = useSelector(userSelector);
-  //const recipe = useSelector(selectRecipeById('-MwWhN5INnbDruc5qohV'));
-  console.log(recipe);
 
   const initStateForm: Recipe = {
     id: "",
@@ -41,7 +38,7 @@ export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerP
   const [instructionList, setInstructionList] = useState<RecipeInstruction[]>(recipe ? recipe.recipeText : [{title: '', text: ''}]);
 
   const history = useHistory();
-  const { createRecipe, uploadFile } = useFirebase();
+  const { createRecipe, uploadFile, updateRecipe } = useFirebase();
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
@@ -64,6 +61,21 @@ export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerP
       });
   }, [form, history, createRecipe, ingredientList, selectedFile, owner, instructionList]);
 
+  const handleUpdate = useCallback((e: FormEvent) => {
+    e.preventDefault();
+    setIsEditForm(false);
+    const tags = form.type !== "full recipe" ? [] : form.tags;
+    const recipeObject = {...form, 'ingredients': ingredientList, tags, owner, recipeText: instructionList};
+    updateRecipe(recipe?.id, recipeObject)
+      .then(() => {
+        history.replace(`${routes.recipe}/${recipe?.id}`);
+      })
+      .catch((e) => {
+        setError('Что-то пошло не так... Попробуйте позже.');
+        console.log(e);
+      });
+  }, [form, history, ingredientList, owner, instructionList, recipe, updateRecipe]);
+
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | SelectChangeEvent<string>) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -73,7 +85,6 @@ export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerP
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
     if (fileObject.name === '') return;
-    console.log('!!!!');
     setIsLoadFile(true);
     setSelectedFile(fileObject);
     uploadFile(fileObject).then((url) => {
@@ -89,6 +100,7 @@ export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerP
     isEditForm,
     form,
     handleSubmit,
+    handleUpdate,
     handleChange,
     setIngredientList,
     ingredientList,
@@ -98,7 +110,8 @@ export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerP
     handleUploadFile,
     error,
     isLoadFile,
-    setIsLoadFile
+    setIsLoadFile,
+    isUpdateRecipe: recipe ? true : false
   }
 
   return <CreateRecipeForm {...propsCreateRecipe}/>

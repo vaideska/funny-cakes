@@ -9,8 +9,6 @@ import {MainPageContainer} from "../../pages/MainPage";
 import { FullRecipeContainer } from '../FullRecipe';
 import {RecipeBuilderContainer} from "../RecipeBuilder";
 import {MyRecipesContainer} from "../MyRecipes";
-import {Container} from '../CreateRecipe/CreateRecipeForm/container'
-
 
 function App() {
   const { listenUser } = useFirebase();
@@ -27,7 +25,7 @@ function App() {
             <MainPageContainer/>
           </Route>
           <Route path={routes.createRecipe} exact>
-            <Container/>
+            <CreateRecipeFormContainer recipe={undefined}/>
           </Route>
           <Route path={routes.recipeBuilder} exact>
             <RecipeBuilderContainer/>
