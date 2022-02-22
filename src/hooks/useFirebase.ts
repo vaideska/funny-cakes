@@ -174,6 +174,12 @@ export const useFirebase = () => {
     }, []
   )
 
+  const updateRecipe = useCallback(
+    (recipeId, data) => {
+      return setData(`/recipes/${recipeId}`, data)
+    }, []
+  )
+
   const setData = useCallback(
     (path, data) => {
       return set(ref(db, path), data)
@@ -202,6 +208,7 @@ export const useFirebase = () => {
     uploadFile,
     getRecipes,
     getRecipeById,
-    deleteRecipe
+    deleteRecipe,
+    updateRecipe
   }
 }
