@@ -35,3 +35,7 @@ export const selectRecipesByTags = (tagsArr: string[], type: string) => ({ recip
 export const selectRecipesByType = (type: string) => ({ recipes: { recipes }} :RootState) => {
   return recipes.filter((recipe) => recipe.type === type)
 }
+
+export const selectRecipesByOwner = (ownerId: string | null) => ({ recipes: { recipes }}: RootState) => {
+  return recipes.filter(recipe => recipe.owner.id === ownerId)
+}
