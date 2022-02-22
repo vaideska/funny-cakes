@@ -61,13 +61,14 @@ export const CreateInstruction = ({ handleChange, handleUploadFile, instruction,
           {selectedFile.name !== '' ? 
           isLoadFile ? 'Загрузка...' : selectedFile.name : "Загрузить фотографию"}
         </Box>
-        {instruction.imgURL ? 
-          (<ResponsiveImage
-            src={instruction.imgURL}
-            alt={`Фото к шагу ${id+1}`}
-            aspectRatio='50'
-          />)
-          : null}
+      </Grid>
+      <Grid item xs={12} sm={6}>{instruction.imgURL ? 
+        (<ResponsiveImage
+          src={instruction.imgURL}
+          alt={`Фото к шагу ${id+1}`}
+          aspectRatio='50'
+        />)
+        : null}
       </Grid>
     </Grid>
   )

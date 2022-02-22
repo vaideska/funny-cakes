@@ -194,7 +194,9 @@ export const CreateRecipeForm = (
             {selectedFile.name !== '' ? 
             isLoadFile ? 'Загрузка...' : selectedFile.name : "Загрузить фотографию"}
           </Box>
-          {form.imgUrl !== '' ? 
+        </Grid>
+        <Grid item xs={12} sm={6}>
+        {form.imgUrl !== '' ? 
             (<ResponsiveImage
               src={form.imgUrl}
               alt='Основное фото рецепта'
