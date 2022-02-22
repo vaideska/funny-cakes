@@ -1,7 +1,8 @@
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { ChangeEvent, FocusEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useDebouncedCallback } from 'use-debounce';
 import { Recipe, RecipeIngredient } from '../../../../../types/recipeType';
 import { FullRecipeInfoIngredients } from '.'
+import { recipeTypeToUnit } from '../../../../../utils/functions';
 
 interface FullRecipeInfoIngredientsContainerProps {
     recipe: Recipe
@@ -21,19 +22,35 @@ export const FullRecipeInfoIngredientsContainer = ({ recipe }: FullRecipeInfoIng
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const prevDiameter = Number(recipe?.diameter)
         const newDiameter = Number(e.target.value)
+        const recipeCalcUnit = recipeTypeToUnit(recipe.type)
 
         if (Number.isNaN(newDiameter)) {
             return
         }
 
-        if (newDiameter > 50) {
-            setDiameter(50)
+        if(recipeCalcUnit === 'volume') {
+            if(newDiameter > 5000) return setDiameter(5000)
+        } else {
+            if(newDiameter > 50) return setDiameter(50)
+        }
+
+        setDiameter(newDiameter)
+        calcIngredients(prevDiameter, newDiameter)
+    }
+
+    const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+        const prevDiameter = Number(recipe?.diameter)
+        const newDiameter = Number(e.target.value)
+        const recipeCalcUnit = recipeTypeToUnit(recipe.type)
+
+        if (Number.isNaN(newDiameter)) {
             return
         }
 
-        if (newDiameter < 1) { //TODO: Поправить валидацию. У пользователя должна быть возможность начать ввод с пустой строки
-            setDiameter(1)
-            return
+        if(recipeCalcUnit === 'volume') {
+            if(newDiameter < 100) return setDiameter(100)
+        } else {
+            if(newDiameter < 1) return setDiameter(1)
         }
 
         setDiameter(newDiameter)
@@ -68,6 +85,7 @@ export const FullRecipeInfoIngredientsContainer = ({ recipe }: FullRecipeInfoIng
             customIngredients={customIngredients}   
             diameter={diameter}
             handleInputChange={handleInputChange}
+            handleInputBlur={handleInputBlur}
             handleSliderChange={handleSliderChange}
             recipe={recipe as Recipe}
         />
