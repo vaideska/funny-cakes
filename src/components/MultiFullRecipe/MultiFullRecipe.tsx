@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCreative } from "swiper";
 import "swiper/css/effect-creative";
 import 'swiper/css';
+import SwiperClass from 'swiper/types/swiper-class';
 
 interface MultiFullRecipeProps {
     duration?: number,
@@ -16,14 +17,14 @@ interface MultiFullRecipeProps {
 
 export const MultiFullRecipe = ({ recipes, duration = 300 }: MultiFullRecipeProps) => {
     const [value, setValue] = useState(0)
-    const [swiper, setSwiper] = useState<any>(null)
+    const [swiper, setSwiper] = useState<SwiperClass | null>(null)
     const [swiperLock, setSwiperLock] = useState(false)
 
     const handleTabChange = (event: SyntheticEvent, targetValue: number) => {
         if (swiperLock) return
         setSwiperLock(true)
         setValue(targetValue)
-        swiper.slideTo(targetValue)
+        swiper?.slideTo(targetValue)
     }
 
     const resizeCb = useCallback(() => {
