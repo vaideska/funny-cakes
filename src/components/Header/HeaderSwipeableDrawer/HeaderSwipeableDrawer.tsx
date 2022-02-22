@@ -1,32 +1,43 @@
 import React, { KeyboardEvent, MouseEvent } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { 
-  Box, 
-  IconButton, 
-  ListItemIcon, 
-  ListItemText, 
-  ListItem, 
-  List, 
-  SwipeableDrawer } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  List,
+  SwipeableDrawer,
+} from '@mui/material';
 
 interface buttonDescription {
-  name: string,
-  icon: JSX.Element,
-  handler: (e: MouseEvent) => void,
+  name: string;
+  icon: JSX.Element;
+  handler: (e: MouseEvent) => void;
 }
 
 interface HeaderSwipeableDrawerProps {
-  buttonList: buttonDescription[],
-  toggleDrawer: (open: boolean) => (event: KeyboardEvent | MouseEvent) => void,
-  isOpen: boolean
+  buttonList: buttonDescription[];
+  toggleDrawer: (open: boolean) => (event: KeyboardEvent | MouseEvent) => void;
+  isOpen: boolean;
 }
 
-export const HeaderSwipeableDrawer = ({ buttonList, toggleDrawer, isOpen }: HeaderSwipeableDrawerProps) => {
+export const HeaderSwipeableDrawer = ({
+  buttonList,
+  toggleDrawer,
+  isOpen,
+}: HeaderSwipeableDrawerProps) => {
   return (
     <Box sx={{ display: { md: 'none', xs: 'block' } }}>
-      <IconButton color={'inherit'} aria-label="MenuOpen" onClick={toggleDrawer(true)}><MenuIcon /></IconButton >
+      <IconButton
+        color={'inherit'}
+        aria-label="MenuOpen"
+        onClick={toggleDrawer(true)}
+      >
+        <MenuIcon />
+      </IconButton>
       <SwipeableDrawer
-        anchor='right'
+        anchor="right"
         open={isOpen}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
@@ -38,11 +49,9 @@ export const HeaderSwipeableDrawer = ({ buttonList, toggleDrawer, isOpen }: Head
           onKeyDown={toggleDrawer(false)}
         >
           <List>
-            {buttonList.map(({name, icon, handler}, index) => (
+            {buttonList.map(({ name, icon, handler }, index) => (
               <ListItem button key={index} onClick={handler}>
-                <ListItemIcon >
-                  {icon}
-                </ListItemIcon>
+                <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name} />
               </ListItem>
             ))}
@@ -51,4 +60,4 @@ export const HeaderSwipeableDrawer = ({ buttonList, toggleDrawer, isOpen }: Head
       </SwipeableDrawer>
     </Box>
   );
-}
+};

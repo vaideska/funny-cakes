@@ -1,28 +1,28 @@
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import * as React from "react";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import {Recipe} from "../../types/recipeType";
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import * as React from 'react';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { Recipe } from '../../types/recipeType';
 
 interface RecipeBuilderProps {
-  steps: string[],
-  activeStep: number,
-  resultRecipes: Recipe[],
-  recipeSelected: boolean,
-  handleBack: () => void,
-  handleNext: () => void
+  steps: string[];
+  activeStep: number;
+  resultRecipes: Recipe[];
+  recipeSelected: boolean;
+  handleBack: () => void;
+  handleNext: () => void;
 }
 
 export const RecipeBuilder = ({
-                                steps,
-                                activeStep,
-                                resultRecipes,
-                                recipeSelected,
-                                handleBack,
-                                handleNext
+  steps,
+  activeStep,
+  resultRecipes,
+  recipeSelected,
+  handleBack,
+  handleNext,
 }: RecipeBuilderProps) => {
   return (
     <Box sx={{ width: '100%' }}>
@@ -44,11 +44,17 @@ export const RecipeBuilder = ({
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
-          {resultRecipes.map((subRecipe: Recipe) => <p key={subRecipe.id}>{subRecipe.title}</p>)}
+          {resultRecipes.map((subRecipe: Recipe) => (
+            <p key={subRecipe.id}>{subRecipe.title}</p>
+          ))}
         </>
       ) : (
         <>
-          <Typography sx={{ mt: 2, mb: 1 }}>{recipeSelected ? `Выбран ${resultRecipes[activeStep].title}` : 'Рецепт не выбран'}</Typography>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+            {recipeSelected
+              ? `Выбран ${resultRecipes[activeStep].title}`
+              : 'Рецепт не выбран'}
+          </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -66,5 +72,5 @@ export const RecipeBuilder = ({
         </>
       )}
     </Box>
-  )
-}
+  );
+};

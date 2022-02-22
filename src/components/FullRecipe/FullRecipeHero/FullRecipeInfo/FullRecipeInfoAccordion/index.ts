@@ -1,1 +1,1 @@
-export * from './FullRecipeInfoAccordion'
+export * from './FullRecipeInfoAccordion';

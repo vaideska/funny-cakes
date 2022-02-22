@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, MouseEventHandler } from "react";
+import React, { ChangeEventHandler, MouseEventHandler } from 'react';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,14 +9,20 @@ import Chip from '@mui/material/Chip';
 import { tagList } from '../../../utils/dictionary';
 
 interface CreateTagsProps {
-  tags: string[],
-  handleChange: (event: SelectChangeEvent<string[]>) => void,
-  isEditForm: boolean,
-  handleDelete: (value: string) => ChangeEventHandler,
-  handleMouseDown: MouseEventHandler
+  tags: string[];
+  handleChange: (event: SelectChangeEvent<string[]>) => void;
+  isEditForm: boolean;
+  handleDelete: (value: string) => ChangeEventHandler;
+  handleMouseDown: MouseEventHandler;
 }
 
-export const CreateTags = ({ tags, handleChange, isEditForm, handleDelete, handleMouseDown }: CreateTagsProps) => {
+export const CreateTags = ({
+  tags,
+  handleChange,
+  isEditForm,
+  handleDelete,
+  handleMouseDown,
+}: CreateTagsProps) => {
   return (
     <Box>
       <FormControl fullWidth>
@@ -33,9 +39,9 @@ export const CreateTags = ({ tags, handleChange, isEditForm, handleDelete, handl
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={
-                  tagList[value]} 
-                  label={tagList[value]} 
+                <Chip
+                  key={tagList[value]}
+                  label={tagList[value]}
                   onDelete={handleDelete(value)}
                   onMouseDown={handleMouseDown}
                 />
@@ -44,10 +50,7 @@ export const CreateTags = ({ tags, handleChange, isEditForm, handleDelete, handl
           )}
         >
           {Object.keys(tagList).map((key) => (
-            <MenuItem
-              key={key}
-              value={key}
-            >
+            <MenuItem key={key} value={key}>
               {tagList[key]}
             </MenuItem>
           ))}
@@ -55,4 +58,4 @@ export const CreateTags = ({ tags, handleChange, isEditForm, handleDelete, handl
       </FormControl>
     </Box>
   );
-}
+};

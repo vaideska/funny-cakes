@@ -1,2 +1,2 @@
-export * from "./CreateIngredientContainer";
-export * from "./CreateIngredient";
+export * from './CreateIngredientContainer';
+export * from './CreateIngredient';

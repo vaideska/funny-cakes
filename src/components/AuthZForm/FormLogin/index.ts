@@ -1,1 +1,1 @@
-export * from './FormLoginContainer'
+export * from './FormLoginContainer';
