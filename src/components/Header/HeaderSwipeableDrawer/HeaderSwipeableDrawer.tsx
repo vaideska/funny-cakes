@@ -23,7 +23,7 @@ interface HeaderSwipeableDrawerProps {
 
 export const HeaderSwipeableDrawer = ({ buttonList, toggleDrawer, isOpen }: HeaderSwipeableDrawerProps) => {
   return (
-    <Box sx={{ display: { sm: 'none', xs: 'block' } }}>
+    <Box sx={{ display: { md: 'none', xs: 'block' } }}>
       <IconButton color={'inherit'} aria-label="MenuOpen" onClick={toggleDrawer(true)}><MenuIcon /></IconButton >
       <SwipeableDrawer
         anchor='right'

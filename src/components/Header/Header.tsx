@@ -38,7 +38,7 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCr
                       <AutoFixHighOutlinedIcon />
                   }
                   size='medium'
-                  sx={{ mx: 3, display: { sm: 'flex', xs: 'none' } }}
+                  sx={{ mx: 3, display: { md: 'flex', xs: 'none' } }}
                   onClick={handleRecipeBuilderClick}>
                   Конструктор рецепта
                </Button>
@@ -51,7 +51,7 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCr
                            <Add />
                         }
                         size='medium'
-                        sx={{ mx: 3, display: { sm: 'flex', xs: 'none' } }}
+                        sx={{ mx: 3, display: { md: 'flex', xs: 'none' } }}
                         onClick={handleCreateRecipeClick}>
                         Добавить рецепт
                      </Button>
