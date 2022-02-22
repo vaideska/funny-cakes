@@ -1,17 +1,16 @@
 import { AccessTimeRounded } from '@mui/icons-material'
 import { Avatar, Box, Divider, Stack, Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { selectRecipeById } from '../../../../store/slices/recipes/recipesSelectors'
-import { MatchParams } from '../../../../types/globalTypes'
+import { Recipe } from '../../../../types/recipeType'
 import { getTime } from '../../../../utils/functions'
 import { FullRecipeInfoAccordion } from './FullRecipeInfoAccordion'
+import { FullRecipeInfoIngredientsContainer } from './FullRecipeInfoIngredients'
 import { FullRecipeInfoStatItem } from './FullRecipeInfoStatItem'
-import { FullRecipeInfoTitle } from './FullRecipeInfoTitle'
 
-export const FullRecipeInfo = () => {
-    const routeParams = useParams<MatchParams>()
-    const recipe = useSelector(selectRecipeById(routeParams.id))
+interface FullRecipeInfoProps {
+    recipe: Recipe
+}
+
+export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
     const duration = recipe?.duration + ' минут'
     const fullName = recipe?.owner.firstName + ' ' + recipe?.owner.lastName
     const avatar = recipe?.owner.profile_picture
@@ -26,7 +25,17 @@ export const FullRecipeInfo = () => {
                 boxShadow: 10
             }}
         >
-            <FullRecipeInfoTitle />
+            <Typography
+                component='h1'
+                variant='h5'
+                align='center'
+                sx={{
+                    pb: 2,
+                    mx: 'auto'
+                }}
+            >
+                {recipe?.title}
+            </Typography>
             <Divider
                 sx={{
                     width: 130,
@@ -47,7 +56,10 @@ export const FullRecipeInfo = () => {
                     txt={duration}
                 />
             </Stack>
-            <FullRecipeInfoAccordion />
+            <FullRecipeInfoAccordion 
+                description={recipe?.description}
+                ingredients={<FullRecipeInfoIngredientsContainer recipe={recipe} />}
+            />
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', pb: 2 }}>
                 <Avatar
                     alt={fullName + " Аватар"}

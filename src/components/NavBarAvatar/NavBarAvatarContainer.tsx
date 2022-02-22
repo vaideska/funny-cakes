@@ -6,13 +6,15 @@ import { NavBarAvatar } from '.'
 import { userSelector } from "../../store/slices/authZ/authZSelectors";
 import { useSelector } from "react-redux";
 import { getAuth, signOut } from "firebase/auth";
+import {routes} from "../../utils/routes";
+import {useHistory} from "react-router-dom";
 
 export const NavBarAvatarContainer = () => {
     const dispatch = useAppDispatch()
     const [menuIsOpen, setMenuIsOpen] = useState(false)
     const [menuAnchorEl, setMenuAnchorEl] = useState(null)
     const { profile_picture, firstName } = useSelector(userSelector);
-
+    const history = useHistory();
     const handleModalClose = useCallback(
         () => {
             dispatch(logout());
@@ -46,6 +48,13 @@ export const NavBarAvatarContainer = () => {
         }, []
     )
 
+    const handleMyRecipesButton = useCallback(
+      () => {
+        history.push(routes.myRecipes);
+        setMenuIsOpen(false);
+      }, []
+    )
+
     return (
         <NavBarAvatar
             menuIsOpen={menuIsOpen}
@@ -53,8 +62,8 @@ export const NavBarAvatarContainer = () => {
             handleLogoutBtnClick={handleModalClose}
             handleOpenMenu={handleOpenMenu}
             handleCloseMenu={handleCloseMenu}
+            handleMyRecipesButton={handleMyRecipesButton}
             avatar={profile_picture}
-            userName={firstName}
         />
     )
 }
