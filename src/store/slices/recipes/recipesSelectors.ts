@@ -1,10 +1,6 @@
 import { RootState } from '../..';
 import { Recipe } from '../../../types/recipeType';
 
-interface TagsMap {
-    [key: string]: boolean
-}
-
 export const selectRecipes = (state: RootState) => state.recipes
 export const selectRecipesStatus = (state: RootState) => state.recipes.status
 export const selectRecipeById = (id: string) => 
@@ -17,17 +13,15 @@ export const selectRecipesByTags = (tagsArr: string[], type:string) => ({ recipe
     if (!tagsArr.length) {
         return recipes.filter((recipe) => recipe.type === type)
     }
-    const tagsMap:TagsMap = {};
-    for (const tag of tagsArr) {
-        tagsMap[tag] = true;
-    }
-
-    return recipes.filter((recipe) =>
-      tagsArr.every(tag =>
-        recipe.tags.some(rTag =>
-          (rTag === tag) && (recipe.type === type)
+    return recipes.filter((recipe) => {
+      if (recipe.tags) {
+        return tagsArr.every(tag =>
+          recipe.tags.some(rTag =>
+            (rTag === tag) && (recipe.type === type)
+          )
         )
-      )
+      }
+    }
     )
 }
 
