@@ -18,13 +18,15 @@ export const useFirebase = () => {
   const dispatch = useAppDispatch();
   const auth = getAuth();
   const db = getDatabase();
+  const dbRef = ref(db);
   const recipesRef = ref(db, 'recipes/');
   useEffect(() => {
-    console.log('useEffect in getterUserData');
-    //getUserData('vvfiRH3KHeZPQF5ByPbBCDw0D783');
+    //const recipeId = '-MwH8vqjHqlL6qpYoGIT';
+    //deleteRecipe(recipeId).then(() => console.log(`recipe ${recipeId} deleted`)) // вызов удаления рецепта. в .then нужно добавить логику
+    //либо редиректа на главную, либо всплывающее окно с текстом об успешности операции
   }, [])
 
-  const listenUser = useCallback( // подписываемся на юзера, если залогинены, то грузим его данные и кладем в стор.
+  const listenUser = useCallback(
     () => {
       dispatch(setLoading(true))
       onAuthStateChanged(auth, (user) => {
@@ -40,8 +42,7 @@ export const useFirebase = () => {
 
   const getUserData: GetUserData = useCallback(
     (userId) => {
-      const dbRef = ref(getDatabase());
-      get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+      getData(`users/${userId}`).then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           dispatch(login(userData))
@@ -92,8 +93,7 @@ export const useFirebase = () => {
       email,
       profile_picture
     ) => {
-      const db = getDatabase();
-      set(ref(db, 'users/' + userId), {
+      setData('users/' + userId, {
         id: userId,
         firstName,
         email,
@@ -101,7 +101,6 @@ export const useFirebase = () => {
         profile_picture,
       })
       .then(() => {
-        console.log('success!')
         dispatch(setAuthZModalVariant());
       })
     }, []
@@ -116,7 +115,6 @@ export const useFirebase = () => {
           if (!user) {
             throw new Error('User not found')
           }
-          //getUserData(user.uid);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -128,15 +126,13 @@ export const useFirebase = () => {
   )
 
   const createRecipe:CreateRecipe = useCallback((recipe) => {
-    const db = getDatabase();
-    const recipeId = push(child(ref(db), 'recipes/')).key;
-    return set(ref(db, 'recipes/' + recipeId), {...recipe, id: recipeId}).then(() => recipeId)
+    const recipeId = getNewItemKey('/recipes');
+    return setData('recipes/' + recipeId, {...recipe, id: recipeId}).then(() => recipeId);
     }, []
   )
 
   const getRecipeById = (id: string): Promise<void> => {
-    const dbRef = ref(getDatabase());
-    return get(child(dbRef, `recipes/${id}`))
+    return getData(`recipes/${id}`)
     .then((snapshot) => {
         if (snapshot.exists()) {
             const result = snapshot.val(); // пришедший объект
@@ -172,6 +168,30 @@ export const useFirebase = () => {
     }, []
   )
 
+  const deleteRecipe = useCallback(
+    (recipeId) => {
+      return setData(`/recipes/${recipeId}`, null)
+    }, []
+  )
+
+  const setData = useCallback(
+    (path, data) => {
+      return set(ref(db, path), data)
+    }, []
+  )
+
+  const getData = useCallback(
+    (path) => {
+      return get(child(dbRef, path))
+    }, []
+  )
+
+  const getNewItemKey = useCallback(
+    (path) => {
+      return push(child(dbRef, path)).key;
+    }, []
+  )
+
   return {
     getterUser: getUserData,
     listenUser: listenUser,
@@ -182,5 +202,6 @@ export const useFirebase = () => {
     uploadFile,
     getRecipes,
     getRecipeById,
+    deleteRecipe
   }
 }

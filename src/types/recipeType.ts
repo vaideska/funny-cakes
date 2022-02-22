@@ -27,13 +27,15 @@ export interface Recipe {
   recipeText: RecipeInstruction[]
 }
 
-export interface RecipesStatus {
+
+
+export interface SliceRecipesStatus {
   loadedAll: boolean,
   loading: boolean,
   error: string | null,
 }
 
-export interface RecipesTypes {
-  status: RecipesStatus
-  recipes: Recipe[]
+export interface SliceRecipes {
+  status: SliceRecipesStatus,
+  recipes: Recipe[],
 }
