@@ -67,7 +67,6 @@ export const CreateRecipeFormContainer = () => {
   const handleUploadFile = useCallback((e: ChangeEvent<HTMLInputElement> ) => {
     const fileObject = e.target.files ? e.target.files[0] : new File([], '');         //TS просил проверить массив files на null
     if (fileObject.name === '') return;
-    console.log('!!!!');
     setIsLoadFile(true);
     setSelectedFile(fileObject);
     uploadFile(fileObject).then((url) => {
