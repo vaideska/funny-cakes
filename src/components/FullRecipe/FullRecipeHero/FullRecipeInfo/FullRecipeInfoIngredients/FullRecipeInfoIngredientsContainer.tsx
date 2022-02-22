@@ -1,15 +1,13 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-import { useSelector } from 'react-redux';
-import { selectRecipeById } from '../../../../../store/slices/recipes/recipesSelectors';
-import { MatchParams } from '../../../../../types/globalTypes';
 import { Recipe, RecipeIngredient } from '../../../../../types/recipeType';
 import { FullRecipeInfoIngredients } from '.'
 
-export const FullRecipeInfoIngredientsContainer = () => {
-    const routeParams = useParams<MatchParams>()
-    const recipe = useSelector(selectRecipeById(routeParams.id))
+interface FullRecipeInfoIngredientsContainerProps {
+    recipe: Recipe
+}
+
+export const FullRecipeInfoIngredientsContainer = ({ recipe }: FullRecipeInfoIngredientsContainerProps) => {
     const [diameter, setDiameter] = useState<number | number[]>(0)
     const [customIngredients, setCustomIngredients] = useState<RecipeIngredient[] | undefined>()
 

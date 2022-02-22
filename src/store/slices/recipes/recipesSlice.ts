@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Recipe} from "../../../types/recipeType"
-import {RecipesTypes} from "../../../types/recipeType";
+import {SliceRecipes} from "../../../types/recipeType";
 
-const initialState: RecipesTypes = {
+const initialState: SliceRecipes = {
   status: {
     loadedAll: false,
     loading: false,
     error: null
   },
-  recipes: []
+  recipes: [],
 }
 
 export const recipesSlice = createSlice({
@@ -21,7 +21,7 @@ export const recipesSlice = createSlice({
     },
     addRecipe: (state, { payload }:PayloadAction<Recipe>) => {
       state.recipes.push(payload)
-    }
+    },
   }
 })
 

@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { selectRecipeById } from '../../../store/slices/recipes/recipesSelectors'
 import { MatchParams } from '../../../types/globalTypes'
+import { Recipe } from '../../../types/recipeType'
 
-export const FullRecipeInstruction = () => {
-    const routeParams = useParams<MatchParams>()
-    const recipe = useSelector(selectRecipeById(routeParams.id))
+interface FullRecipeInstructionProps {
+    recipe: Recipe
+}
 
+export const FullRecipeInstruction = ({ recipe }: FullRecipeInstructionProps) => {
     return (
         <Container>
             <Grid container justifyContent='center'>

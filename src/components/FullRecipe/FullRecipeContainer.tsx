@@ -1,22 +1,31 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { selectRecipes } from '../../store/slices/recipes/recipesSelectors';
+import { selectRecipeById, selectRecipes } from '../../store/slices/recipes/recipesSelectors';
 import { FullRecipe } from '.'
 import { MatchParams } from '../../types/globalTypes';
 import { useFirebase } from '../../hooks/useFirebase';
 import { PageLoader } from '../UI/PageLoader';
+import { Recipe } from '../../types/recipeType'
 
-export const FullRecipeContainer = () => {
-    const [loading, setLoading] = useState(true)
+interface FullRecipeContainerProps {
+    recipeId?: string
+}
+
+const RecipeContext = createContext(null);
+
+export const FullRecipeContainer = ({ recipeId }: FullRecipeContainerProps) => {
     const { getRecipeById } = useFirebase()
     const routeParams = useParams<MatchParams>()
     const recipesStoreIsEmpty = !Boolean(useSelector(selectRecipes).recipes.length)
 
+    const [loading, setLoading] = useState(true)
+    const recipe = useSelector(selectRecipeById(recipeId || routeParams.id))
+
     useEffect(() => {
-        if (routeParams.id) {
+        if (recipeId || routeParams.id) {
             if (recipesStoreIsEmpty) {
-                getRecipeById(routeParams.id)
+                getRecipeById(recipeId || routeParams.id)
                 .then((res) => {
                     setLoading(false)
                 })
@@ -30,9 +39,9 @@ export const FullRecipeContainer = () => {
     }, []);
 
     return (
-        loading ?
+        loading || !recipe ?
         <PageLoader />
         :
-        <FullRecipe />
+        <FullRecipe recipe={recipe}/>
     )
 }
