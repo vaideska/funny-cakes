@@ -1,5 +1,5 @@
 import { Box, Container, Tab, Tabs } from '@mui/material'
-import { SyntheticEvent, useCallback, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, SyntheticEvent } from 'react'
 import { FullRecipeContainer } from '../FullRecipe'
 import { ResizeObserver } from './ResizeObserver';
 import { Recipe } from '../../types/recipeType';
@@ -11,38 +11,37 @@ import 'swiper/css';
 import SwiperClass from 'swiper/types/swiper-class';
 
 interface MultiFullRecipeProps {
-    duration?: number,
-    recipes: Recipe[]
+    recipes: Recipe[],
+    animateDuration?: number,
+
+    setSwiperInstance: Dispatch<SetStateAction<SwiperClass | null>>,
+    setSwiperLock: Dispatch<SetStateAction<boolean>>,
+    tabControllerVal: number,
+    handleTabChange: (event: SyntheticEvent, targetValue: number) => void,
+    resizeObserverCb: () => void
 }
 
-export const MultiFullRecipe = ({ recipes, duration = 300 }: MultiFullRecipeProps) => {
-    const [value, setValue] = useState(0)
-    const [swiper, setSwiper] = useState<SwiperClass | null>(null)
-    const [swiperLock, setSwiperLock] = useState(false)
+export const MultiFullRecipe = ({
+    recipes,
+    animateDuration = 300,
 
-    const handleTabChange = (event: SyntheticEvent, targetValue: number) => {
-        if (swiperLock) return
-        setSwiperLock(true)
-        setValue(targetValue)
-        swiper?.slideTo(targetValue)
-    }
-
-    const resizeCb = useCallback(() => {
-        if (swiper) {
-            swiper.updateAutoHeight()
-        }
-    }, [swiper])
-
+    tabControllerVal,
+    setSwiperInstance,
+    setSwiperLock,
+    handleTabChange,
+    resizeObserverCb,
+}: MultiFullRecipeProps) => {
+    
     return (
         <Box sx={{pb: 2}}>
             <Container>
                 <Tabs 
-                value={value} 
+                value={tabControllerVal} 
                 onChange={handleTabChange} 
                 centered 
                 sx={{
                         '& .MuiTabs-indicator': {
-                            transition: `left 0.${duration}s ease`,
+                            transition: `left 0.${animateDuration}s ease`,
                         },
                     }}
                 >
@@ -58,7 +57,7 @@ export const MultiFullRecipe = ({ recipes, duration = 300 }: MultiFullRecipeProp
             </Container>
             <Swiper
                 autoHeight={true}
-                speed={duration}
+                speed={animateDuration}
                 allowTouchMove={false}
                 spaceBetween={50}
                 slidesPerView={1}
@@ -77,12 +76,12 @@ export const MultiFullRecipe = ({ recipes, duration = 300 }: MultiFullRecipeProp
                     setSwiperLock(false)
                 }}
                 onSwiper={(swiper) => {
-                    setSwiper(swiper)
+                    setSwiperInstance(swiper)
                 }}
             >
                 {recipes.map(({ id }) => (
                     <SwiperSlide key={id}>
-                        <ResizeObserver callback={resizeCb}>
+                        <ResizeObserver callback={resizeObserverCb}>
                             <FullRecipeContainer recipeId={id} />
                         </ResizeObserver>
                     </SwiperSlide>

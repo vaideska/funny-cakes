@@ -9,7 +9,7 @@ import {useFirebase} from "../../hooks/useFirebase";
 import {RecipeBuilder} from "./RecipeBuilder";
 import {FullScreenModal} from "../FullScreenModal";
 import {FullRecipeContainer} from "../FullRecipe";
-import { MultiFullRecipe } from '../MultiFullRecipe';
+import { MultiFullRecipeContainer } from '../MultiFullRecipe/MultiFullRecipeContainer';
 
 interface SelectedType {
   [key: number]: Recipe[]
@@ -103,7 +103,10 @@ export const RecipeBuilderContainer = () => {
       <RecipesFeed {...recipeFeedProps}/>
     </Container>
     ) : (
-      <MultiFullRecipe recipes={resultRecipes}/>
+      <MultiFullRecipeContainer 
+        recipes={resultRecipes}
+        animateDuration={400}
+      />
     )
   );
 }
