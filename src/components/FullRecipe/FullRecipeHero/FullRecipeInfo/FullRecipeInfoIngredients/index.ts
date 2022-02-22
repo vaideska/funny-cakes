@@ -1,2 +1,2 @@
-export * from './FullRecipeInfoIngredientsContainer'
-export * from './FullRecipeInfoIngredients'
+export * from './FullRecipeInfoIngredientsContainer';
+export * from './FullRecipeInfoIngredients';

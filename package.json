@@ -54,6 +54,7 @@
   "devDependencies": {
     "@types/react-redux": "^7.1.22",
     "@types/react-router-dom": "^5.3.3",
+    "prettier": "2.5.1",
     "react-to-print": "^2.14.4",
     "use-resize-observer": "^8.0.0"
   }

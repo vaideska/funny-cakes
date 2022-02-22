@@ -1,1 +1,1 @@
-export * from './RecipesFeedItem'
+export * from './RecipesFeedItem';

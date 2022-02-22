@@ -1,1 +1,1 @@
-export * from './FullRecipeHero'
+export * from './FullRecipeHero';

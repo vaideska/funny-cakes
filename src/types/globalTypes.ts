@@ -1,3 +1,3 @@
 export interface MatchParams {
-    id: string;
+  id: string;
 }

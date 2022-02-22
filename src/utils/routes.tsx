@@ -5,5 +5,5 @@ export const routes = {
   createRecipe: '/create-recipe',
   recipe: '/recipes',
   recipeBuilder: '/recipe-builder',
-  myRecipes: '/my-recipes'
-}
+  myRecipes: '/my-recipes',
+};
