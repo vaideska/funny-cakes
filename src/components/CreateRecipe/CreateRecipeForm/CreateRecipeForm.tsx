@@ -27,6 +27,7 @@ import { CreateInstructionListContainer } from '../CreateInstructionList';
 import { CreateTagsContainer } from '../CreateTags';
 import { InputNumberComponent } from '../InputNumber';
 import { typeRecipe } from '../../../utils/dictionary';
+import { ResponsiveImage } from '../../UI/ResponsiveImage';
 
 interface CreateRecipeFormProps {
   selectedFile: File, 
@@ -190,8 +191,16 @@ export const CreateRecipeForm = (
             <IconButton color="primary" disabled={!isEditForm || isLoadFile} aria-label="upload picture" component="span">
               <PhotoCameraOutlinedIcon />
             </IconButton>
-            {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
+            {selectedFile.name !== '' ? 
+            isLoadFile ? 'Загрузка...' : selectedFile.name : "Загрузить фотографию"}
           </Box>
+          {form.imgUrl !== '' ? 
+            (<ResponsiveImage
+              src={form.imgUrl}
+              alt='Основное фото рецепта'
+              aspectRatio='50'
+            />)
+            : null}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom component="div" sx={{mb: -1}}>Инструкция приготовления</Typography>

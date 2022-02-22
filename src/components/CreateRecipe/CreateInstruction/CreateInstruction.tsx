@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { RecipeInstruction } from '../../../types/recipeType';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
+import { ResponsiveImage } from '../../UI/ResponsiveImage'
 
 interface CreateInstructionProps {
   handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
@@ -57,8 +58,16 @@ export const CreateInstruction = ({ handleChange, handleUploadFile, instruction,
           <IconButton color="primary" disabled={!isEditForm || isLoadFile} aria-label="upload picture instruction" component="span">
             <PhotoCameraOutlinedIcon />
           </IconButton>
-          {selectedFile.name !== '' ? selectedFile.name : "Загрузить фотографию"}
+          {selectedFile.name !== '' ? 
+          isLoadFile ? 'Загрузка...' : selectedFile.name : "Загрузить фотографию"}
         </Box>
+        {instruction.imgURL ? 
+          (<ResponsiveImage
+            src={instruction.imgURL}
+            alt={`Фото к шагу ${id+1}`}
+            aspectRatio='50'
+          />)
+          : null}
       </Grid>
     </Grid>
   )
