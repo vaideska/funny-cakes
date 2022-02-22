@@ -33,52 +33,60 @@ export const MultiFullRecipe = ({ recipes, duration = 300 }: MultiFullRecipeProp
     }, [swiper])
 
     return (
-        <Box sx={{ width: '100%', typography: 'body1' }}>
+        <Box sx={{pb: 2}}>
             <Container>
-                <Tabs value={value} onChange={handleTabChange} centered sx={
-                    {
+                <Tabs 
+                value={value} 
+                onChange={handleTabChange} 
+                centered 
+                sx={{
                         '& .MuiTabs-indicator': {
                             transition: `left 0.${duration}s ease`,
                         },
-                    }
-                }>
-                    {recipes.map(({ type, id }, index) => (
-                        <Tab key={id} label={typeRecipe[type]} value={index} />
-                    ))}
-                </Tabs>
-                <Swiper
-                    autoHeight={true}
-                    speed={duration}
-                    allowTouchMove={false}
-                    spaceBetween={50}
-                    slidesPerView={1}
-                    modules={[EffectCreative]}
-                    effect={"creative"}
-                    creativeEffect={{
-                        prev: {
-                            opacity: 0,
-                            translate: [0, 0, -800],
-                        },
-                        next: {
-                            translate: ["100%", 0, 0],
-                        },
-                    }}
-                    onSlideChangeTransitionEnd={() => {
-                        setSwiperLock(false)
-                    }}
-                    onSwiper={(swiper) => {
-                        setSwiper(swiper)
                     }}
                 >
-                    {recipes.map(({ id }) => (
-                        <SwiperSlide key={id}>
-                            <ResizeObserver callback={resizeCb}>
-                                <FullRecipeContainer recipeId={id} />
-                            </ResizeObserver>
-                        </SwiperSlide>
+                    {recipes.map(({ type, id }, index) => (
+                        <Tab 
+                            key={id} 
+                            label={typeRecipe[type]} 
+                            value={index} 
+                            sx={{pt: 3.2, pb: 2.5}}
+                        />
                     ))}
-                </Swiper>
+                </Tabs>
             </Container>
+            <Swiper
+                autoHeight={true}
+                speed={duration}
+                allowTouchMove={false}
+                spaceBetween={50}
+                slidesPerView={1}
+                modules={[EffectCreative]}
+                effect={"creative"}
+                creativeEffect={{
+                    prev: {
+                        opacity: 0,
+                        translate: [0, 0, -800],
+                    },
+                    next: {
+                        translate: ["100%", 0, 0],
+                    },
+                }}
+                onSlideChangeTransitionEnd={() => {
+                    setSwiperLock(false)
+                }}
+                onSwiper={(swiper) => {
+                    setSwiper(swiper)
+                }}
+            >
+                {recipes.map(({ id }) => (
+                    <SwiperSlide key={id}>
+                        <ResizeObserver callback={resizeCb}>
+                            <FullRecipeContainer recipeId={id} />
+                        </ResizeObserver>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
         </Box>
     )
 }
