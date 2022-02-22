@@ -9,43 +9,36 @@ import { Header } from '.';
 import { routes } from '../../utils/routes';
 
 export const HeaderContainer = () => {
-   const history = useHistory()
-   const dispatch = useAppDispatch()
-   const { isLoged } = useSelector(selectAuthZStatus)
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+  const { isLoged } = useSelector(selectAuthZStatus);
 
-   const handleModalOpen = useCallback(
-      () => {
-         dispatch(openAuthZModal())
-      },
-      []
-   )
+  const handleModalOpen = useCallback(() => {
+    dispatch(openAuthZModal());
+  }, []);
 
-   const handleLogoClick = useCallback(
-      (e) => {
-         e.preventDefault();
-         history.push('/');
-      },
-      [],
-   )
+  const handleLogoClick = useCallback((e) => {
+    e.preventDefault();
+    history.push('/');
+  }, []);
 
-   const handleCreateRecipeClick = useCallback(
-      (e) => {
-         e.preventDefault();
-         history.push(routes.createRecipe);
-      },
-      [],
-   )
+  const handleCreateRecipeClick = useCallback((e) => {
+    e.preventDefault();
+    history.push(routes.createRecipe);
+  }, []);
 
-   const handleRecipeBuilderClick = useCallback(
-      (e) => {
-         e.preventDefault();
-         history.push(routes.recipeBuilder);
-      },
-      [],
-   )
+  const handleRecipeBuilderClick = useCallback((e) => {
+    e.preventDefault();
+    history.push(routes.recipeBuilder);
+  }, []);
 
-   return (
-      <Header handleLogoClick={handleLogoClick} isLoged={isLoged} handleLoginBtnClick={handleModalOpen} 
-      handleCreateRecipeClick={handleCreateRecipeClick} handleRecipeBuilderClick={handleRecipeBuilderClick}/>
-   )
-}
+  return (
+    <Header
+      handleLogoClick={handleLogoClick}
+      isLoged={isLoged}
+      handleLoginBtnClick={handleModalOpen}
+      handleCreateRecipeClick={handleCreateRecipeClick}
+      handleRecipeBuilderClick={handleRecipeBuilderClick}
+    />
+  );
+};

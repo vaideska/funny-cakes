@@ -1,2 +1,2 @@
-export * from './NavBarAvatarContainer'
-export * from './NavBarAvatar'
+export * from './NavBarAvatarContainer';
+export * from './NavBarAvatar';

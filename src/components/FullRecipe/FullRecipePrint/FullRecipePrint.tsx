@@ -6,16 +6,22 @@ import { PrintComponent } from './PrintComponent';
 import { Recipe } from '../../../types/recipeType';
 
 interface FullRecipePrintProps {
-  recipe: Recipe
+  recipe: Recipe;
 }
 
 export const FullRecipePrint = ({ recipe }: FullRecipePrintProps) => {
   const componentRef = useRef(null);
-  return (<>
-  <ReactToPrint
-    trigger={() => <Button variant="outlined" color="primary">Напечатать рецепт</Button>}
-    content={() => componentRef.current}
-  />
-  {recipe ? <PrintComponent recipe={recipe} ref={componentRef} /> : null}
-  </>)
+  return (
+    <>
+      <ReactToPrint
+        trigger={() => (
+          <Button variant="outlined" color="primary">
+            Напечатать рецепт
+          </Button>
+        )}
+        content={() => componentRef.current}
+      />
+      {recipe ? <PrintComponent recipe={recipe} ref={componentRef} /> : null}
+    </>
+  );
 };

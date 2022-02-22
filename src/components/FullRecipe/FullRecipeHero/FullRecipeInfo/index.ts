@@ -1,1 +1,1 @@
-export * from './FullRecipeInfo'
+export * from './FullRecipeInfo';

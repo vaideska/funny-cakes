@@ -1,15 +1,23 @@
-import {Card, CardActionArea, CardContent, CardMedia, Grid, Typography} from "@mui/material";
-import React from "react";
-import {Recipe} from "../../types/recipeType";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from '@mui/material';
+import React from 'react';
+import { Recipe } from '../../types/recipeType';
 
 interface RecipeFeedItemProps {
-  recipe: Recipe,
-  handleCardClick?: () => void, //TODO: убрать опциональность. без нее ошибка.
+  recipe: Recipe;
+  handleCardClick?: () => void; //TODO: убрать опциональность. без нее ошибка.
 }
 
-
-export const RecipeFeedItem = ({recipe, handleCardClick}: RecipeFeedItemProps) => {
-
+export const RecipeFeedItem = ({
+  recipe,
+  handleCardClick,
+}: RecipeFeedItemProps) => {
   return (
     <Grid item key={recipe.id} xs={12} sm={6} md={4}>
       <Card raised={true}>
@@ -22,18 +30,30 @@ export const RecipeFeedItem = ({recipe, handleCardClick}: RecipeFeedItemProps) =
             onClick={handleCardClick}
           />
           <CardContent>
-            <Typography  sx={{ height: 66, overflow: 'hidden' }} gutterBottom variant="h5" component="div">
+            <Typography
+              sx={{ height: 66, overflow: 'hidden' }}
+              gutterBottom
+              variant="h5"
+              component="div"
+            >
               {recipe.title}
             </Typography>
-            <Typography sx={{ height: 56, overflow: 'hidden' }} variant="subtitle1">
+            <Typography
+              sx={{ height: 56, overflow: 'hidden' }}
+              variant="subtitle1"
+            >
               {recipe.description}
             </Typography>
-            <Typography variant="subtitle2" color="text.secondary" align="right">
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              align="right"
+            >
               {`${recipe.owner.firstName} ${recipe.owner.lastName}`}
             </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
     </Grid>
-  )
-}
+  );
+};

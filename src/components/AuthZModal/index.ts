@@ -1,1 +1,1 @@
-export * from './AuthZModal'
+export * from './AuthZModal';

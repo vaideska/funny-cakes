@@ -1,1 +1,1 @@
-export * from './FullRecipeInfoStatItem'
+export * from './FullRecipeInfoStatItem';
