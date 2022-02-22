@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react';
 import {
   TextField,
   FormControl,
@@ -6,19 +6,27 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  Grid
-} from "@mui/material";
+  Grid,
+} from '@mui/material';
 import { RecipeIngredient } from '../../../types/recipeType';
 import { unitList } from '../../../utils/dictionary';
 import { InputNumberComponent } from '../InputNumber';
 
 interface CreateIngredientProps {
-  handleChange: (e: SelectChangeEvent<string> | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
-  ingredient: RecipeIngredient,
-  isEditForm: boolean
+  handleChange: (
+    e:
+      | SelectChangeEvent<string>
+      | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void;
+  ingredient: RecipeIngredient;
+  isEditForm: boolean;
 }
 
-export const CreateIngredient = ({ handleChange, ingredient, isEditForm }: CreateIngredientProps) => {
+export const CreateIngredient = ({
+  handleChange,
+  ingredient,
+  isEditForm,
+}: CreateIngredientProps) => {
   const ref = React.createRef();
   return (
     <Grid container spacing={2}>
@@ -49,10 +57,10 @@ export const CreateIngredient = ({ handleChange, ingredient, isEditForm }: Creat
           InputProps={{
             inputProps: {
               inputcomponent: InputNumberComponent,
-              ref: {ref},
+              ref: { ref },
               min: 0.1,
-              step: 0.1
-            }
+              step: 0.1,
+            },
           }}
         />
       </Grid>
@@ -69,11 +77,13 @@ export const CreateIngredient = ({ handleChange, ingredient, isEditForm }: Creat
             onChange={handleChange}
           >
             {Object.keys(unitList).map((key) => (
-              <MenuItem key={key} value={key}>{unitList[key]}</MenuItem>
+              <MenuItem key={key} value={key}>
+                {unitList[key]}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
       </Grid>
     </Grid>
-  )
+  );
 };
