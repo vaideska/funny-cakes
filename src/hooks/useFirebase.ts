@@ -188,38 +188,31 @@ export const useFirebase = () => {
       keysArr.forEach((recipeKey) => {
         recipesArr.push(recipes[recipeKey]);
       });
-    }, []
-  )
+      dispatch(setRecipes(recipesArr));
+    });
+  }, []);
 
-  const deleteRecipe = useCallback(
-    (recipeId) => {
-      return setData(`/recipes/${recipeId}`, null)
-    }, []
-  )
+  const deleteRecipe = useCallback((recipeId) => {
+    return setData(`/recipes/${recipeId}`, null);
+  }, []);
 
   const updateRecipe = useCallback(
     (recipeId, data) => {
       return setData(`/recipes/${recipeId}`, data)
     }, []
-  )
+  );
 
-  const setData = useCallback(
-    (path, data) => {
-      return set(ref(db, path), data)
-    }, []
-  )
+  const setData = useCallback((path, data) => {
+    return set(ref(db, path), data);
+  }, []);
 
-  const getData = useCallback(
-    (path) => {
-      return get(child(dbRef, path))
-    }, []
-  )
+  const getData = useCallback((path) => {
+    return get(child(dbRef, path));
+  }, []);
 
-  const getNewItemKey = useCallback(
-    (path) => {
-      return push(child(dbRef, path)).key;
-    }, []
-  )
+  const getNewItemKey = useCallback((path) => {
+    return push(child(dbRef, path)).key;
+  }, []);
 
   return {
     getterUser: getUserData,
