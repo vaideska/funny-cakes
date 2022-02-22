@@ -58,7 +58,8 @@ export const CreateInstruction = ({ handleChange, handleUploadFile, instruction,
           <IconButton color="primary" disabled={!isEditForm || isLoadFile} aria-label="upload picture instruction" component="span">
             <PhotoCameraOutlinedIcon />
           </IconButton>
-          {selectedFile.name !== '' ? 
+          {!selectedFile ? "Загрузить фотографию" : 
+           selectedFile.name !== '' ? 
           isLoadFile ? 'Загрузка...' : selectedFile.name : "Загрузить фотографию"}
         </Box>
       </Grid>

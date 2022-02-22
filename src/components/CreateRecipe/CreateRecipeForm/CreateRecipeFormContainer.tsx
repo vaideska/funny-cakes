@@ -4,12 +4,19 @@ import { useHistory } from 'react-router-dom';
 import { routes } from '../../../utils/routes';
 import { CreateRecipeForm } from './';
 import { userSelector} from "../../../store/slices/authZ/authZSelectors";
+import {selectRecipeById} from '../../../store/slices/recipes/recipesSelectors'
 import { useSelector } from "react-redux";
 import { useFirebase } from "../../../hooks/useFirebase";
 import { SelectChangeEvent } from '@mui/material';
 
-export const CreateRecipeFormContainer = () => {
+interface CreateRecipeFormContainerProps {
+  recipe: Recipe | undefined
+}
+
+export const CreateRecipeFormContainer = ({ recipe }: CreateRecipeFormContainerProps) => {
   const owner = useSelector(userSelector);
+  //const recipe = useSelector(selectRecipeById('-MwWhN5INnbDruc5qohV'));
+  console.log(recipe);
 
   const initStateForm: Recipe = {
     id: "",
@@ -25,14 +32,13 @@ export const CreateRecipeFormContainer = () => {
     ingredients: [],
     recipeText: []};
 
-  const [form, setForm] = useState(initStateForm);
+  const [form, setForm] = useState(recipe ? recipe : initStateForm);
   const [isLoadFile, setIsLoadFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState(new File([], ''));
   const [isEditForm, setIsEditForm] = useState(true);
   const [error, setError] = useState('');
-  const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>([{name: '', unit: 'gr', count: 0}]);
-  const [instructionList, setInstructionList] = useState<RecipeInstruction[]>([{title: '', text: ''}]);
-
+  const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>(recipe ? recipe.ingredients : [{name: '', unit: 'gr', count: 0}]);
+  const [instructionList, setInstructionList] = useState<RecipeInstruction[]>(recipe ? recipe.recipeText : [{title: '', text: ''}]);
 
   const history = useHistory();
   const { createRecipe, uploadFile } = useFirebase();

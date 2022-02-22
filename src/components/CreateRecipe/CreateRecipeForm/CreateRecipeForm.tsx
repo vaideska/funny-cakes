@@ -101,6 +101,7 @@ export const CreateRecipeForm = (
             required
             fullWidth
             disabled={!isEditForm}
+            value={form.title}
             name="title"
             label="Название"
             onChange={handleChange}
@@ -111,6 +112,7 @@ export const CreateRecipeForm = (
             required
             fullWidth
             disabled={!isEditForm}
+            value={form.description}
             name="description"
             label="Краткое описание"
             multiline
@@ -124,6 +126,7 @@ export const CreateRecipeForm = (
             required
             fullWidth
             disabled={!isEditForm}
+            value={form.diameter}
             name="diameter"
             type="number"
             label="Количество"
@@ -145,6 +148,7 @@ export const CreateRecipeForm = (
             name="diameter"
             type="number"
             label="Диаметр"
+            value={form.diameter}
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="end">см. <PieChartOutlineOutlinedIcon/></InputAdornment>,
@@ -163,6 +167,7 @@ export const CreateRecipeForm = (
             required
             fullWidth
             disabled={!isEditForm}
+            value={form.duration}
             name="duration"
             type="number"
             label="Общее время"

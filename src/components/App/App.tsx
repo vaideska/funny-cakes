@@ -11,6 +11,7 @@ import {RecipeBuilderContainer} from "../RecipeBuilder";
 import {MyRecipesContainer} from "../MyRecipes";
 import { FullScreenModal } from '../FullScreenModal';
 import { Button } from '@mui/material';
+import {Container} from '../CreateRecipe/CreateRecipeForm/container'
 
 
 function App() {
@@ -44,7 +45,7 @@ const handleClose = () => {
             <MainPageContainer/>
           </Route>
           <Route path={routes.createRecipe} exact>
-            <CreateRecipeFormContainer />
+            <Container/>
           </Route>
           <Route path={routes.recipeBuilder} exact>
             <RecipeBuilderContainer/>
