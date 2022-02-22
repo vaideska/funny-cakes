@@ -9,6 +9,7 @@ import {useFirebase} from "../../hooks/useFirebase";
 import {RecipeBuilder} from "./RecipeBuilder";
 import {FullScreenModal} from "../FullScreenModal";
 import {FullRecipeContainer} from "../FullRecipe";
+import { MultiFullRecipeContainer } from '../MultiFullRecipe/MultiFullRecipeContainer';
 
 interface SelectedType {
   [key: number]: Recipe[]
@@ -16,11 +17,10 @@ interface SelectedType {
 
 const steps = ['Выберите бисквит', 'Выберите крем', 'Выберите покрытие'];
 
-
 export const RecipeBuilderContainer = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [recipeSelected, setRecipeSelected] = useState(false);
-  const [resultRecipe, setResultRecipe] = useState<Recipe[]>([]);
+  const [resultRecipes, setResultRecipes] = useState<Recipe[]>([]);
   const [clickedRecipeId, setClickedRecipeId] = useState<string>('');
   const biscuitsRecipes = useSelector(selectRecipesByType('biscuit'));
   const creamRecipes = useSelector(selectRecipesByType('cream'));
@@ -36,7 +36,7 @@ export const RecipeBuilderContainer = () => {
       getRecipes();
     }
     if (activeStep === steps.length) {
-      const resultIdsRecipes = resultRecipe.map(el => el.id);
+      const resultIdsRecipes = resultRecipes.map(el => el.id);
       console.log(resultIdsRecipes);
     }
   }, [activeStep]);
@@ -58,13 +58,13 @@ export const RecipeBuilderContainer = () => {
   )
 
   const handleSelect = () => {
-    const resultRecipeCopy = resultRecipe;
+    const resultRecipeCopy = resultRecipes;
     if (!clickedRecipe) {
       return
     }
     resultRecipeCopy[activeStep] = clickedRecipe;
     setRecipeSelected(true);
-    setResultRecipe(resultRecipeCopy);
+    setResultRecipes(resultRecipeCopy);
     setIsModalOpen(false)
   }
 
@@ -75,7 +75,7 @@ export const RecipeBuilderContainer = () => {
   const recipeBuilderProps = {
     steps,
     activeStep,
-    resultRecipe,
+    resultRecipes,
     recipeSelected,
     handleBack,
     handleNext
@@ -94,6 +94,7 @@ export const RecipeBuilderContainer = () => {
   }
 
   return (
+    activeStep !== steps.length ? ( 
     <Container sx={{pt: 2}}>
       <FullScreenModal isOpen={isModalOpen} handleClose={handleClose} handleSelect={handleSelect}>
         <FullRecipeContainer recipeId={clickedRecipeId}/>
@@ -101,5 +102,11 @@ export const RecipeBuilderContainer = () => {
       <RecipeBuilder {...recipeBuilderProps}/>
       <RecipesFeed {...recipeFeedProps}/>
     </Container>
+    ) : (
+      <MultiFullRecipeContainer 
+        recipes={resultRecipes}
+        animateDuration={400}
+      />
+    )
   );
 }

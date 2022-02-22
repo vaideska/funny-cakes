@@ -13,10 +13,10 @@ interface FullRecipeProps {
 export const FullRecipe = ({ recipe }: FullRecipeProps) => {
     return (
         <Stack
-            spacing={8} 
-            sx={{alignItems: "center", py: 8 }}
+            spacing={8} py={4}
+            sx={{ alignItems: "center" }}
         >
-            <FullRecipeHero 
+            <FullRecipeHero
                 img={ <FullRecipeImg recipe={ recipe } /> }
                 info={ <FullRecipeInfo recipe={ recipe } /> }
             />

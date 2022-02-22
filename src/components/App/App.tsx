@@ -4,14 +4,15 @@ import { routes } from '../../utils/routes';
 import { HeaderContainer } from '../Header';
 import { AuthZModalContainer } from '../AuthZModal/AuthZModalContainer';
 import { CreateRecipeFormContainer } from '../CreateRecipe/CreateRecipeForm';
-import {useFirebase} from "../../hooks/useFirebase";
-import {MainPageContainer} from "../../pages/MainPage";
-import { FullRecipeContainer } from '../FullRecipe';
+import { useFirebase } from "../../hooks/useFirebase";
+import { MainPageContainer } from "../../pages/MainPage";
 import {RecipeBuilderContainer} from "../RecipeBuilder";
 import {MyRecipesContainer} from "../MyRecipes";
+import { FullRecipePage } from '../../pages/FullRecipePage';
 
 function App() {
   const { listenUser } = useFirebase();
+
   useEffect(() => {
     listenUser();
   }, []);
@@ -34,7 +35,7 @@ function App() {
             <MyRecipesContainer/>
           </Route>
           <Route path={`${routes.recipe}/:id`}>
-            <FullRecipeContainer />
+            <FullRecipePage />
           </Route>
         </Switch>
     </div>

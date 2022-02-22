@@ -1,13 +1,15 @@
 import { List, ListItem, Slider, ListItemText, TextField, Stack } from '@mui/material'
-import { ChangeEventHandler, SyntheticEvent } from 'react';
+import { ChangeEventHandler, FocusEventHandler, SyntheticEvent } from 'react';
 import { Recipe as RecipeType, RecipeIngredient } from '../../../../../types/recipeType';
 import { unitList } from '../../../../../utils/dictionary';
+import { recipeTypeToUnit } from '../../../../../utils/functions';
 import { FullRecipePrint } from '../../../FullRecipePrint';
 
 interface FullRecipeInfoIngredientsProps {
     customIngredients?: RecipeIngredient[],
     diameter: number | number[],
     handleInputChange: ChangeEventHandler,
+    handleInputBlur: FocusEventHandler,
     handleSliderChange: (event: Event | SyntheticEvent, value: number | number[]) => void,
     recipe: RecipeType
 }
@@ -16,6 +18,7 @@ export const FullRecipeInfoIngredients = ({
     diameter,
     customIngredients,
     handleInputChange,
+    handleInputBlur,
     handleSliderChange,
     recipe }: FullRecipeInfoIngredientsProps) => {
     const diametrPrint = typeof diameter === "number" ? diameter : diameter[0];             //Какой-то костыль для ТС
@@ -25,7 +28,13 @@ export const FullRecipeInfoIngredients = ({
                 <TextField
                     value={diameter}
                     onChange={handleInputChange}
-                    label="Диаметр коржа см."
+                    onBlur={handleInputBlur}
+                    label={ 
+                        recipeTypeToUnit(recipe.type) === 'volume' ?
+                        'Объем мл.'
+                        :
+                        'Диаметр коржа см.'
+                    }
                     variant="outlined"
                     fullWidth
                     sx={{
@@ -39,8 +48,8 @@ export const FullRecipeInfoIngredients = ({
                 <Slider
                     value={diameter}
                     onChange={handleSliderChange}
-                    min={1}
-                    max={50}
+                    min={recipeTypeToUnit(recipe.type) === 'volume' ?  100 : 1}
+                    max={recipeTypeToUnit(recipe.type) === 'volume' ?  5000 : 50}
                     sx={{ maxWidth: 400 }}
                 />
                 <List sx={{ width: '100%' }}>

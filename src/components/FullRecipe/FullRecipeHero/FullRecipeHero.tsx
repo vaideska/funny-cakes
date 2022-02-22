@@ -13,7 +13,7 @@ export const FullRecipeHero = ({ img, info }: FullRecipeHeroProps) => {
                 <Grid item xs={12}>
                     {img}
                 </Grid>
-                <Grid item xs={6} sx={{ mt: -13, zIndex: 10 }}>
+                <Grid item xs={6} sx={{ mt: -15, zIndex: 10 }}>
                     {info}
                 </Grid>
             </Grid>

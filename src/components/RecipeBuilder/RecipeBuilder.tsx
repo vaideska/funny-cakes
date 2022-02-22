@@ -10,7 +10,7 @@ import {Recipe} from "../../types/recipeType";
 interface RecipeBuilderProps {
   steps: string[],
   activeStep: number,
-  resultRecipe: Recipe[],
+  resultRecipes: Recipe[],
   recipeSelected: boolean,
   handleBack: () => void,
   handleNext: () => void
@@ -19,7 +19,7 @@ interface RecipeBuilderProps {
 export const RecipeBuilder = ({
                                 steps,
                                 activeStep,
-                                resultRecipe,
+                                resultRecipes,
                                 recipeSelected,
                                 handleBack,
                                 handleNext
@@ -44,11 +44,11 @@ export const RecipeBuilder = ({
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
-          {resultRecipe.map((subRecipe) => <p key={subRecipe.id}>{subRecipe.title}</p>)}
+          {resultRecipes.map((subRecipe: Recipe) => <p key={subRecipe.id}>{subRecipe.title}</p>)}
         </>
       ) : (
         <>
-          <Typography sx={{ mt: 2, mb: 1 }}>{recipeSelected ? `Выбран ${resultRecipe[activeStep].title}` : 'Рецепт не выбран'}</Typography>
+          <Typography sx={{ mt: 2, mb: 1 }}>{recipeSelected ? `Выбран ${resultRecipes[activeStep].title}` : 'Рецепт не выбран'}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"

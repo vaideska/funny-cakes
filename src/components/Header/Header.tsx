@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 
 import { NavBarAvatarContainer } from '../NavBarAvatar';
+import {HeaderSwipeableDrawerContainer} from './HeaderSwipeableDrawer';
 
 interface HeaderProps {
    isLoged: boolean,
@@ -37,7 +38,7 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCr
                       <AutoFixHighOutlinedIcon />
                   }
                   size='medium'
-                  sx={{ mx: 3 }}
+                  sx={{ mx: 3, display: { md: 'flex', xs: 'none' } }}
                   onClick={handleRecipeBuilderClick}>
                   Конструктор рецепта
                </Button>
@@ -50,7 +51,7 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCr
                            <Add />
                         }
                         size='medium'
-                        sx={{ mx: 3 }}
+                        sx={{ mx: 3, display: { md: 'flex', xs: 'none' } }}
                         onClick={handleCreateRecipeClick}>
                         Добавить рецепт
                      </Button>
@@ -69,6 +70,10 @@ export const Header = ({ isLoged, handleLogoClick, handleLoginBtnClick, handleCr
                      Войти
                   </Button>
                )}
+               <HeaderSwipeableDrawerContainer 
+                  handleRecipeBuilderClick={handleRecipeBuilderClick}
+                  handleCreateRecipeClick={handleCreateRecipeClick}
+               />
             </Toolbar>
          </Container>
       </AppBar>
