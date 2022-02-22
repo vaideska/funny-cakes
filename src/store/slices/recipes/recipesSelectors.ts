@@ -13,6 +13,7 @@ export const selectRecipesByTags = (tagsArr: string[], type: string) => ({ recip
     if (!tagsArr.length) {
         return recipes.filter((recipe) => recipe.type === type)
     }
+
     return recipes.filter((recipe) => {
       if (recipe.tags) {
         return tagsArr.every(tag =>
