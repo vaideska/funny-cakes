@@ -1,14 +1,13 @@
 import { ExpandMoreRounded } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material'
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { selectRecipeById } from '../../../../../store/slices/recipes/recipesSelectors';
-import { MatchParams } from '../../../../../types/globalTypes';
-import { FullRecipeInfoIngredientsContainer } from '../FullRecipeInfoIngredients';
+import { ReactElement } from 'react';
 
-export const FullRecipeInfoAccordion = () => {
-    const routeParams = useParams<MatchParams>()
-    const recipe = useSelector(selectRecipeById(routeParams.id))
+interface FullRecipeInfoAccordionProps {
+    description: string,
+    ingredients: ReactElement
+}
+
+export const FullRecipeInfoAccordion = ({ description, ingredients }: FullRecipeInfoAccordionProps) => {
 
     return (
         <Box sx={{
@@ -39,7 +38,7 @@ export const FullRecipeInfoAccordion = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography align='justify'>
-                        {recipe?.description}
+                        {description}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -48,7 +47,7 @@ export const FullRecipeInfoAccordion = () => {
                     Ингрeдиенты
                 </AccordionSummary>
                 <AccordionDetails>
-                    <FullRecipeInfoIngredientsContainer />
+                    {ingredients}
                 </AccordionDetails>
             </Accordion>
         </Box>
