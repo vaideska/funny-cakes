@@ -183,7 +183,7 @@ export const CreateRecipeForm = (
         <CreateIngredientListContainer setIngredientList={setIngredientList} ingredientList={ingredientList} isEditForm={isEditForm}/>
         <Grid item xs={12}></Grid>
         <Grid item xs={12} sm={6}>
-          {form.type === "full recipe" ? <CreateTagsContainer setForm={setForm} isEditForm={isEditForm}/> : null}
+          {form.type === "full recipe" ? <CreateTagsContainer tags={form.tags} setForm={setForm} isEditForm={isEditForm}/> : null}
         </Grid>
         <Grid item xs={12}>
           <Box component={'label'} sx={{cursor: 'pointer'}} htmlFor="icon-button-file">

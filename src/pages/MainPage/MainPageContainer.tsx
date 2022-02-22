@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState, ChangeEvent} from "react";
 import {useSelector} from "react-redux";
 import {selectRecipesByTags} from "../../store/slices/recipes/recipesSelectors";
 import {useFirebase} from "../../hooks/useFirebase";
@@ -32,6 +32,14 @@ export const MainPageContainer = () => {
     );
   }, []);
 
+  const handleDelete = useCallback((value: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    setTags(prev => prev.filter((tag) => tag !== value));
+  }, [setTags]);
+
+  const handleMouseDown = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+  }, []);
+
 
   const handleCardClick = useCallback(
     (recipe: Recipe) => {
@@ -46,6 +54,8 @@ export const MainPageContainer = () => {
       handleChange={handleChange}
       handleCardClick={handleCardClick}
       recipes={recipes}
+      handleDelete={handleDelete}
+      handleMouseDown={handleMouseDown}
     />
   )
 }
