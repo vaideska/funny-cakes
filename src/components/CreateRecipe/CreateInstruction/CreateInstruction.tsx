@@ -45,17 +45,6 @@ export const CreateInstruction = ({
           required
           fullWidth
           disabled={!isEditForm}
-          name="title"
-          label="Заголовок шага"
-          value={instruction.title}
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          required
-          fullWidth
-          disabled={!isEditForm}
           name="text"
           label="Описание шага"
           value={instruction.text}

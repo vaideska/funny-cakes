@@ -45,7 +45,7 @@ export const CreateRecipeFormContainer = ({
     recipe ? recipe.ingredients : [{ name: '', unit: 'gr', count: 0 }]
   );
   const [instructionList, setInstructionList] = useState<RecipeInstruction[]>(
-    recipe ? recipe.recipeText : [{ title: '', text: '' }]
+    recipe ? recipe.recipeText : [{ text: '' }]
   );
 
   const history = useHistory();
