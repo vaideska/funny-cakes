@@ -24,11 +24,10 @@ export const PrintComponent = forwardRef(
       //div, а не Box из-за ref
       <div className={style.print} ref={ref}>
         <Typography variant="h4">{title}</Typography>
-        <Typography>{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
-        <Typography>{description}</Typography>
-        <Typography>Время приготовления: {duration} мин.</Typography>
-        <Typography>Диаметр торта: {diameter} см.</Typography>
-        <Typography />
+        <Typography sx={{mb: 1}}>{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
+        <Typography sx={{mb: 1}}>{description}</Typography>
+        <Typography sx={{mb: 1, fontWeight: 'bold' }}>Время приготовления: {duration} мин.</Typography>
+        <Typography sx={{mb: 1, fontWeight: 'bold' }}>Диаметр торта: {diameter} см.</Typography>
         <Typography variant="h5">Состав:</Typography>
         <List>
           {ingredients.map(({ name, unit, count }, index) => {
@@ -40,7 +39,7 @@ export const PrintComponent = forwardRef(
           })}
         </List>
         <Typography />
-        <Typography variant="h5">Инструкция приготовления:</Typography>
+        <Typography sx={{mb: 2}} variant="h5">Инструкция приготовления:</Typography>
         <Typography>{recipeText}</Typography>
       </div>
     );
