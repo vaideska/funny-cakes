@@ -150,25 +150,26 @@ export const CreateRecipeForm = ({
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            {form.type === 'cream' ? (
+            {form.type === 'cream' || form.type === 'surface' ? (
               <TextField
                 required
                 fullWidth
                 disabled={!isEditForm}
                 name="diameter"
                 type="number"
-                label="Количество"
+                label="Объем"
                 onChange={handleChange}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      гр. <MonitorWeightOutlinedIcon />
+                      мл. <MonitorWeightOutlinedIcon />
                     </InputAdornment>
                   ),
                   inputProps: {
                     inputcomponent: InputNumberComponent,
                     ref: { ref },
-                    min: 1,
+                    min: 100,
+                    max: 5000,
                     step: 0.5,
                   },
                 }}
