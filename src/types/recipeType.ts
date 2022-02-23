@@ -7,7 +7,6 @@ export interface RecipeIngredient {
 }
 
 export interface RecipeInstruction {
-  title: string;
   text: string;
   imgURL?: string;
 }
