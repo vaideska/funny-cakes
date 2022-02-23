@@ -12,7 +12,13 @@ import { useSelector } from 'react-redux';
 import { useFirebase } from '../../../hooks/useFirebase';
 import { SelectChangeEvent } from '@mui/material';
 
-export const CreateRecipeFormContainer = () => {
+interface CreateRecipeFormContainerProps {
+  recipe?: Recipe | undefined;
+}
+
+export const CreateRecipeFormContainer = ({
+  recipe,
+}: CreateRecipeFormContainerProps) => {
   const owner = useSelector(userSelector);
 
   const initStateForm: Recipe = {
@@ -30,20 +36,20 @@ export const CreateRecipeFormContainer = () => {
     recipeText: [],
   };
 
-  const [form, setForm] = useState(initStateForm);
+  const [form, setForm] = useState(recipe ? recipe : initStateForm);
   const [isLoadFile, setIsLoadFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState(new File([], ''));
   const [isEditForm, setIsEditForm] = useState(true);
   const [error, setError] = useState('');
-  const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>([
-    { name: '', unit: 'gr', count: 0 },
-  ]);
-  const [instructionList, setInstructionList] = useState<RecipeInstruction[]>([
-    { text: '' },
-  ]);
+  const [ingredientList, setIngredientList] = useState<RecipeIngredient[]>(
+    recipe ? recipe.ingredients : [{ name: '', unit: 'gr', count: 0 }]
+  );
+  const [instructionList, setInstructionList] = useState<RecipeInstruction[]>(
+    recipe ? recipe.recipeText : [{ text: '' }]
+  );
 
   const history = useHistory();
-  const { createRecipe, uploadFile } = useFirebase();
+  const { createRecipe, uploadFile, updateRecipe } = useFirebase();
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
@@ -85,6 +91,38 @@ export const CreateRecipeFormContainer = () => {
     ]
   );
 
+  const handleUpdate = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      setIsEditForm(false);
+      const tags = form.type !== 'full recipe' ? [] : form.tags;
+      const recipeObject = {
+        ...form,
+        ingredients: ingredientList,
+        tags,
+        owner,
+        recipeText: instructionList,
+      };
+      updateRecipe(recipe?.id, recipeObject)
+        .then(() => {
+          history.replace(`${routes.recipe}/${recipe?.id}`);
+        })
+        .catch((e) => {
+          setError('Что-то пошло не так... Попробуйте позже.');
+          console.log(e);
+        });
+    },
+    [
+      form,
+      history,
+      ingredientList,
+      owner,
+      instructionList,
+      recipe,
+      updateRecipe,
+    ]
+  );
+
   const handleChange = useCallback(
     (
       e:
@@ -119,6 +157,7 @@ export const CreateRecipeFormContainer = () => {
     isEditForm,
     form,
     handleSubmit,
+    handleUpdate,
     handleChange,
     setIngredientList,
     ingredientList,
@@ -129,6 +168,7 @@ export const CreateRecipeFormContainer = () => {
     error,
     isLoadFile,
     setIsLoadFile,
+    isUpdateRecipe: recipe ? true : false,
   };
 
   return <CreateRecipeForm {...propsCreateRecipe} />;

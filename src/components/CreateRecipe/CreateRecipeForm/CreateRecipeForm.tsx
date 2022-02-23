@@ -44,6 +44,7 @@ interface CreateRecipeFormProps {
   selectedFile: File;
   isEditForm: boolean;
   handleSubmit: FormEventHandler;
+  handleUpdate: FormEventHandler;
   handleChange: (
     e:
       | SelectChangeEvent<string>
@@ -59,6 +60,7 @@ interface CreateRecipeFormProps {
   setIsLoadFile: Dispatch<SetStateAction<boolean>>;
   instructionList: RecipeInstruction[];
   setInstructionList: Dispatch<SetStateAction<RecipeInstruction[]>>;
+  isUpdateRecipe: boolean;
 }
 
 export const CreateRecipeForm = ({
@@ -76,6 +78,8 @@ export const CreateRecipeForm = ({
   instructionList,
   setInstructionList,
   setIsLoadFile,
+  isUpdateRecipe,
+  handleUpdate,
 }: CreateRecipeFormProps) => {
   const InputStyle = styled('input')({
     display: 'none',
@@ -99,12 +103,12 @@ export const CreateRecipeForm = ({
           pb: 10,
         }}
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={isUpdateRecipe ? handleUpdate : handleSubmit}
       >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Typography variant="h5" gutterBottom component="div">
-              Создание рецепта
+              {isUpdateRecipe ? 'Редактирование рецепта' : 'Создание рецепта'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} sx={{ p: 0 }}>
@@ -132,6 +136,7 @@ export const CreateRecipeForm = ({
               required
               fullWidth
               disabled={!isEditForm}
+              value={form.title}
               name="title"
               label="Название"
               onChange={handleChange}
@@ -142,6 +147,7 @@ export const CreateRecipeForm = ({
               required
               fullWidth
               disabled={!isEditForm}
+              value={form.description}
               name="description"
               label="Краткое описание"
               multiline
@@ -155,6 +161,7 @@ export const CreateRecipeForm = ({
                 required
                 fullWidth
                 disabled={!isEditForm}
+                value={form.diameter === 0 ? '' : form.diameter}
                 name="diameter"
                 type="number"
                 label="Объем"
@@ -182,6 +189,7 @@ export const CreateRecipeForm = ({
                 name="diameter"
                 type="number"
                 label="Диаметр"
+                value={form.diameter === 0 ? '' : form.diameter}
                 onChange={handleChange}
                 InputProps={{
                   endAdornment: (
@@ -205,6 +213,7 @@ export const CreateRecipeForm = ({
               required
               fullWidth
               disabled={!isEditForm}
+              value={form.duration == 0 ? '' : form.duration}
               name="duration"
               type="number"
               label="Общее время"
@@ -318,7 +327,7 @@ export const CreateRecipeForm = ({
               variant="contained"
               type="submit"
             >
-              Опубликовать рецепт
+              {isUpdateRecipe ? 'Сохранить изменения' : 'Опубликовать рецепт'}
             </LoadingButton>
           </Grid>
         </Grid>

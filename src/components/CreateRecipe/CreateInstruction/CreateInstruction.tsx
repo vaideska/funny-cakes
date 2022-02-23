@@ -74,7 +74,9 @@ export const CreateInstruction = ({
           >
             <PhotoCameraOutlinedIcon />
           </IconButton>
-          {selectedFile.name !== ''
+          {!selectedFile
+            ? 'Загрузить фотографию'
+            : selectedFile.name !== ''
             ? isLoadFile
               ? 'Загрузка...'
               : selectedFile.name
