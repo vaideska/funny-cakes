@@ -30,7 +30,7 @@ export const CreateInstructionListContainer = ({
       selectedFiles.push(new File([], ''));
       setInstructionList((prev) => {
         const newState: RecipeInstruction[] = [...prev];
-        newState.push({ title: '', text: '' });
+        newState.push({ text: '' });
         return newState;
       });
     },
