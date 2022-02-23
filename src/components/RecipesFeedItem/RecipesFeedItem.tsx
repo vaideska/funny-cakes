@@ -11,23 +11,24 @@ import { Recipe } from '../../types/recipeType';
 
 interface RecipeFeedItemProps {
   recipe: Recipe;
-  handleCardClick?: () => void; //TODO: убрать опциональность. без нее ошибка.
+  handleCardClick: () => void;
+  selected?: boolean
 }
 
 export const RecipeFeedItem = ({
   recipe,
   handleCardClick,
+  selected
 }: RecipeFeedItemProps) => {
   return (
     <Grid item key={recipe.id} xs={12} sm={6} md={4}>
-      <Card raised={true}>
+      <Card raised={true} onClick={handleCardClick} sx={selected ? {bgcolor: '#1976d2', boxShadow: '0 0 15px #1976d2'} : {bgcolor: '#fff'}}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="220"
             image={recipe.imgUrl}
             title={recipe.title}
-            onClick={handleCardClick}
           />
           <CardContent>
             <Typography

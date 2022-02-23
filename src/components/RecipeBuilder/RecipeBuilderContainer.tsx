@@ -93,6 +93,7 @@ export const RecipeBuilderContainer = () => {
   const recipeFeedProps = {
     handleCardClick: handleOpenModal,
     recipes: selectedType[activeStep],
+    idCardSelected: resultRecipes[activeStep]?.id
   };
 
   return activeStep !== steps.length ? (
