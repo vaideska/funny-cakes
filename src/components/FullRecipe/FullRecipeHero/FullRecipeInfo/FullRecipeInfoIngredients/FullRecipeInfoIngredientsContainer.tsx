@@ -79,7 +79,7 @@ export const FullRecipeInfoIngredientsContainer = ({
 
   const calcIngredients = useDebouncedCallback(
     (baseDiameter: number, newDiametr: number) => {
-      let factor: number = newDiametr / baseDiameter;
+      let factor: number = Math.pow(newDiametr, 2) / Math.pow(baseDiameter, 2);
 
       setCustomIngredients((prevIngredients) => {
         if (prevIngredients) {
