@@ -23,7 +23,7 @@ export const PrintComponent = forwardRef(
     return (
       //div, а не Box из-за ref
       <div className={style.print} ref={ref}>
-        <Typography variant="h4">{title}</Typography>
+        <Typography sx={{mb: 1}} variant="h4">{title}</Typography>
         <Typography sx={{mb: 1}}>{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
         <Typography sx={{mb: 1}}>{description}</Typography>
         <Typography sx={{mb: 1, fontWeight: 'bold' }}>Время приготовления: {duration} мин.</Typography>
