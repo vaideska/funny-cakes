@@ -6,8 +6,8 @@ import {
   useState,
 } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import { Recipe, RecipeIngredient } from '../../../../../types/recipeType';
 import { FullRecipeInfoIngredients } from '.';
+import { Recipe, RecipeIngredient } from '../../../../../types/recipeType';
 import { recipeTypeToUnit } from '../../../../../utils/functions';
 
 interface FullRecipeInfoIngredientsContainerProps {
@@ -24,86 +24,94 @@ export const FullRecipeInfoIngredientsContainer = ({
 
   useEffect(() => {
     if (recipe) {
-      setDiameter(Number(recipe.diameter));
-      setCustomIngredients(recipe.ingredients);
+      setDiameter(Number(recipe.diameter))
+      setCustomIngredients(recipe.ingredients)
     }
-  }, [recipe]);
+  }, [recipe])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const prevDiameter = Number(recipe?.diameter);
-    const newDiameter = Number(e.target.value);
-    const recipeCalcUnit = recipeTypeToUnit(recipe.type);
+    const baseUnitValue = Number(recipe?.diameter)
+    let newUnitValue = Number(e.target.value)
+    const recipeCalcUnit = recipeTypeToUnit(recipe.type)
 
-    if (Number.isNaN(newDiameter)) {
-      return;
+    if (Number.isNaN(newUnitValue)) {
+      return
     }
 
     if (recipeCalcUnit === 'volume') {
-      if (newDiameter > 5000) return setDiameter(5000);
+      if (newUnitValue > 5000) {
+        newUnitValue = 5000
+      }
     } else {
-      if (newDiameter > 50) return setDiameter(50);
+      if (newUnitValue > 50) {
+        newUnitValue = 50
+      }
     }
 
-    setDiameter(newDiameter);
-    calcIngredients(prevDiameter, newDiameter);
-  };
+    setDiameter(newUnitValue)
+    calcIngredients(baseUnitValue, newUnitValue)
+  }
 
   const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const prevDiameter = Number(recipe?.diameter);
-    const newDiameter = Number(e.target.value);
-    const recipeCalcUnit = recipeTypeToUnit(recipe.type);
+    const baseUnitValue = Number(recipe?.diameter)
+    let newUnitValue = Number(e.target.value)
+    const recipeCalcUnit = recipeTypeToUnit(recipe.type)
 
-    if (Number.isNaN(newDiameter)) {
-      return;
+    if (Number.isNaN(newUnitValue)) {
+      return
     }
 
     if (recipeCalcUnit === 'volume') {
-      if (newDiameter < 100) return setDiameter(100);
+      if (newUnitValue < 100) {
+        newUnitValue = 100
+      }
     } else {
-      if (newDiameter < 1) return setDiameter(1);
+      if (newUnitValue < 1) {
+        newUnitValue = 1
+      }
     }
 
-    setDiameter(newDiameter);
-    calcIngredients(prevDiameter, newDiameter);
-  };
+    setDiameter(newUnitValue)
+    calcIngredients(baseUnitValue, newUnitValue)
+  }
 
-  const handleSliderChange = (
-    event: Event | SyntheticEvent,
-    value: number | number[]
-  ) => {
-    const baseDiameter = Number(recipe?.diameter);
-    const newDiameter = Number(value);
-    setDiameter(value);
-    calcIngredients(baseDiameter, newDiameter);
-  };
+const handleSliderChange = (
+  event: Event | SyntheticEvent,
+  value: number | number[]
+) => {
+  const baseUnitValue = Number(recipe?.diameter);
+  const newUnitValue = Number(value);
+  setDiameter(value);
+  calcIngredients(baseUnitValue, newUnitValue);
+};
 
-  const calcIngredients = useDebouncedCallback(
-    (baseDiameter: number, newDiametr: number) => {
-      let factor: number = newDiametr / baseDiameter;
+const calcIngredients = useDebouncedCallback(
+  (baseDiameter: number, newDiametr: number) => {
+    let factor: number = newDiametr / baseDiameter;
 
-      setCustomIngredients((prevIngredients) => {
-        if (prevIngredients) {
-          return recipe?.ingredients.map((ingredient) => {
-            return {
-              ...ingredient,
-              count: Number((ingredient.count * factor).toFixed(2)),
-            };
-          });
-        }
-      });
-      console.log(factor);
-    },
-    300
-  );
+    setCustomIngredients((prevIngredients) => {
+      if (prevIngredients) {
+        return recipe?.ingredients.map((ingredient) => {
+          return {
+            ...ingredient,
+            count: Number((ingredient.count * factor).toFixed(2)),
+          };
+        });
+      }
+    });
+    console.log(factor);
+  },
+  300
+);
 
-  return (
-    <FullRecipeInfoIngredients
-      customIngredients={customIngredients}
-      diameter={diameter}
-      handleInputChange={handleInputChange}
-      handleInputBlur={handleInputBlur}
-      handleSliderChange={handleSliderChange}
-      recipe={recipe as Recipe}
-    />
-  );
+return (
+  <FullRecipeInfoIngredients
+    customIngredients={customIngredients}
+    diameter={diameter}
+    handleInputChange={handleInputChange}
+    handleInputBlur={handleInputBlur}
+    handleSliderChange={handleSliderChange}
+    recipe={recipe as Recipe}
+  />
+);
 };

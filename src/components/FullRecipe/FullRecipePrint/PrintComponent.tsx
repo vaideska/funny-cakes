@@ -20,8 +20,7 @@ export const PrintComponent = forwardRef(
       recipeText,
     } = recipe;
 
-    return (
-      //div, а не Box из-за ref
+    return (                                  //div, а не Box из-за ref
       <div className={style.print} ref={ref}>
         <Typography variant="h4">{title}</Typography>
         <Typography>{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
@@ -32,17 +31,14 @@ export const PrintComponent = forwardRef(
         <Typography variant="h5">Состав:</Typography>
         <List>
           {ingredients.map(({ name, unit, count }, index) => {
-            return (
-              <ListItem
-                key={index}
-              >{`${name} — ${count} ${unitList[unit]}`}</ListItem>
-            );
+            return <ListItem key={index}>{`${name} — ${count} ${unitList[unit]}`}</ListItem>
           })}
         </List>
         <Typography />
         <Typography variant="h5">Инструкция приготовления:</Typography>
-        <Typography>{recipeText}</Typography>
+        {recipeText.map((step, index) => (
+          <Typography key={index}>{`${index + 1}. ${step.text}`}</Typography>
+        ))}
       </div>
     );
-  }
-);
+  });
