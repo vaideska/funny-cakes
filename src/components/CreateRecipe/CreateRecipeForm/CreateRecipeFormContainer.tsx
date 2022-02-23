@@ -13,7 +13,7 @@ import { useFirebase } from '../../../hooks/useFirebase';
 import { SelectChangeEvent } from '@mui/material';
 
 interface CreateRecipeFormContainerProps {
-  recipe: Recipe | undefined;
+  recipe?: Recipe | undefined;
 }
 
 export const CreateRecipeFormContainer = ({

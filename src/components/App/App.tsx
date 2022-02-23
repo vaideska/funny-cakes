@@ -26,7 +26,7 @@ function App() {
           <MainPageContainer />
         </Route>
         <Route path={routes.createRecipe} exact>
-          <CreateRecipeFormContainer recipe={undefined} />
+          <CreateRecipeFormContainer />
         </Route>
         <Route path={routes.recipeBuilder} exact>
           <RecipeBuilderContainer />
