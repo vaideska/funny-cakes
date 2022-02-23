@@ -12,7 +12,8 @@ import { FullRecipeInfoAccordion } from './FullRecipeInfoAccordion';
 import { FullRecipeInfoIngredientsContainer } from './FullRecipeInfoIngredients';
 import { FullRecipeInfoStatItem } from './FullRecipeInfoStatItem';
 import { FullRecipeInfoButtonsContainer } from './FullRecipeInfoButtons';
-
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../../../store/slices/authZ/authZSelectors';
 
 interface FullRecipeInfoProps {
   recipe: Recipe;
@@ -22,6 +23,7 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
   const duration = recipe?.duration + ' минут';
   const fullName = recipe?.owner.firstName + ' ' + recipe?.owner.lastName;
   const avatar = recipe?.owner.profile_picture;
+  const user = useSelector(userSelector);           //не хочется ради этой строчки отдельный контейнер делать
 
   return (
     <Box
@@ -94,16 +96,20 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
           }}
         />
         <Typography variant="body2">{getTime(recipe?.date)}</Typography>
-        <Divider
-          orientation="vertical"
-          flexItem
-          sx={{
-            height: 12,
-            my: 'auto',
-            mx: 1,
-          }}
-        />
-        <FullRecipeInfoButtonsContainer recipe={recipe} />
+        {(user?.id === recipe.id) ?
+        (<>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              height: 12,
+              my: 'auto',
+              mx: 1,
+            }}
+          />
+          <FullRecipeInfoButtonsContainer recipe={recipe} />
+        </>)
+      : null}
       </Box>
     </Box>
   );
