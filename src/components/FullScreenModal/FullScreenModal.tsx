@@ -26,16 +26,11 @@ interface FullScreenModalProps {
   handleSelect: () => void;
 }
 
-export const FullScreenModal = ({
-  children,
-  handleClose,
-  isOpen,
-  handleSelect,
-}: FullScreenModalProps) => {
+export const FullScreenModal = ({ children, handleClose, isOpen, handleSelect }: FullScreenModalProps) => {
   return (
     <Box>
       <Dialog
-        transitionDuration={500}
+        transitionDuration={400}
         fullScreen
         open={isOpen}
         onClose={handleClose}
@@ -44,28 +39,16 @@ export const FullScreenModal = ({
         <AppBar sx={{ position: 'fixed' }}>
           <Container>
             <Toolbar>
-              <Button
-                onClick={handleClose}
-                color="inherit"
-                variant="outlined"
-                sx={{ mr: 'auto' }}
-              >
-                Закрыть
-              </Button>
-              <Button
-                onClick={handleSelect}
-                color="inherit"
-                variant="outlined"
-                sx={{ ml: 'auto' }}
-              >
-                Выбрать рецепт
-              </Button>
+              <Button onClick={handleClose} color='inherit' variant="outlined" sx={{ mr: 'auto' }}>Закрыть</Button>
+              <Button onClick={handleSelect} color='inherit' variant="outlined" sx={{ ml: 'auto' }}>Выбрать рецепт</Button>
             </Toolbar>
           </Container>
         </AppBar>
         <Toolbar />
-        <Container>{children}</Container>
+        <Container>
+          {children}
+        </Container>
       </Dialog>
     </Box>
   );
-};
+}
