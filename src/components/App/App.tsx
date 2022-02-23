@@ -9,6 +9,7 @@ import { MainPageContainer } from '../../pages/MainPage';
 import { RecipeBuilderContainer } from '../RecipeBuilder';
 import { MyRecipesContainer } from '../MyRecipes';
 import { FullRecipePage } from '../../pages/FullRecipePage';
+import { EditRecipeContainer } from '../EditRecipe';
 
 function App() {
   const { listenUser } = useFirebase();
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route path={`${routes.recipe}/:id`}>
           <FullRecipePage />
+        </Route>
+        <Route path={`${routes.createRecipe}/:id`}>
+          <EditRecipeContainer />
         </Route>
       </Switch>
     </div>
