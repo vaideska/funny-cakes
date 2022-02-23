@@ -12,17 +12,25 @@ import { Recipe } from '../../types/recipeType';
 interface RecipeFeedItemProps {
   recipe: Recipe;
   handleCardClick: () => void;
-  selected?: boolean
+  selected?: boolean;
 }
 
 export const RecipeFeedItem = ({
   recipe,
   handleCardClick,
-  selected
+  selected,
 }: RecipeFeedItemProps) => {
   return (
     <Grid item key={recipe.id} xs={12} sm={6} md={4}>
-      <Card raised={true} onClick={handleCardClick} sx={selected ? {bgcolor: '#1976d2', boxShadow: '0 0 15px #1976d2'} : {bgcolor: '#fff'}}>
+      <Card
+        raised={true}
+        onClick={handleCardClick}
+        sx={
+          selected
+            ? { bgcolor: '#1976d2', boxShadow: '0 0 15px #1976d2' }
+            : { bgcolor: '#fff' }
+        }
+      >
         <CardActionArea>
           <CardMedia
             component="img"
