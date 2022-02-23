@@ -28,7 +28,7 @@ import {
 } from 'firebase/auth';
 import { useAppDispatch } from './useAppDispatch';
 import { Recipe } from '../types/recipeType';
-import { setRecipes, addRecipe } from '../store/slices/recipes/recipesSlice';
+import { setRecipes, addRecipe, updateRecipe } from '../store/slices/recipes/recipesSlice';
 
 type WriteUserData = (
   userId: string,
@@ -196,8 +196,9 @@ export const useFirebase = () => {
     return setData(`/recipes/${recipeId}`, null);
   }, []);
 
-  const updateRecipe = useCallback(
+  const updateRecipeData = useCallback(
     (recipeId, data) => {
+      dispatch(updateRecipe(data));
       return setData(`/recipes/${recipeId}`, data)
     }, []
   );
@@ -225,6 +226,6 @@ export const useFirebase = () => {
     getRecipes,
     getRecipeById,
     deleteRecipe,
-    updateRecipe
+    updateRecipeData
   }
 }

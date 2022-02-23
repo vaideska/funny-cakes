@@ -96,7 +96,7 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
           }}
         />
         <Typography variant="body2">{getTime(recipe?.date)}</Typography>
-        {(user?.id === recipe.id) ?
+        {(user?.id === recipe.owner.id) ?
         (<>
           <Divider
             orientation="vertical"

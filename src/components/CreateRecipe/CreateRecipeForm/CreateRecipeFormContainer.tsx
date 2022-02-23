@@ -49,7 +49,7 @@ export const CreateRecipeFormContainer = ({
   );
 
   const history = useHistory();
-  const { createRecipe, uploadFile, updateRecipe } = useFirebase();
+  const { createRecipe, uploadFile, updateRecipeData } = useFirebase();
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
@@ -103,7 +103,7 @@ export const CreateRecipeFormContainer = ({
         owner,
         recipeText: instructionList,
       };
-      updateRecipe(recipe?.id, recipeObject)
+      updateRecipeData(recipe?.id, recipeObject)
         .then(() => {
           history.replace(`${routes.recipe}/${recipe?.id}`);
         })
@@ -119,7 +119,7 @@ export const CreateRecipeFormContainer = ({
       owner,
       instructionList,
       recipe,
-      updateRecipe,
+      updateRecipeData,
     ]
   );
 
