@@ -5,8 +5,6 @@ import {
   Divider,
   Stack,
   Typography,
-  IconButton,
-  Tooltip,
 } from '@mui/material';
 import { Recipe } from '../../../../types/recipeType';
 import { getTime } from '../../../../utils/functions';
@@ -14,9 +12,7 @@ import { FullRecipeInfoAccordion } from './FullRecipeInfoAccordion';
 import { FullRecipeInfoIngredientsContainer } from './FullRecipeInfoIngredients';
 import { FullRecipeInfoStatItem } from './FullRecipeInfoStatItem';
 import { FullRecipeInfoButtonsContainer } from './FullRecipeInfoButtons';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { MouseEventHandler } from 'react';
+
 
 interface FullRecipeInfoProps {
   recipe: Recipe;
