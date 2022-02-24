@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -9,7 +9,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-export const theme = createTheme({
+let theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -32,4 +32,36 @@ export const theme = createTheme({
       main: '#f9eeaa',
     },
   },
+
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          paddingLeft: '10px',
+          paddingRight: '10px',
+        },
+      },
+    },
+  },
 });
+
+theme = responsiveFontSizes(theme, {
+  factor: 3,
+  breakpoints: ['sm'],
+});
+
+theme.typography.body1 = {
+  fontSize: '0.85rem',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.2rem',
+  },
+};
+
+theme.typography.body2 = {
+  fontSize: '0.75rem',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '0.9rem',
+  },
+};
+
+export { theme };

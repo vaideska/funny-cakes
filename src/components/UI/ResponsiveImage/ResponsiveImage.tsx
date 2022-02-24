@@ -16,27 +16,25 @@ export const ResponsiveImage = ({
   return (
     <Box
       sx={{
-        ...sx,
         position: 'relative',
         overflow: 'hidden',
         pb: aspectRatio + '%',
+        ...sx,
       }}
     >
-      {src && (
-        <Box
-          component="img"
-          src={src}
-          sx={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
-        />
-      )}
+      <Box
+        component="img"
+        src={src}
+        sx={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+      />
     </Box>
   );
 };

@@ -20,17 +20,30 @@ export const PrintComponent = forwardRef(
       recipeText,
     } = recipe;
 
-    return (                                  //div, а не Box из-за ref
+    return (
+      //div, а не Box из-за ref
       <div className={style.print} ref={ref}>
-        <Typography sx={{mb: 1}} variant="h4">{title}</Typography>
-        <Typography sx={{mb: 1}}>{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
-        <Typography sx={{mb: 1}}>{description}</Typography>
-        <Typography sx={{mb: 1, fontWeight: 'bold' }}>Время приготовления: {duration} мин.</Typography>
-        <Typography sx={{mb: 1, fontWeight: 'bold' }}>Диаметр торта: {diameter} см.</Typography>
+        <Typography sx={{ mb: 1 }} variant="h4">
+          {title}
+        </Typography>
+        <Typography
+          sx={{ mb: 1 }}
+        >{`Автор: ${owner.firstName} ${owner.lastName}`}</Typography>
+        <Typography sx={{ mb: 1 }}>{description}</Typography>
+        <Typography sx={{ mb: 1, fontWeight: 'bold' }}>
+          Время приготовления: {duration} мин.
+        </Typography>
+        <Typography sx={{ mb: 1, fontWeight: 'bold' }}>
+          Диаметр торта: {diameter} см.
+        </Typography>
         <Typography variant="h5">Состав:</Typography>
         <List>
           {ingredients.map(({ name, unit, count }, index) => {
-            return <ListItem key={index}>{`${name} — ${count} ${unitList[unit]}`}</ListItem>
+            return (
+              <ListItem
+                key={index}
+              >{`${name} — ${count} ${unitList[unit]}`}</ListItem>
+            );
           })}
         </List>
         <Typography variant="h5">Инструкция приготовления:</Typography>
@@ -39,4 +52,5 @@ export const PrintComponent = forwardRef(
         ))}
       </div>
     );
-  });
+  }
+);

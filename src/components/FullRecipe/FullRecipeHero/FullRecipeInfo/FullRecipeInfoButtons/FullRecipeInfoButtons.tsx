@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -30,7 +31,7 @@ export const FullRecipeInfoButtons = ({
   open,
 }: FullRecipeInfoButtonsProps) => {
   return (
-    <>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Tooltip title="Редактировать рецепт">
         <IconButton
           aria-label="edit-recipe"
@@ -40,15 +41,6 @@ export const FullRecipeInfoButtons = ({
           <EditOutlinedIcon />
         </IconButton>
       </Tooltip>
-      <Divider
-        orientation="vertical"
-        flexItem
-        sx={{
-          height: 12,
-          my: 'auto',
-          mx: 1,
-        }}
-      />
       <Tooltip title="Удалить рецепт">
         <IconButton
           aria-label="delete-recipe"
@@ -74,6 +66,6 @@ export const FullRecipeInfoButtons = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </Box>
   );
 };

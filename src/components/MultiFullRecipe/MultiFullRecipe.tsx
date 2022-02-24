@@ -33,15 +33,24 @@ export const MultiFullRecipe = ({
 }: MultiFullRecipeProps) => {
   return (
     <Box sx={{ pb: 2 }}>
-      <Container>
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          px: { xs: 0 },
+        }}
+      >
         <Tabs
           value={tabControllerVal}
           onChange={handleTabChange}
-          centered
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
           sx={{
             '& .MuiTabs-indicator': {
               transition: `left 0.${animateDuration}s ease`,
             },
+            mb: { xs: 3, sm: 0 },
           }}
         >
           {recipes.map(({ type, id }, index) => (
@@ -49,7 +58,11 @@ export const MultiFullRecipe = ({
               key={id}
               label={typeRecipe[type]}
               value={index}
-              sx={{ pt: 3.2, pb: 2.5 }}
+              sx={{
+                pt: { xs: 1.5, sm: 3.2 },
+                pb: { xs: 1.5, sm: 2.5 },
+                fontSize: { xs: '13px', sm: '16px' },
+              }}
             />
           ))}
         </Tabs>
