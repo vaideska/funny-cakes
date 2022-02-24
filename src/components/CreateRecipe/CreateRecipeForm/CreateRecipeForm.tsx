@@ -237,7 +237,7 @@ export const CreateRecipeForm = ({
               variant="h6"
               gutterBottom
               component="div"
-              sx={{ mb: -1 }}
+              sx={{ mb: -1, mt: 2 }}
             >
               Состав
             </Typography>
