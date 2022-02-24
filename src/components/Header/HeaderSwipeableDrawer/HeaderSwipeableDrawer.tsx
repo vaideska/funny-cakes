@@ -37,7 +37,7 @@ export const HeaderSwipeableDrawer = ({
         <MenuIcon />
       </IconButton>
       <SwipeableDrawer
-        anchor="right"
+        anchor="left"
         open={isOpen}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}

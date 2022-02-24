@@ -25,7 +25,17 @@ export const Header = ({
     <AppBar position="static">
       <Container>
         <Toolbar disableGutters={true}>
-          <Box sx={{ flexGrow: 1 }}>
+          <HeaderSwipeableDrawerContainer
+            handleRecipeBuilderClick={handleRecipeBuilderClick}
+            handleCreateRecipeClick={handleCreateRecipeClick}
+          />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: { md: 'left', xs: 'center' },
+            }}
+          >
             <Link
               href="#"
               variant="h5"
@@ -72,10 +82,6 @@ export const Header = ({
               Войти
             </Button>
           )}
-          <HeaderSwipeableDrawerContainer
-            handleRecipeBuilderClick={handleRecipeBuilderClick}
-            handleCreateRecipeClick={handleCreateRecipeClick}
-          />
         </Toolbar>
       </Container>
     </AppBar>
