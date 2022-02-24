@@ -24,7 +24,7 @@ export const FullRecipeInstruction = ({ recipe }: FullRecipeInstructionProps) =>
                 sx={{ alignItems: "center" }}
             >
                 {recipe.recipeText.map((step, index) => (
-                    <FullRecipeInstructionStep key={index} children={step.text} index={index} />
+                    <FullRecipeInstructionStep key={index} children={step.text} index={index} imgURL={step.imgURL}/>
                 ))}
             </Stack>
         </Container>
