@@ -19,7 +19,7 @@ interface SelectedType {
   [key: number]: Recipe[];
 }
 
-const steps = ['Выберите бисквит', 'Выберите крем', 'Выберите покрытие'];
+const steps = ['Бисквит', 'Крем', 'Покрытие'];
 
 export const RecipeBuilderContainer = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -33,17 +33,13 @@ export const RecipeBuilderContainer = () => {
   const { getRecipes } = useFirebase();
   const { loadedAll } = useSelector(selectRecipesStatus);
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // для примера
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (loadedAll === false) {
+    if (!loadedAll) {
       getRecipes();
     }
-    if (activeStep === steps.length) {
-      const resultIdsRecipes = resultRecipes.map((el) => el.id);
-      console.log(resultIdsRecipes);
-    }
-  }, [activeStep]);
+  }, []);
 
   const handleNext = () => {
     setRecipeSelected(false);
@@ -93,11 +89,11 @@ export const RecipeBuilderContainer = () => {
   const recipeFeedProps = {
     handleCardClick: handleOpenModal,
     recipes: selectedType[activeStep],
-    idCardSelected: resultRecipes[activeStep]?.id
+    idCardSelected: resultRecipes[activeStep]?.id,
   };
 
   return activeStep !== steps.length ? (
-    <Container sx={{ pt: 2 }}>
+    <Container sx={{ pt: 4 }}>
       <FullScreenModal
         isOpen={isModalOpen}
         handleClose={handleClose}
