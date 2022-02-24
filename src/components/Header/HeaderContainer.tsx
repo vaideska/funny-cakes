@@ -11,7 +11,7 @@ import { routes } from '../../utils/routes';
 export const HeaderContainer = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const { isLoged } = useSelector(selectAuthZStatus);
+  const { isLogged } = useSelector(selectAuthZStatus);
 
   const handleModalOpen = useCallback(() => {
     dispatch(openAuthZModal());
@@ -35,7 +35,7 @@ export const HeaderContainer = () => {
   return (
     <Header
       handleLogoClick={handleLogoClick}
-      isLoged={isLoged}
+      isLogged={isLogged}
       handleLoginBtnClick={handleModalOpen}
       handleCreateRecipeClick={handleCreateRecipeClick}
       handleRecipeBuilderClick={handleRecipeBuilderClick}

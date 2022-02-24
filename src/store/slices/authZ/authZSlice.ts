@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authZState, authZModal, user } from '../../../types/authZTypes';
+import { authZState, user } from '../../../types/authZTypes';
 
 const initialState: authZState = {
   status: {
-    isLoged: false,
+    isLogged: false,
     loading: false,
     error: null,
   },
@@ -25,7 +25,7 @@ export const authZSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<user>) => {
-      state.status.isLoged = true;
+      state.status.isLogged = true;
       state.user = action.payload;
       state.modal.isOpen = false;
       state.modal.variant = 'login';
@@ -34,7 +34,7 @@ export const authZSlice = createSlice({
       state.status.loading = payload;
     },
     logout: (state /* action: PayloadAction<boolean> */) => {
-      state.status.isLoged = false;
+      state.status.isLogged = false;
     },
     openAuthZModal: (state) => {
       state.modal.isOpen = true;

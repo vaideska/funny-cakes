@@ -7,7 +7,6 @@ import {
   set,
   push,
   onValue,
-  DataSnapshot,
 } from 'firebase/database';
 import {
   getStorage,
@@ -54,11 +53,6 @@ export const useFirebase = () => {
   const db = getDatabase();
   const dbRef = ref(db);
   const recipesRef = ref(db, 'recipes/');
-  useEffect(() => {
-    //const recipeId = '-MwH8vqjHqlL6qpYoGIT';
-    //deleteRecipe(recipeId).then(() => console.log(`recipe ${recipeId} deleted`)) // вызов удаления рецепта. в .then нужно добавить логику
-    //либо редиректа на главную, либо всплывающее окно с текстом об успешности операции
-  }, []);
 
   const listenUser = useCallback(() => {
     dispatch(setLoading(true));
@@ -79,7 +73,6 @@ export const useFirebase = () => {
           const userData = snapshot.val();
           dispatch(login(userData));
         } else {
-          console.log('error');
           throw new Error('User data not found');
         }
       })
@@ -97,7 +90,6 @@ export const useFirebase = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user; // созданный юзер
-          console.log(user, 'user registered');
           writeUserData(
             user.uid,
             firstName,

@@ -10,7 +10,7 @@ export interface authZModal {
 }
 
 export interface authZStatus {
-  isLoged: boolean;
+  isLogged: boolean;
   loading: boolean;
   error: string | null;
 }

@@ -1,6 +1,5 @@
-import { Chip, Divider, Paper, Typography } from '@mui/material';
+import { Chip, Divider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { ReactNode } from 'react';
 import { ResponsiveImage } from '../../../UI/ResponsiveImage';
 
 interface FullRecipeInstructionStep {

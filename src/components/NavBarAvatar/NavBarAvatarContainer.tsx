@@ -13,7 +13,7 @@ export const NavBarAvatarContainer = () => {
   const dispatch = useAppDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-  const { profile_picture, firstName } = useSelector(userSelector);
+  const { profile_picture } = useSelector(userSelector);
   const history = useHistory();
   const handleModalClose = useCallback(() => {
     dispatch(logout());

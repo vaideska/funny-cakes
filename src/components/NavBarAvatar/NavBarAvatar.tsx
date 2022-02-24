@@ -9,10 +9,11 @@ import {
   Typography,
   Badge,
 } from '@mui/material';
+import { PopoverProps } from '@mui/material/Popover';
 
 interface NavBarAvatarProps {
   menuIsOpen: boolean;
-  menuAnchorEl: any;
+  menuAnchorEl: null | PopoverProps['anchorEl'];
   handleLogoutBtnClick: () => void;
   handleOpenMenu: (e: MouseEvent) => void;
   handleCloseMenu: () => void;
