@@ -27,7 +27,7 @@ export const RecipeFeedItem = ({
         onClick={handleCardClick}
         sx={
           selected
-            ? { boxShadow: '0 0 15px #1976d2' }
+            ? { boxShadow: '0 0 15px #e87c7c' }
             : { boxShadow: '0 0 15px rgba(0, 0, 0, .3)' }
         }
       >
