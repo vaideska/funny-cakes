@@ -12,18 +12,18 @@ import { PageLoader } from '../UI/PageLoader';
 
 export const EditRecipeContainer = () => {
   const { getRecipeById } = useFirebase();
-  const routeParams = useParams<MatchParams>();
+  const { id } = useParams<MatchParams>();
   const recipesStoreIsEmpty = !Boolean(
     useSelector(selectRecipes).recipes.length
   );
 
   const [loading, setLoading] = useState(true);
-  const recipe = useSelector(selectRecipeById(routeParams.id));
+  const recipe = useSelector(selectRecipeById(id));
 
   useEffect(() => {
-    if (routeParams.id) {
+    if (id) {
       if (recipesStoreIsEmpty) {
-        getRecipeById(routeParams.id).then((res) => {
+        getRecipeById(id).then((res) => {
           setLoading(false);
         });
       } else {

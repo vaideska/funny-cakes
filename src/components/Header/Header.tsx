@@ -7,7 +7,7 @@ import { NavBarAvatarContainer } from '../NavBarAvatar';
 import { HeaderSwipeableDrawerContainer } from './HeaderSwipeableDrawer';
 
 interface HeaderProps {
-  isLoged: boolean;
+  isLogged: boolean;
   handleLoginBtnClick: () => void;
   handleLogoClick: (e: MouseEvent) => void;
   handleCreateRecipeClick: (e: MouseEvent) => void;
@@ -15,7 +15,7 @@ interface HeaderProps {
 }
 
 export const Header = ({
-  isLoged,
+  isLogged,
   handleLogoClick,
   handleLoginBtnClick,
   handleCreateRecipeClick,
@@ -46,7 +46,7 @@ export const Header = ({
           >
             Конструктор рецепта
           </Button>
-          {isLoged ? (
+          {isLogged ? (
             <>
               <Button
                 color="inherit"

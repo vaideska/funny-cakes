@@ -22,7 +22,6 @@ export const selectRecipesByTags =
     });
   };
 
-//TODO: переделаю верхний селектор, чтобы использовать и на главной и в билдере
 export const selectRecipesByType =
   (type: string) =>
   ({ recipes: { recipes } }: RootState) => {

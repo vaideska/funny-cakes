@@ -16,18 +16,18 @@ interface FullRecipeContainerProps {
 
 export const FullRecipeContainer = ({ recipeId }: FullRecipeContainerProps) => {
   const { getRecipeById } = useFirebase();
-  const routeParams = useParams<MatchParams>();
+  const { id } = useParams<MatchParams>();
   const recipesStoreIsEmpty = !Boolean(
     useSelector(selectRecipes).recipes.length
   );
 
   const [loading, setLoading] = useState(true);
-  const recipe = useSelector(selectRecipeById(recipeId || routeParams.id));
+  const recipe = useSelector(selectRecipeById(recipeId || id));
 
   useEffect(() => {
-    if (recipeId || routeParams.id) {
+    if (recipeId || id) {
       if (recipesStoreIsEmpty) {
-        getRecipeById(recipeId || routeParams.id).then((res) => {
+        getRecipeById(recipeId || id).then((res) => {
           setLoading(false);
         });
       } else {

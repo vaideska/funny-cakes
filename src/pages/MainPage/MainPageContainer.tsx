@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState, ChangeEvent } from 'react';
+import { ChangeEvent, MouseEvent, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectRecipesByTags } from '../../store/slices/recipes/recipesSelectors';
+import {
+  selectRecipesByTags,
+  selectRecipesStatus,
+} from '../../store/slices/recipes/recipesSelectors';
 import { useFirebase } from '../../hooks/useFirebase';
 import { useHistory } from 'react-router-dom';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { MainPage } from './MainPage';
-import { selectRecipesStatus } from '../../store/slices/recipes/recipesSelectors';
 import { Recipe } from '../../types/recipeType';
 
 export const MainPageContainer = () => {
@@ -16,7 +18,7 @@ export const MainPageContainer = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (loadedAll === false) {
+    if (!loadedAll) {
       getRecipes();
     }
   }, [getRecipes]);
@@ -24,8 +26,7 @@ export const MainPageContainer = () => {
   const handleChange = useCallback((event: SelectChangeEvent<string[]>) => {
     const value = event.target.value;
     setTags(() => {
-      const newTags = typeof value === 'string' ? value.split(',') : value;
-      return newTags;
+      return typeof value === 'string' ? value.split(',') : value;
     });
   }, []);
 
@@ -36,7 +37,7 @@ export const MainPageContainer = () => {
     [setTags]
   );
 
-  const handleMouseDown = useCallback((event: React.MouseEvent) => {
+  const handleMouseDown = useCallback((event: MouseEvent) => {
     event.stopPropagation();
   }, []);
 

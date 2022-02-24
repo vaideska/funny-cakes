@@ -1,13 +1,12 @@
-import { Chip, Divider, Paper, Typography } from '@mui/material'
+import { Chip, Divider, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { ReactNode } from 'react'
 
-interface FullRecipeInstructionStep {
-    children: any,
+interface FullRecipeInstructionStepProps {
+    children: string,
     index: number
 }
 
-export const FullRecipeInstructionStep = ({ children, index }: FullRecipeInstructionStep) => {
+export const FullRecipeInstructionStep = ({ children, index }: FullRecipeInstructionStepProps) => {
     return (
         <Box sx={{maxWidth: '640px', width: '100%'}}>
             <Divider sx={{ mb: 2 }}>
