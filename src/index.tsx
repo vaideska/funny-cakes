@@ -8,6 +8,7 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/system';
 import { theme } from './theme';
 import { initializeApp } from 'firebase/app';
+import './index.css';
 
 (function () {
   const firebaseConfig = {

@@ -70,7 +70,12 @@ export const FullRecipeInfoIngredients = ({
             <ListItemText primary={data.name} />
             <ListItemText
               primary={data.count + ' ' + unitList[data.unit]}
-              sx={{ textAlign: 'end' }}
+              sx={{
+                textAlign: 'end',
+                pl: { xs: 2, sm: 3 },
+                whiteSpace: 'nowrap',
+                flex: '0 0 auto',
+              }}
             />
           </ListItem>
         ))}

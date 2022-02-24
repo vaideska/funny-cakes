@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Paper, SxProps } from '@mui/material';
 import { Recipe } from '../../../../types/recipeType';
 import { ResponsiveImage } from '../../../UI/ResponsiveImage';
 
@@ -11,11 +11,20 @@ export const FullRecipeImg = ({ recipe }: FullRecipeImgProps) => {
     <Paper
       elevation={12}
       sx={{
+        mx: 'auto',
+        width: '100%',
         borderRadius: 3,
         overflow: 'hidden',
+        maxWidth: { md: '1000px', lg: '1100px' },
       }}
     >
-      <ResponsiveImage src={recipe?.imgUrl} alt="тортик" />
+      <ResponsiveImage
+        src={recipe?.imgUrl}
+        alt="тортик"
+        sx={{
+          pb: { xs: '75%', sm: '55%', md: '44%' },
+        }}
+      />
     </Paper>
   );
 };

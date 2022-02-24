@@ -15,7 +15,7 @@ export const FullRecipePrint = ({ recipe }: FullRecipePrintProps) => {
     <>
       <ReactToPrint
         trigger={() => (
-          <Button variant="outlined" color="primary">
+          <Button variant="outlined" color="primary" sx={{ mt: 2 }}>
             Напечатать рецепт
           </Button>
         )}

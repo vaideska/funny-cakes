@@ -25,8 +25,13 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
   return (
     <Box
       sx={{
-        py: 2,
-        px: 3,
+        mx: 'auto',
+        mt: { xs: -10, sm: -15 },
+        py: { xs: 1, sm: 2 },
+        px: { xs: 1, sm: 3 },
+        width: '95%',
+        maxWidth: { xs: '650px' },
+        zIndex: 10,
         borderRadius: 3,
         bgcolor: 'white.main',
         boxShadow: 10,
@@ -37,7 +42,7 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
         variant="h5"
         align="center"
         sx={{
-          pb: 2,
+          pb: { xs: 1, sm: 2 },
           mx: 'auto',
         }}
       >
@@ -55,7 +60,7 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
         alignItems="center"
         spacing={4}
         sx={{
-          py: 3,
+          py: { xs: 1.5, sm: 3 },
         }}
       >
         <FullRecipeInfoStatItem icon={<AccessTimeRounded />} txt={duration} />
@@ -69,7 +74,7 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          pb: 2,
+          pb: { xs: 1, sm: 2 },
         }}
       >
         <Avatar
@@ -93,21 +98,18 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
           }}
         />
         <Typography variant="body2">{getTime(recipe?.date)}</Typography>
-        {user?.id === recipe.owner.id && path !== routes.recipeBuilder ? (
-          <>
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{
-                height: 12,
-                my: 'auto',
-                mx: 1,
-              }}
-            />
-            <FullRecipeInfoButtonsContainer recipe={recipe} />
-          </>
-        ) : null}
       </Box>
+      {user?.id === recipe.owner.id && path !== routes.recipeBuilder ? (
+        <>
+          <Divider
+            flexItem
+            sx={{
+              my: 1,
+            }}
+          />
+          <FullRecipeInfoButtonsContainer recipe={recipe} />
+        </>
+      ) : null}
     </Box>
   );
 };

@@ -9,7 +9,7 @@ interface FullRecipeTagsProps {
 export const FullRecipeTags = ({ recipe }: FullRecipeTagsProps) => {
   return (
     <Container>
-      <Grid container spacing={1} pt={3} justifyContent={'center'}>
+      <Grid container spacing={1} pt={0} justifyContent={'center'}>
         {recipe?.tags?.map((tag: string) => (
           <Grid item key={tag}>
             <Chip clickable variant="outlined" label={tagList[tag]} />

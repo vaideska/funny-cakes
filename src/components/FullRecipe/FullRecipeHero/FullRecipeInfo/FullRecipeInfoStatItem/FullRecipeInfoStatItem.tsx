@@ -17,8 +17,15 @@ export const FullRecipeInfoStatItem = ({
         alignItems: 'center',
       }}
     >
-      <SvgIcon fontSize="large" children={icon} sx={{ mr: 1 }} />
-      <Typography children={txt} sx={{ fontSize: 18 }} />
+      <SvgIcon
+        children={icon}
+        sx={{
+          mr: { xs: 0.5, sm: 1 },
+          width: { xs: 24, sm: 32 },
+          height: { xs: 24, sm: 32 },
+        }}
+      />
+      <Typography children={txt} sx={{ pt: { xs: '3px', sm: 0 } }} />
     </Box>
   );
 };

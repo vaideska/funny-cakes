@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Stack } from '@mui/material';
 import { ReactElement } from 'react';
 
 interface FullRecipeHeroProps {
@@ -9,14 +9,10 @@ interface FullRecipeHeroProps {
 export const FullRecipeHero = ({ img, info }: FullRecipeHeroProps) => {
   return (
     <Container>
-      <Grid container spacing={0} justifyContent="center">
-        <Grid item xs={12}>
-          {img}
-        </Grid>
-        <Grid item xs={6} sx={{ mt: -15, zIndex: 10 }}>
-          {info}
-        </Grid>
-      </Grid>
+      <Stack>
+        {img}
+        {info}
+      </Stack>
     </Container>
   );
 };

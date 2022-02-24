@@ -1,4 +1,10 @@
-import { ChangeEvent, MouseEvent, useCallback, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import {
   selectRecipesByTags,

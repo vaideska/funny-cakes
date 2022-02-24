@@ -23,8 +23,10 @@ export const recipesSlice = createSlice({
       state.recipes.push(payload);
     },
     updateRecipe: (state, { payload }: PayloadAction<Recipe>) => {
-      state.recipes.map((recipe) => recipe.id === payload.id ? payload : recipe);
-    }
+      state.recipes.map((recipe) =>
+        recipe.id === payload.id ? payload : recipe
+      );
+    },
   },
 });
 
