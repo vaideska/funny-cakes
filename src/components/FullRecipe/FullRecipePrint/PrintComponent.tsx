@@ -33,10 +33,10 @@ export const PrintComponent = forwardRef(
         <Typography sx={{ mb: 1, fontWeight: 'bold' }}>
           Время приготовления: {duration} мин.
         </Typography>
-        <Typography sx={{ mb: 1, fontWeight: 'bold' }}>
+        <Typography sx={{ mt: 1, fontWeight: 'bold' }}>
           Диаметр торта: {diameter} см.
         </Typography>
-        <Typography variant="h5">Состав:</Typography>
+        <Typography variant="h5" sx={{mt: 5}}>Состав:</Typography>
         <List>
           {ingredients.map(({ name, unit, count }, index) => {
             return (
@@ -46,9 +46,9 @@ export const PrintComponent = forwardRef(
             );
           })}
         </List>
-        <Typography variant="h5">Инструкция приготовления:</Typography>
+        <Typography variant="h5" sx={{mt: 5}}>Инструкция приготовления:</Typography>
         {recipeText.map((step, index) => (
-          <Typography key={index}>{`${index + 1}. ${step.text}`}</Typography>
+          <Typography key={index} sx={{mt: 1}}>{`${index + 1}. ${step.text}`}</Typography>
         ))}
       </div>
     );
