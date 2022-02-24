@@ -213,7 +213,7 @@ export const CreateRecipeForm = ({
               required
               fullWidth
               disabled={!isEditForm}
-              value={form.duration == 0 ? '' : form.duration}
+              value={form.duration === 0 ? '' : form.duration}
               name="duration"
               type="number"
               label="Общее время"
