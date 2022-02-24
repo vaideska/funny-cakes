@@ -8,6 +8,7 @@ export const unitList: Map = {
   cups: 'стак.',
   tablespoon: 'ст. л.',
   'tea spoon': 'ч. л.',
+  count: 'шт.',
 };
 
 export const tagList: Map = {

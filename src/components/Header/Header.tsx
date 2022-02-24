@@ -22,10 +22,20 @@ export const Header = ({
   handleRecipeBuilderClick,
 }: HeaderProps) => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" color='secondary'>
       <Container>
         <Toolbar disableGutters={true}>
-          <Box sx={{ flexGrow: 1 }}>
+          <HeaderSwipeableDrawerContainer
+            handleRecipeBuilderClick={handleRecipeBuilderClick}
+            handleCreateRecipeClick={handleCreateRecipeClick}
+          />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: { md: 'left', xs: 'center' },
+            }}
+          >
             <Link
               href="#"
               variant="h5"
@@ -72,10 +82,6 @@ export const Header = ({
               Войти
             </Button>
           )}
-          <HeaderSwipeableDrawerContainer
-            handleRecipeBuilderClick={handleRecipeBuilderClick}
-            handleCreateRecipeClick={handleCreateRecipeClick}
-          />
         </Toolbar>
       </Container>
     </AppBar>

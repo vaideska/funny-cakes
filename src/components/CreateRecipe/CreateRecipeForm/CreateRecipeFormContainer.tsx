@@ -71,9 +71,7 @@ export const CreateRecipeFormContainer = ({
       };
       createRecipe(recipeObject)
         .then((recipeId) => {
-          form.type === 'full recipe'
-            ? history.replace(`${routes.recipe}/${recipeId}`)
-            : history.replace(routes.main);
+          history.replace(`${routes.recipe}/${recipeId}`)
         })
         .catch((e) => {
           setError('Что-то пошло не так... Попробуйте позже.');

@@ -26,6 +26,7 @@ export const FullRecipeContainer = ({ recipeId }: FullRecipeContainerProps) => {
 
   useEffect(() => {
     if (recipeId || id) {
+    window.scrollTo(0, 0);
       if (recipesStoreIsEmpty) {
         getRecipeById(recipeId || id).then((res) => {
           setLoading(false);

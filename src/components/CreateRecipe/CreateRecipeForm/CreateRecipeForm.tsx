@@ -213,7 +213,7 @@ export const CreateRecipeForm = ({
               required
               fullWidth
               disabled={!isEditForm}
-              value={form.duration == 0 ? '' : form.duration}
+              value={form.duration === 0 ? '' : form.duration}
               name="duration"
               type="number"
               label="Общее время"
@@ -237,7 +237,7 @@ export const CreateRecipeForm = ({
               variant="h6"
               gutterBottom
               component="div"
-              sx={{ mb: -1 }}
+              sx={{ mb: -1, mt: 2 }}
             >
               Состав
             </Typography>

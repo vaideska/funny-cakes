@@ -21,6 +21,7 @@ export const EditRecipeContainer = () => {
   const recipe = useSelector(selectRecipeById(id));
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (id) {
       if (recipesStoreIsEmpty) {
         getRecipeById(id).then((res) => {
