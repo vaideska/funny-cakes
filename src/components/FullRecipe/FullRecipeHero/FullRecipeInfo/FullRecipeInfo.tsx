@@ -1,11 +1,5 @@
 import { AccessTimeRounded } from '@mui/icons-material';
-import {
-  Avatar,
-  Box,
-  Divider,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Divider, Stack, Typography } from '@mui/material';
 import { Recipe } from '../../../../types/recipeType';
 import { getTime } from '../../../../utils/functions';
 import { FullRecipeInfoAccordion } from './FullRecipeInfoAccordion';
@@ -14,6 +8,8 @@ import { FullRecipeInfoStatItem } from './FullRecipeInfoStatItem';
 import { FullRecipeInfoButtonsContainer } from './FullRecipeInfoButtons';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../../store/slices/authZ/authZSelectors';
+import { useRouteMatch } from 'react-router-dom';
+import { routes } from '../../../../utils/routes';
 
 interface FullRecipeInfoProps {
   recipe: Recipe;
@@ -23,7 +19,8 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
   const duration = recipe?.duration + ' минут';
   const fullName = recipe?.owner.firstName + ' ' + recipe?.owner.lastName;
   const avatar = recipe?.owner.profile_picture;
-  const user = useSelector(userSelector);           //не хочется ради этой строчки отдельный контейнер делать
+  const user = useSelector(userSelector);
+  const { path } = useRouteMatch();
 
   return (
     <Box
@@ -96,20 +93,20 @@ export const FullRecipeInfo = ({ recipe }: FullRecipeInfoProps) => {
           }}
         />
         <Typography variant="body2">{getTime(recipe?.date)}</Typography>
-        {(user?.id === recipe.owner.id) ?
-        (<>
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{
-              height: 12,
-              my: 'auto',
-              mx: 1,
-            }}
-          />
-          <FullRecipeInfoButtonsContainer recipe={recipe} />
-        </>)
-      : null}
+        {user?.id === recipe.owner.id && path !== routes.recipeBuilder ? (
+          <>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{
+                height: 12,
+                my: 'auto',
+                mx: 1,
+              }}
+            />
+            <FullRecipeInfoButtonsContainer recipe={recipe} />
+          </>
+        ) : null}
       </Box>
     </Box>
   );
