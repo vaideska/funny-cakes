@@ -22,10 +22,13 @@ export const recipesSlice = createSlice({
     addRecipe: (state, { payload }: PayloadAction<Recipe>) => {
       state.recipes.push(payload);
     },
+    updateRecipe: (state, { payload }: PayloadAction<Recipe>) => {
+      state.recipes.map((recipe) => recipe.id === payload.id ? payload : recipe);
+    }
   },
 });
 
 // Action creator
-export const { setRecipes, addRecipe } = recipesSlice.actions;
+export const { setRecipes, addRecipe, updateRecipe } = recipesSlice.actions;
 // Reducer
 export const recipesReducer = recipesSlice.reducer;

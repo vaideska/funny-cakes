@@ -320,7 +320,7 @@ export const CreateRecipeForm = ({
           ) : null}
           <Grid item xs={12}>
             <LoadingButton
-              loading={isLoadFile}
+              loading={isLoadFile || !isEditForm}
               loadingPosition="start"
               disabled={!isEditForm}
               startIcon={<LibraryAddOutlinedIcon />}
