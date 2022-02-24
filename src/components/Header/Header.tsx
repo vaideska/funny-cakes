@@ -22,7 +22,7 @@ export const Header = ({
   handleRecipeBuilderClick,
 }: HeaderProps) => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" color='secondary'>
       <Container>
         <Toolbar disableGutters={true}>
           <Box sx={{ flexGrow: 1 }}>
