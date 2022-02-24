@@ -5,13 +5,13 @@ import { RecipeFeedItem } from '../RecipesFeedItem';
 interface RecipesFeedProps {
   handleCardClick: (recipe: Recipe) => void;
   recipes: Recipe[];
-  idCardSelected?: string
+  idCardSelected?: string;
 }
 
 export const RecipesFeed = ({
   handleCardClick,
   recipes,
-  idCardSelected
+  idCardSelected,
 }: RecipesFeedProps) => {
   return (
     <Box sx={{ py: 4 }}>

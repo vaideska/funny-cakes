@@ -39,21 +39,12 @@ export const RecipeBuilder = ({
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
-        <>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          {resultRecipes.map((subRecipe: Recipe) => (
-            <p key={subRecipe.id}>{subRecipe.title}</p>
-          ))}
-        </>
-      ) : (
+      {activeStep < steps.length && (
         <>
           <Typography sx={{ mt: 2, mb: 1 }}>
             {recipeSelected
               ? `Выбран ${resultRecipes[activeStep].title}`
-              : 'Рецепт не выбран'}
+              : `${steps[activeStep]} не выбран`}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button

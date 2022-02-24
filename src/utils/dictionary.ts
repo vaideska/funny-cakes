@@ -11,12 +11,17 @@ export const unitList: Map = {
 };
 
 export const tagList: Map = {
-  'vanilla cream': 'Ванильный крем',
-  'chocolate cream': 'Шоколадный крем',
-  'red velvet': 'Красный бархат',
-  glaze: 'Глазурь',
-  mastic: 'Мастика',
-  'vanilla cake': 'Ванильный корж',
+  chocolate: 'шоколадный',
+  vanilla: 'ванильный',
+  yogurt: 'йогуртовый',
+  PP: 'ПП',
+  pancake: 'блинный',
+  cheesecake: 'чизкейк',
+  sugarFree: 'без сахара',
+  vegan: 'веган',
+  light: 'легкий',
+  shortbread: 'песочный',
+  classic: 'классический',
 };
 
 export const typeRecipe: Map = {

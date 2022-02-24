@@ -20,7 +20,7 @@ export const MainPageTags = ({
   handleMouseDown,
 }: MainPageTagsContainerProps) => {
   return (
-    <Box sx={{ pt: 2 }}>
+    <Box sx={{ pt: 4 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-multiple-chip-label">Поиск по тегам</InputLabel>
         <Select

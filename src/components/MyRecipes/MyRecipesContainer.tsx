@@ -17,7 +17,7 @@ export const MyRecipesContainer = () => {
   const recipes = useSelector(selectRecipesByOwner(id));
   const history = useHistory();
   useEffect(() => {
-    if (loadedAll === false) {
+    if (!loadedAll) {
       getRecipes();
     }
   }, [getRecipes]);
