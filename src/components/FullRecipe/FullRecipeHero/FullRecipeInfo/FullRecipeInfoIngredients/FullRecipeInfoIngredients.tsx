@@ -60,7 +60,7 @@ export const FullRecipeInfoIngredients = ({
       <Slider
         value={diameter}
         onChange={handleSliderChange}
-        min={recipeTypeToUnit(recipe.type) === 'volume' ? 100 : 1}
+        min={recipeTypeToUnit(recipe.type) === 'volume' ? 100 : 5}
         max={recipeTypeToUnit(recipe.type) === 'volume' ? 5000 : 50}
         sx={{ maxWidth: 400 }}
       />
