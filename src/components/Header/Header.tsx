@@ -1,7 +1,17 @@
 import { MouseEvent } from 'react';
 import { AccountCircleRounded, Add } from '@mui/icons-material';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
-import { AppBar, Toolbar, Button, Container, Link, Box } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Container,
+  Link,
+  Box,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import { NavBarAvatarContainer } from '../NavBarAvatar';
 import { HeaderSwipeableDrawerContainer } from './HeaderSwipeableDrawer';
@@ -21,6 +31,9 @@ export const Header = ({
   handleCreateRecipeClick,
   handleRecipeBuilderClick,
 }: HeaderProps) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
     <AppBar position="static" color="secondary">
       <Container>
@@ -31,7 +44,7 @@ export const Header = ({
           />
           <Box
             sx={{
-              flexGrow: 1,
+              flex: { xs: '0 0 auto', md: '0 1 100%' },
               display: 'flex',
               justifyContent: { md: 'left', xs: 'center' },
             }}
@@ -51,7 +64,11 @@ export const Header = ({
             variant="text"
             startIcon={<AutoFixHighOutlinedIcon />}
             size="medium"
-            sx={{ mx: 3, display: { md: 'flex', xs: 'none' } }}
+            sx={{
+              ml: 2.5,
+              display: { md: 'flex', xs: 'none' },
+              flex: '0 0 auto',
+            }}
             onClick={handleRecipeBuilderClick}
           >
             Конструктор рецепта
@@ -63,24 +80,54 @@ export const Header = ({
                 variant="text"
                 startIcon={<Add />}
                 size="medium"
-                sx={{ mx: 3, display: { md: 'flex', xs: 'none' } }}
+                sx={{
+                  ml: 2.5,
+                  display: { md: 'flex', xs: 'none' },
+                  flex: '0 0 auto',
+                }}
                 onClick={handleCreateRecipeClick}
               >
                 Добавить рецепт
               </Button>
-              <NavBarAvatarContainer />
+              <NavBarAvatarContainer
+                sx={{
+                  pl: 2,
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  flex: { xs: '0 1 50%', md: '0 0 auto' },
+                }}
+              />
             </>
           ) : (
-            <Button
-              color="inherit"
-              variant="outlined"
-              startIcon={<AccountCircleRounded />}
-              size="medium"
-              sx={{ ml: 2 }}
-              onClick={handleLoginBtnClick}
+            <Box
+              sx={{
+                pl: 2,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                flex: { xs: '0 1 50%', md: '0 0 auto' },
+              }}
             >
-              Войти
-            </Button>
+              {matches ? (
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  startIcon={<AccountCircleRounded />}
+                  size="medium"
+                  onClick={handleLoginBtnClick}
+                >
+                  Войти
+                </Button>
+              ) : (
+                <IconButton onClick={handleLoginBtnClick} color="inherit">
+                  <AccountCircleRounded 
+                    sx={{
+                      width: { xs: 24, sm: 32 },
+                      height: { xs: 24, sm: 32 },
+                    }}
+                  />
+                </IconButton>
+              )}
+            </Box>
           )}
         </Toolbar>
       </Container>

@@ -8,8 +8,13 @@ import { useSelector } from 'react-redux';
 import { getAuth, signOut } from 'firebase/auth';
 import { routes } from '../../utils/routes';
 import { useHistory } from 'react-router-dom';
+import { SxProps } from '@mui/material';
 
-export const NavBarAvatarContainer = () => {
+interface NavBarAvatarContainerProps {
+  sx?: SxProps
+}
+
+export const NavBarAvatarContainer = ({ sx }: NavBarAvatarContainerProps) => {
   const dispatch = useAppDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -46,6 +51,7 @@ export const NavBarAvatarContainer = () => {
 
   return (
     <NavBarAvatar
+      sx={sx}
       menuIsOpen={menuIsOpen}
       menuAnchorEl={menuAnchorEl}
       handleLogoutBtnClick={handleModalClose}

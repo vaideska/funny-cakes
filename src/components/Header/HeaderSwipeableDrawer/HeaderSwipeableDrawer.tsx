@@ -28,13 +28,19 @@ export const HeaderSwipeableDrawer = ({
   isOpen,
 }: HeaderSwipeableDrawerProps) => {
   return (
-    <Box sx={{ display: { md: 'none', xs: 'block' } }}>
-      <IconButton
-        color={'inherit'}
-        aria-label="MenuOpen"
-        onClick={toggleDrawer(true)}
-      >
-        <MenuIcon />
+    <Box
+      sx={{
+        display: { md: 'none', xs: 'block' },
+        flex: { xs: '0 1 50%', md: '0 0 auto' },
+      }}
+    >
+      <IconButton color={'inherit'} onClick={toggleDrawer(true)}>
+        <MenuIcon
+          sx={{
+            width: { xs: 24, sm: 32 },
+            height: { xs: 24, sm: 32 },
+          }}
+        />
       </IconButton>
       <SwipeableDrawer
         anchor="left"
@@ -51,7 +57,7 @@ export const HeaderSwipeableDrawer = ({
           <List>
             {buttonList.map(({ name, icon, handler }, index) => (
               <ListItem button key={index} onClick={handler}>
-                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemIcon sx={{minWidth: 42}}>{icon}</ListItemIcon>
                 <ListItemText primary={name} />
               </ListItem>
             ))}
