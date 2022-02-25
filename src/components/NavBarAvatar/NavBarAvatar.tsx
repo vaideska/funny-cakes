@@ -8,10 +8,12 @@ import {
   MenuItem,
   Typography,
   Badge,
+  SxProps,
 } from '@mui/material';
 import { PopoverProps } from '@mui/material/Popover';
 
 interface NavBarAvatarProps {
+  sx?: SxProps;
   menuIsOpen: boolean;
   menuAnchorEl: null | PopoverProps['anchorEl'];
   handleLogoutBtnClick: () => void;
@@ -22,6 +24,7 @@ interface NavBarAvatarProps {
 }
 
 export const NavBarAvatar = ({
+  sx,
   menuIsOpen,
   menuAnchorEl,
   handleLogoutBtnClick,
@@ -31,7 +34,7 @@ export const NavBarAvatar = ({
   handleMyRecipesButton,
 }: NavBarAvatarProps) => {
   return (
-    <Box>
+    <Box sx={sx}>
       <Tooltip title="Открыть меню пользователя">
         <Badge>
           <IconButton onClick={handleOpenMenu} sx={{ p: 0 }}>
@@ -51,26 +54,31 @@ export const NavBarAvatar = ({
           vertical: 'top',
           horizontal: 'right',
         }}
-        sx={{ mt: 1 }}
+        sx={{ 
+          mt: 1,
+          '& .MuiMenuItem-root': {
+            minHeight: {xs: 32, sm: 36},
+          }
+        }}
       >
         <MenuItem>
           <Typography
-            variant="body1"
+            variant="body2"
             textAlign="center"
             onClick={handleMyRecipesButton}
           >
             Мои рецепты
           </Typography>
         </MenuItem>
-        <MenuItem onClick={handleCloseMenu}>
-          <Typography
-            variant="body1"
-            textAlign="center"
-            onClick={handleLogoutBtnClick}
-          >
-            Выйти
-          </Typography>
-        </MenuItem>
+          <MenuItem onClick={handleCloseMenu}>
+            <Typography
+              variant="body2"
+              textAlign="center"
+              onClick={handleLogoutBtnClick}
+            >
+              Выйти
+            </Typography>
+          </MenuItem>
       </Menu>
     </Box>
   );
